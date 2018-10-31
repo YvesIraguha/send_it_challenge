@@ -1,7 +1,8 @@
 # send_it_challenge
 SendIT is a courier service that helps users deliver parcels to different destinations. SendIt provides courier quotes on weight categories. 
 
-#Hit over the link below to see the templates 
+# Hit over the link below to see the templates 
+
 The template for admin to view all deliveries:
 https://yvesiraguha.github.io/send_it_challenge/UI/delivery_orders_for_admin.html
 
