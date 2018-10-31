@@ -1,0 +1,36 @@
+body {
+	background-color: #f9f9f7; 
+}
+#signup, #signin {
+	border: 2px solid green;
+	padding:20px;
+	width:400px;
+	padding:30px;
+	margin:150px auto;
+	background-color: white;
+}
+
+#delivary, #adminDelivary, #userProfile {
+	border: 3px solid #ddd;
+	padding:20px;
+	width:80%;
+	padding:30px;
+	margin:150px auto;
+	background-color:white;
+}
+
+caption {
+	font-size:30px;
+	
+}
+
+#delivary td, #adminDelivary td, #userProfile td {
+ 	border-bottom:3px solid #ddd;
+    height: 30px;    
+    vertical-align: bottom;
+}
+
+#signup td, #signin td {
+	height:30px;
+	border-bottom:3px solid #ddd;
+}
