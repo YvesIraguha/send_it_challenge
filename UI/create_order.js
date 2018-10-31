@@ -1,3 +1,5 @@
+
+//function for adding a template to create an order. 
 addOrder.onclick = function(){
 	const table = document.createElement("table"); 
 table.innerHTML = `<tr>
@@ -18,7 +20,7 @@ table.innerHTML = `<tr>
 		                To
 		              </td>
 		              <td>
-		                <select name="destination" id="origin">
+		                <select name="destination" id="destination">
 		                  <option value="Rwanda">Rwanda</option>
 		                  <option value="Burundi">Burundi</option>
 		                  <option value="Uganda">Uganda</option>
@@ -31,8 +33,7 @@ table.innerHTML = `<tr>
 		                Weight (kgs)
 		              </td>
 		              <td>
-		                <input type="text" placeholder="kgs">      
-		             
+		                <input type="text" placeholder="kgs" id="weight"> 	             
 		           </tr>`
 			
 const orders = document.getElementById("order"); 
