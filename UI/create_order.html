@@ -5,53 +5,60 @@
   <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
   <body>
-   <h1>Create an order</h1>  
-        <div id="order">
-          <table>
-            <tr>
-              <td>
-                From 
-              </td>
-              <td>
-                <select name="origin" id="origin">
-                  <option value="Rwanda">Rwanda</option>
-                  <option value="Burundi">Burundi</option>
-                  <option value="Uganda">Uganda</option>
-                  <option value="DRC">DRC</option>
-                  <option value="South Africa">South African</option>
-                  <option value="Nigeria">Negeria</option>
-                </select>
-              </td>
-              <td>
-                To
-              </td>
-              <td>
-                <select name="destination" id="destination">
-                  <option value="Rwanda">Rwanda</option>
-                  <option value="Burundi">Burundi</option>
-                  <option value="Uganda">Uganda</option>
-                  <option value="DRC">DRC</option>
-                  <option value="South Africa">South African</option>
-                  <option value="Nigeria">Negeria</option>
-                </select>
-              </td>
-              <td>
-                Weight (kgs)
-              </td>
-              <td>
-                <input type="text" placeholder="kgs" id="weight">
-              </td>              
-            </tr>
-          </table>      
-        </div>
-     
-      <button id='addOrder'>Add</button>        
-         
-    <button >Get Quotes</button>    
+    <div id="homePage">
+      <article>
+        <h1>SendIT</h1>
+        <p><strong>SendIt</strong> is a service for you to send a parcel from one destination <br> 
+          to another with just cost calculated based on the weight of what you want to <br>
+          transfer. The the cost per unit is 100RWf.</p>
+          <p>This is the opportunity for you to send parcels with us.</p>
+          <p><a href=" https://yvesiraguha.github.io/send_it_challenge/UI/signup.html">Sign up</a> to send with us or <a href=" https://yvesiraguha.github.io/send_it_challenge/UI/signin.html">Sign in</a> if you already have an account.</p>
+      </article>     
+          <div id="order">
+            <caption><b>Create an order</b></caption>
+            <table>
+              <tr>
+                <td>
+                  From 
+                </td>
+                <td>
+                  <select name="origin" id="origin">
+                    <option value="Rwanda">Rwanda</option>
+                    <option value="Burundi">Burundi</option>
+                    <option value="Uganda">Uganda</option>
+                    <option value="DRC">DRC</option>
+                    <option value="South Africa">South African</option>
+                    <option value="Nigeria">Negeria</option>
+                  </select>
+                </td>
+                <td>
+                  To
+                </td>
+                <td>
+                  <select name="destination" id="destination">
+                    <option value="Rwanda">Rwanda</option>
+                    <option value="Burundi">Burundi</option>
+                    <option value="Uganda">Uganda</option>
+                    <option value="DRC">DRC</option>
+                    <option value="South Africa">South African</option>
+                    <option value="Nigeria">Negeria</option>
+                  </select>
+                </td>
+                <td>
+                  Weight (kgs)
+                </td>
+                <td>
+                  <input type="text" placeholder="kgs" id="weight">
+                </td>              
+              </tr>
+            </table>      
+          </div>
+       
+        <button id='addOrder'>Add</button>                 
+        <button >Get Quotes</button>  
+    </div>  
   </body>
   <!-- link to the javascript file for creating order  -->
   <script type="text/javascript" src="./create_order.js"></script>
-  <!-- link to the file of javaScript for storing orders made  -->
-  <script type="text/javascript" src="./delivery_orders_to_user.js"></script>
 
 </html>

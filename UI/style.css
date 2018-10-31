@@ -10,14 +10,21 @@ body {
 	background-color: white;
 }
 
-#delivary, #adminDelivary, #userProfile {
+
+#delivary, #adminDelivary, #userProfile,#homePage {
 	border: 3px solid #ddd;
 	padding:20px;
 	width:80%;
 	padding:30px;
-	margin:150px auto;
+	margin:100px auto;
 	background-color:white;
 }
+
+#homePage{
+	width:60%;
+	font-size:25px;
+}
+
 
 caption {
 	font-size:30px;
@@ -34,3 +41,17 @@ caption {
 	height:30px;
 	border-bottom:3px solid #ddd;
 }
+
+article{
+	text-align: center;
+}
+
+
+a {
+	text-decoration: none;
+}
+
+a:hover{	
+	color:green;
+}
+
