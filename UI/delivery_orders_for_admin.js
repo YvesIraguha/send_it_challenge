@@ -1,6 +1,6 @@
-//Display the delivery orders made by a user to a user. 
+// creat the array of objects for demonstration. 
 
-const deliveryOrder = [{
+var deliveryOrder =[{
 	from:"kigali",
 	to:"Gisenyi",	
 	status:"Not delivered",
@@ -31,29 +31,28 @@ const deliveryOrder = [{
 	owner:"Allelua"
 }]; 
 
-const deliveries = document.getElementById("delivary");
+
+// //Display the orders made to Admin
+
+var adminDeliveries = document.getElementById("adminDelivary");
+
 for (let i =0; i<deliveryOrder.length;i++){
 const table = document.createElement("table"); 
-table.innerHTML =`<table>							
-					<tr><td>${deliveryOrder[i].from}</td>
+table.innerHTML = `<table>								
+					<tr>
+						<td>${deliveryOrder[i].from}</td>
 						<td>${deliveryOrder[i].to}</td>		
 						<td>${deliveryOrder[i].weight}</td>
 						<td>${deliveryOrder[i].price}</td>
 						<td>${deliveryOrder[i].owner}</td>
-						<td>${deliveryOrder[i].status}</td>
-						<td><button class="cancel">Cancel</button></td>
+						<td><select name="status" id="status">
+								<option value="Not delivered">Not delivered</option>
+								<option value="In transit">In transit</option>
+								<option value="Delivered">Delivered</option>
+							</select> 
+						</td>			
 					</tr>
 				</table>`;
-	deliveries.appendChild(table);
+
+adminDeliveries.appendChild(table);
 }; 
-
-
-
-//canel the delivery order if it is not delivered
-var button =document.querySelector('.cancel');
-button.onclick = function(){
-	if (deliveryOrder.status === "Not delivered"){
-const div = document.getElementById("delivery");
- div.innerHTML="";
-}
-};
