@@ -103,6 +103,7 @@ userProfile.innerHTML = `<table>
 
 //canel the delivery order if it is not delivered
 var buttons =document.querySelectorAll('.cancel');
+var error = document.getElementById("error");
 
 for (let i=0;i<buttons.length;i++){
 	buttons[i].onclick = function(){
@@ -112,7 +113,10 @@ for (let i=0;i<buttons.length;i++){
 		if (status ==="Not delivered"){
 			grandParent.removeChild(parent); 
 		}else{
-			alert("you can not cancel an order in processing"); 
+			error.innerHTML = `<p>Ooops we are working on it, you cannot cancel it!</p>`;
+			setTimeout(function(){
+				error.innerHTML="";
+			},1000);
 		};
 			
 		

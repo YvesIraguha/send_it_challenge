@@ -30,7 +30,9 @@ caption {
 	font-size:30px;
 	
 }
-
+th {
+	text-align: left;
+}
 #delivary td, #adminDelivary td, #userProfile td {
  	border-bottom:3px solid #ddd;
     height: 30px;    
@@ -55,3 +57,28 @@ a:hover{
 	color:green;
 }
 
+#error {
+	color: red;
+}
+
+button {
+    background-color:grey; 
+    border: none;
+    color: white;
+    padding: 13px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-top:10px;
+}
+
+input, select {
+	border-radius: 5px;
+	height:30px;
+}
+
+.weight {	
+	width:60px;
+}
