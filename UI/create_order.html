@@ -48,15 +48,21 @@
                   Weight (kgs)
                 </td>
                 <td>
-                  <input type="text" placeholder="kgs" id="weight">
+                  <input type="text" placeholder="kgs" class="weight">
                 </td>              
               </tr>
             </table>      
           </div>
-       
-        <button id='addOrder'>Add</button>                 
-        <button >Get Quotes</button>  
+          <!-- If a user tries to add an order and the first one is not filled, show an error  -->
+          <div id ="error"></div>
+          <!-- If a user inserted the correct weight display the total quotes to be paid. -->
+          <div id="totalQuotes"></div>   
+          <!-- button for adding field for another order  -->      
+        <button id='addOrder'>Add</button> 
+        <!-- button for calculating the quotes              -->    
+        <button id ='quotes'>Get Quotes</button>  
     </div>  
+    
   </body>
   <!-- link to the javascript file for creating order  -->
   <script type="text/javascript" src="./create_order.js"></script>

@@ -74,7 +74,7 @@ table.innerHTML = `
 						<td>${deliveryOrder[i].weight}</td>
 						<td>${deliveryOrder[i].price}</td>
 						<td>
-							<select name="origin" id="origin">
+							<select name="origin" class="origin">
 				              <option value="Rwanda">Rwanda</option>
 				              <option value="Burundi">Burundi</option>
 				              <option value="Uganda">Uganda</option>
@@ -84,7 +84,7 @@ table.innerHTML = `
 				            </select>
                 		</td>					
 						<td>
-							<select name="status" id="status">
+							<select name="status" class="status">
 								<option value="Not delivered">Not delivered</option>
 								<option value="In transit">In transit</option>
 								<option value="Delivered">Delivered</option>
