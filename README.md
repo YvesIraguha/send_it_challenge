@@ -10,7 +10,7 @@ The template for deliveries made by each user:
 https://yvesiraguha.github.io/send_it_challenge/UI/delivery_order_for_user.html 
 
 The template for creating a delivery:
-https://yvesiraguha.github.io/send_it_challenge/UI/create_order.html 
+https://yvesiraguha.github.io/send_it_challenge/UI/index.html 
 
 The template for sign up page:
 https://yvesiraguha.github.io/send_it_challenge/UI/signup.html
