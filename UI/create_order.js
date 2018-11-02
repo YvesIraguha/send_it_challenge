@@ -1,7 +1,7 @@
 
 //function for adding a template to create an order. if the created template was completed.
 addOrder.onclick = function(){
-	const error = document.getElementById("error"); 
+	const error = document.querySelector(".error"); 
 	const div =document.getElementById('order');
 	var weights = document.querySelectorAll('.weight');
 	//check if there is a field which is not completed in the order. 
@@ -10,7 +10,7 @@ addOrder.onclick = function(){
                error.innerHTML =`<p>Please correctly complete orders above</p>`;
                setTimeout(function(){
                     error.innerHTML =null;
-               },3000)		
+               },2500)		
 		return false; 
 		};
 	};

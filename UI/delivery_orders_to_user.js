@@ -82,6 +82,11 @@ table.innerHTML =`
 
 var userProfile = document.getElementById("userProfile");
 userProfile.innerHTML = `<table>
+							<caption>Summary</caption>
+							<tr>
+								<td>Status</td>
+								<td>Total</td>
+							</tr>
 							<tr>
 								<td>Total orders made</td>
 								<td>${inTransit + delivered + notDelivered}</td>
@@ -101,9 +106,9 @@ userProfile.innerHTML = `<table>
 						</table>`;
 
 
-//canel the delivery order if it is not delivered
+//cancel the delivery order if it is not being procsses.
 var buttons =document.querySelectorAll('.cancel');
-var error = document.getElementById("error");
+var error = document.querySelector(".error");
 
 for (let i=0;i<buttons.length;i++){
 	buttons[i].onclick = function(){
@@ -123,9 +128,3 @@ for (let i=0;i<buttons.length;i++){
 		
 	};
 };
-// button.onclick = function(){
-// 	if (deliveryOrder.status === "Not delivered"){
-// const div = document.getElementById("delivery");
-//  div.innerHTML="";
-// }
-// };

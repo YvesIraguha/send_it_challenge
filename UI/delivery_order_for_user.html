@@ -1,27 +1,28 @@
 <html>
-<head>
-	<title>Delivery orders for a user</title>
-	<link rel="stylesheet" type="text/css" href="./style.css">
-	
-</head>
-<body>
-	<div id="error"></div>	
-	<div>		
-		<table id="delivary">
-			<caption><b>Informations about delivery orders I made</b></caption>					
-			<tr>
-				<th>From</th>
-				<th>To</th>
-				<th>Weight</th>
-				<th>Price</th>
-				<th>Name</th>
-			</tr>
-		</table>		
-	</div>	
-	
-	<div id='userProfile'>	
-
-	</div>
-	<script type="text/javascript" src="./delivery_orders_to_user.js"></script>
-</body>
+	<head>
+		<title>Delivery orders for a user</title>
+		<link rel="stylesheet" type="text/css" href="./style.css">
+		
+	</head>
+	<body>		
+		<div class="error"></div>	
+		<div>		
+			<table id="delivary">
+				<caption><b><a href="#userProfile">Summary</a> information about delivery orders I made</b></caption>					
+				<tr>
+					<th>From</th>
+					<th>To</th>
+					<th>Weight</th>
+					<th>Price</th>
+					<th>Name</th>
+					<th>Status</th>
+				</tr>
+			</table>		
+		</div>	
+		<div id="userProfile"></div>	
+		<footer>
+			<p><em><a href="https://yvesiraguha.github.io/send_it_challenge/UI/create_order.html">SEND IT</a></em></p>
+		</footer>	
+		<script type="text/javascript" src="./delivery_orders_to_user.js"></script>
+	</body>
 </html>
