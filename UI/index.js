@@ -449,7 +449,7 @@ quotes.onclick = function(){
 	var totalWeight =0; 
 	for (let weight of weights){
 			if (weight.value==="" || isNaN(weight.value)){
-				totalQuotes.innerHTML = `<p><strong>Please type the correct weight</strong></p>`;
+				totalQuotes.innerHTML = `<p><strong>Please check the incorrect weight and fill it accrondingly</strong></p>`;
 				return false; 
 			}else{
 				totalWeight += parseFloat(weight.value);
