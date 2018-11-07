@@ -2,7 +2,7 @@
   "name": "send_it_challenge",
   "version": "1.0.0",
   "description": "SENDIT is a courier service for sending parcels around different destinations, and the cost is calculated based on the weight of the order. ",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -1,7 +1,7 @@
 html
   head
     title Delivery orders for Admin
-    link(rel='stylesheet', type='text/css', href='./style.css')
+    link(rel='stylesheet', type='text/css', href='/style.css')
   body
     div
       table#adminDelivary
@@ -16,8 +16,18 @@ html
             th Price
             th Present location
             th Status
+        each owner in owners
+          each row in owner.orders 
+            tr 
+              td=owner.name
+              td=row.origin
+              td=row.destination
+              td=row.weight
+              td=row.price
+              td=row.name
+              td=row.status
     footer
       p
         em
-          a(href='https://yvesiraguha.github.io/send_it_challenge/UI/index.html') SEND IT
+          a(href='/api/v1/') SEND IT
     script(type='text/javascript', src='./delivery_orders_for_admin.js')

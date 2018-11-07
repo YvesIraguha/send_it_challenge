@@ -2,20 +2,20 @@ doctype html
 html
   head
     title Create an order
-    link(rel='stylesheet', type='text/css', href='./style.css')
+    link(rel='stylesheet', type='text/css', href='/style.css')
   body
     header
       ul
         li
-          a(href='https://yvesiraguha.github.io/send_it_challenge/UI/signup.html') Sign Up
+          a(href='/api/v1/users/signup') Sign Up
         li
-          a(href='https://yvesiraguha.github.io/send_it_challenge/UI/signin.html') Sign In
+          a(href='/api/v1/users/signin') Sign In
         li
           a(href='#order') Create Order
         li
-          a(href='https://yvesiraguha.github.io/send_it_challenge/UI/delivery_order_for_user.html') User
+          a(href='/api/v1/users/:id/parcels') User
         li
-          a(href='https://yvesiraguha.github.io/send_it_challenge/UI/delivery_orders_for_admin.html') Admin
+          a(href='/api/v1/parcels') Admin
     #homePage
       article
         h1 SendIT
@@ -28,9 +28,9 @@ html
           |           transfer. The cost per unit is 100RWf.
         p This is the opportunity for you to send parcels with us.
         p
-          a(href=' https://yvesiraguha.github.io/send_it_challenge/UI/signup.html') Sign up
+          a(href='/api/v1/users/signup') Sign up
           |  to send with us or 
-          a(href=' https://yvesiraguha.github.io/send_it_challenge/UI/signin.html') Sign in
+          a(href='/api/v1/users/signin') Sign in
           |  if you already have an account.
       #order
         form(action='/api/v1/', method='POST')
@@ -47,7 +47,7 @@ html
                     option(value='Albania') Albania
                     option(value='Algeria') Algeria
                     option(value='Andorra') Andorra
-                    option(value='A ngola') Angola
+                    option(value='Angola') Angola
                     option(value='Antigua and Barbuda') Antigua and Barbuda
                     option(value='Argentina') Argentina
                     option(value='Armenia') Armenia

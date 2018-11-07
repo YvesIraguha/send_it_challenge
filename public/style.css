@@ -1,0 +1,154 @@
+body {
+	background-color: #f9f9f7; 	
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+    background-color: #111;
+}
+#signup, #signin,#userProfile{	
+	border: 2px solid green;
+	padding:20px;
+	width:400px;
+	padding:30px;
+	margin:100px auto;
+	background-color: white;
+}
+
+
+#delivary, #adminDelivary,#homePage {
+	border: 3px solid #ddd;
+	padding:20px;
+	width:80%;
+	padding:20px;
+	margin: 30px auto;
+	background-color:white;
+}
+
+#homePage{
+	width:70%;
+	font-size:25px;
+}
+
+
+caption {
+	font-size:30px;
+	
+}
+th {	
+	text-align:justify;
+	font-size:24px;
+	font-weight: bolder;
+
+}
+
+#delivary td, #adminDelivary td, #userProfile td {
+ 	border-bottom:3px solid #ddd;
+    height: 30px;    
+    vertical-align: bottom;
+}
+
+#signup td, #signin td {
+	height:30px;
+	border-bottom:3px solid #ddd;
+}
+
+article{
+	text-align: center;
+}
+
+
+a {
+	text-decoration: none;
+}
+
+a:hover{	
+	color:green;
+}
+
+.error {
+	color: red;
+}
+
+button {
+    background-color:grey; 
+    border: none;
+    color: white;
+    padding: 13px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-top:10px;
+}
+
+input, select {
+	border-radius: 5px;
+	height:30px;
+    font-size: 18px;
+}
+
+.weight {	
+	width:60px;
+}
+
+
+#userProfile {
+	border-collapse: collapse;
+	margin-top:20px;
+    width: 20%;
+}
+
+#userProfile td, #userProfile th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#userProfile tr:nth-child(even){background-color: #f2f2f2;}
+
+#userProfile tr:hover {background-color: #ddd;}
+
+#userProfile th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+footer {
+    position: fixed;
+    background-image:url(./images/background.png);
+    background-repeat: no-repeat;
+    left: 0;
+    bottom: 0;
+    padding-bottom:20px;
+    width: 100%;
+    background-color: grey;
+    color: white;
+    text-align: center;
+    font-size: 20px;
+    height:30px;
+}
+

@@ -15,6 +15,7 @@ app.use(cookieParser());
 app.use(session({secret:"@yvesiraguha"}));
 app.set('view engine', 'pug');
 app.set('views','./views');
+app.use(express.static('public'))
 //set the route of users. 
 //app.use('/api/v1',userRoute);
 //set the route for parcels
@@ -49,7 +50,7 @@ const loginRequired = (req,res,next)=>{
 app.post('/api/v1/users/signup',(req,res)=>{
 	let name = req.body.fullname;
 	let email = req.body.email;
-	let password = req.body.password;
+	let password = req.body.password[0];
 
 	let user1 = {id:users.length +1,
 		name,
@@ -135,18 +136,25 @@ app.get('/api/v1/parcels/:id',(req,res)=>{
 
 
 
-//Fetch all orders made. 
-app.get("/api/v1/parcels/",(req,res)=>{
-	//XXXloop through the users' orders and display them to admin, those should be in template. 
-	for (let user of users){
-		for (let order of user.orders){
-
+//Route for accepting data from the parcel creation. 
+app.post('/api/v1/',loginRequired,(req,res)=>{
+		let origin = req.body.origin; 
+		let destination = req.body.destination; 
+		let weight = req.body.weight;
+		let price = parseFloat(weight)*100;
+		let order = {
+			date:1,
+			origin,destination,weight,price:`${price}Rwf`
 		};
-	};
-	
-	res.end(`<h1>${users[0].orders[0].origin},${users[0].orders[0].destination},${users[0].orders[0].price}</h1>`); 
+		let user = users[0]; 
+		user.orders.push(order); 
+		console.log(order);
+		console.log(users);
+		//XXXredirect a user to the pages of orders he created
+		res.render("deliveryOrderByUser",{owner:user});
 });
 
+ 
 //fetch all delivery orders made by a specific user 
 
 app.get("/api/v1/users/:id/parcels",(req,res)=>{
@@ -161,25 +169,15 @@ app.get("/api/v1/users/:id/parcels",(req,res)=>{
 });
 
 
-//Route for accepting data from the parcel creation. 
-app.post('/api/v1/',loginRequired,(req,res)=>{
-		let origin = req.body.origin; 
-		let destination = req.body.destination; 
-		let weight = req.body.weight;
-		let price = parseFloat(weight)*100;
-		let order = {
-			date:1,
-			origin,destination,weight,price:`${price}Rwf`
-		};
-		let user = req.session.user; 
-		user.orders.push(order); 
-		console.log(order);
-		console.log(user);
-		//XXXredirect a user to the pages of orders he created
-		res.render("deliveryOrderByUser",{owner:user});
+//Fetch all orders made. 
+app.get("/api/v1/parcels",(req,res)=>{
+	if (users.length>0){
+		res.render("allDeliveryOrders",{owners:users})
+	}else{
+		res.end("there is no order currently")
+	};
 });
 
- 
 //the codes for canceling a delivery order. 
 
 app.put('/api/v1/parcels/:id/cancel',(req,res)=>{
