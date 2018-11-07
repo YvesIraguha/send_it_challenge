@@ -1,0 +1,28 @@
+doctype html
+html
+  head
+    title Sign In
+    link(rel='stylesheet', type='text/css', href='style.css')
+  body
+    #signup
+      h1 Sign In
+      form(action='#', method='POST')
+        table
+          tbody
+            tr
+              td
+                label(for='email') Your Email
+              td
+                input#email(type='text', name='email', placeholder='ex: all@gmail.com', required='')
+            tr
+              td
+                label(for='password') Password:
+              td
+                input#password(type='password', name='password', required='')
+            tr
+              td
+                input(type='submit', value='Sign in')
+    footer
+      p
+        em
+          a(href='https://yvesiraguha.github.io/send_it_challenge/UI/index.html') SEND IT

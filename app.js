@@ -7,7 +7,9 @@ const session = require("express-session")
 
 //instanitiate the app; 
 const app = express(); 
-//set the middle ware to use for body parsing
+
+
+//set the middle ware to use for body parsing]
 app.use(bodyParser()); 
 app.use(cookieParser());
 app.use(session({secret:"@yvesiraguha"}));
@@ -16,11 +18,11 @@ app.set('views','./views');
 //set the route of users. 
 //app.use('/api/v1',userRoute);
 //set the route for parcels
-app.use('/api/v1',parcels);
+//app.use('/api/v1',parcels);
 
 //Send the home page. 
 app.get('/api/v1/',(req,res)=>{
-	res.sendFile(path.join(__dirname,"/UI/index.html"));
+	res.render("createOrder"); 
 });
 
 //declare the variable to store users. 
@@ -34,7 +36,7 @@ app.get('/api/v1/users/signup',(req,res)=>{
 
 //the function for checking if a user is looged in. 
 
-const loginRequired = (req,res)=>{
+const loginRequired = (req,res,next)=>{
  						if (req.session.user){
  							next(); 
  						}else{
@@ -69,7 +71,7 @@ app.post('/api/v1/users/signup',(req,res)=>{
 });
 
 
-//The the login page; 
+//The login page; 
 app.get('/api/v1/users/signin',(req,res)=>{
 	res.render("signin")
 });
@@ -95,6 +97,7 @@ app.post('/api/v1/users/signin',(req,res)=>{
 
 });
 
+//add the link for singing out on the create order page. 
 app.get("/api/v1/signout",(req,res)=>{
 	req.session.destroy(()=>{
 			console.log('A user loged out');			
@@ -103,7 +106,97 @@ app.get("/api/v1/signout",(req,res)=>{
 });
 
 
+//Dealing with parcels. 
 
+//define a function to look for a specific parcel 
+const specificParcel = (parcelId)=>{
+			//check for a specific order for a given order
+			//where 0 is the index of a specific user
+			for (let user of users){
+				for (let order of user.orders){			 
+					let parcel = order.find((order)=>order.id===parcelId);
+					//send the parcel to the template.
+					if (parcel){
+						return;
+					};
+				};
+			};
+		};
+
+
+//fetch a parcel by id
+app.get('/api/v1/parcels/:id',(req,res)=>{
+			let parcelId = req.params.id; 
+			let parcel = specificParcel(parcelId);
+			
+			res.end(parcel); 
+
+		});
+
+
+
+//Fetch all orders made. 
+app.get("/api/v1/parcels/",(req,res)=>{
+	//XXXloop through the users' orders and display them to admin, those should be in template. 
+	for (let user of users){
+		for (let order of user.orders){
+
+		};
+	};
+	
+	res.end(`<h1>${users[0].orders[0].origin},${users[0].orders[0].destination},${users[0].orders[0].price}</h1>`); 
+});
+
+//fetch all delivery orders made by a specific user 
+
+app.get("/api/v1/users/:id/parcels",(req,res)=>{
+	let userId = parseInt(req.params.id);
+	let specificUser = users.find((item) => item.id === userId);
+	//XXXthese codes should be in the template
+	if (specificUser){
+		for (let parcel of specificUser.orders){
+
+		};
+	};
+});
+
+
+//Route for accepting data from the parcel creation. 
+app.post('/api/v1/',loginRequired,(req,res)=>{
+		let origin = req.body.origin; 
+		let destination = req.body.destination; 
+		let weight = req.body.weight;
+		let price = parseFloat(weight)*100;
+		let order = {
+			date:1,
+			origin,destination,weight,price:`${price}Rwf`
+		};
+		let user = req.session.user; 
+		user.orders.push(order); 
+		console.log(order);
+		console.log(user);
+		//XXXredirect a user to the pages of orders he created
+		res.render("deliveryOrderByUser",{owner:user});
+});
+
+ 
+//the codes for canceling a delivery order. 
+
+app.put('/api/v1/parcels/:id/cancel',(req,res)=>{
+	let parcelId = req.params.id; 	
+	for (let user of users){
+		for (let order of user.orders){			 
+			let parcel = order.find((order)=>order.id===parcelId);
+			//send the parcel to the template.
+			if (parcel){
+				//remove the parcel from list of parcels made by someone. 
+				//XXXsend the user to the list of remaining parcels. 
+				order.splice(order.indexOf(parcel),1);
+				return;
+			};
+		};
+};
+});
 
 
 
