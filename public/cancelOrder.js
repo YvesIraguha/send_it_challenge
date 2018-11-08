@@ -3,6 +3,6 @@
 let cancel = document.getElementById("cancelOrder"); 
 cancelOrder.onsubmit = function(){
 	let id = document.getElementById('delete').value; 
-	cancel.action = `http:\/\/localhost:3000/api/v1/parcels/${id}/cancel`; 
+	cancel.action = `/api/v1/parcels/${id}/cancel`; 
 	
 };
