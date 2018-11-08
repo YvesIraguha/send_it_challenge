@@ -4,6 +4,7 @@
   "description": "SENDIT is a courier service for sending parcels around different destinations, and the cost is calculated based on the weight of the order. ",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
