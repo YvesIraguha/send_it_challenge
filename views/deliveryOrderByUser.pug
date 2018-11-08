@@ -1,38 +1,52 @@
+doctype html
 html
   head
     title Delivery orders for a user
     link(rel='stylesheet', type='text/css', href='/style.css')
   body
-    .error
+    header
+      ul
+        li
+          a(href='/api/v1/users/signup') Sign Up
+        li
+          a(href='/api/v1/users/signin') Sign In
+        li
+          a(href='/api/v1/') Home
+        li
+          a(href='/api/v1/parcels') Admin
+        li          
+          a(href='/api/v1/signout') Sign out
     div
       table#delivary
         caption
-          b
-            a(href='#userProfile') Summary
-            |  information about delivery orders I made
+          b Summary information about delivery orders I made
         tbody
           tr
+            th ID
+            th Date
             th From
             th To
             th Weight
-            th Price
-            th Name
-            th Status
-        each row in owner.orders 
-          tr 
-            td=row.origin
-            td=row.destination
-            td=row.weight
-            td=row.price
-            td=row.name
-            td=row.status
+            th Price                      
+          each row in parcelsByUser
+            tr 
+              td=row.id 
+              td=row.date
+              td=row.origin
+              td=row.destination
+              td=row.weight
+              td=row.price
+              
+      form#cancelOrder(action='', method="POST")
+        input#delete(type='text', placeholder='Enter the id of the parcel you wish to cancel', required='')
+        input(type='submit', value='Cancel')
       button
         a(href='/api/v1/') Add Order
-      button
-        a(href='/api/v1/signout') Sign out
-    #userProfile
+      
+
+      
     footer
       p
         em
           a(href='/api/v1/') SEND IT
-    script(type='text/javascript', src='./delivery_orders_to_user.js')
+    script(type='text/javascript', src='/cancelOrder.js')

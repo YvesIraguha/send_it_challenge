@@ -4,9 +4,19 @@ html
     title Sign Up
     link(rel='stylesheet', type='text/css', href='/style.css')
   body
+    header
+      ul
+        li
+          a(href='/api/v1/users/signup') Sign Up
+        li
+          a(href='/api/v1/users/signin') Sign In
+        li
+          a(href='/api/v1/') Home
+        li
+          a(href='/api/v1/parcels') Admin
     #signup
       h1 Sign up
-      form(action='/api/v1/users/signup', method='POST')
+      form#signupvalid(action='/api/v1/users/signup', method='POST')
         table
           tbody
             tr
@@ -23,16 +33,19 @@ html
               td
                 label(for='password') Password:
               td
-                input#password(type='password', name='password', required='')
+                input.password(type='password', name='password', required='')
             tr
               td
                 label(for='password') Confirm password:
               td
-                input#password(type='password', name='password', required='')
+                input.password(type='password', name='password', required='')
             tr
               td
                 input(type='submit', value='Sign up')
+
+      #signuperror     
     footer
       p
         em
           a(href='/api/v1/') SEND IT
+    script(type='text/javascript', src='/signup.js')  

@@ -4,6 +4,18 @@ html
     title Sign In
     link(rel='stylesheet', type='text/css', href='/style.css')
   body
+    header
+      ul
+        li
+          a(href='/api/v1/users/signup') Sign Up
+        li
+          a(href='/api/v1/users/signin') Sign In
+        li
+          a(href='/api/v1/') Home
+        li
+          a(href='/api/v1/parcels') Admin
+        li          
+          a(href='/api/v1/signout') Sign out
     #signup
       h1 Sign In
       form(action='#', method='POST')

@@ -13,9 +13,13 @@ html
         li
           a(href='#order') Create Order
         li
-          a(href='/api/v1/users/:id/parcels') User
+          form#userOrders(action='', method='get')
+            input#userEmail(type='text', placeholder='Enter the email', required='')
+            input(type='submit', value=user)
         li
           a(href='/api/v1/parcels') Admin
+        li          
+          a(href='/api/v1/signout') Sign out
     #homePage
       article
         h1 SendIT
@@ -33,7 +37,7 @@ html
           a(href='/api/v1/users/signin') Sign in
           |  if you already have an account.
       #order
-        form(action='/api/v1/', method='POST')
+        form#addOrder(action='/api/v1/parcels', method='POST')
           table
             caption
               b Create an order
@@ -442,6 +446,11 @@ html
                 td
                   | Weight (kgs)
                 td
-                  input.weight(type='text', placeholder='kgs', name='weight')
-          input(type='submit', value='Confirm')   
+                  input.weight(type='text', placeholder='kgs', name='weight')                  
+          input(type='submit', value='Confirm') 
+        // If a user tries to add an order and the first one is not filled, show an error
+      .error
+
+        // link to the javascript file for creating order
+    script(type='text/javascript', src='/index.js')  
   
