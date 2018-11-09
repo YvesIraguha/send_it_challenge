@@ -15,7 +15,7 @@ let orders = [];
 
 //redirect to the apis when on heroku. 
 app.get('/',(req,res)=>{
-	res.redirect("/api/v1/");
+	res.redirect("/api/v1/parcels");
 })
 
 
