@@ -111,10 +111,14 @@ app.get("/api/v1/parcels",(req,res)=>{
 
 //the codes for canceling a delivery order with put method
 app.put('/api/v1/parcels/:id/cancel',(req,res)=>{
-	let parcelId = parseInt(req.params.id);	
+	let parcelId = parseInt(req.params.id); 
 	let parcel =orders.find((order)=>order.id===parcelId); 	
-	orders.splice(orders.indexOf(parcel),1);
-	res.send(parcel);
+	if (parcel){
+		orders.splice(orders.indexOf(parcel),1);
+		res.send(parcel);
+	}else{
+		res.send({message:"There is no parcel with that Id"});
+	};	
 		
 });
 
