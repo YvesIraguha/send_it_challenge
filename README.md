@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/YvesIraguha/send_it_challenge.svg?branch=master)](https://travis-ci.com/YvesIraguha/send_it_challenge)
 # send_it_challenge
 SendIT is a courier service that helps users deliver parcels to different destinations. SendIt provides courier quotes on weight categories. 
 
@@ -17,3 +18,15 @@ https://yvesiraguha.github.io/send_it_challenge/UI/signup.html
 
 The template for sign in page: 
 https://yvesiraguha.github.io/send_it_challenge/UI/signin.html
+
+# API 
+## Endpoints
+`GET /parcels`:Fetch all parcel delivery orders
+
+`GET /parcels/parcelID`:Fetch a specific parcel delivery order 
+
+`GET /users/userID/parcels`:Fetch all parcel delivery orders by a specific user 
+
+`PUT /parcels/parcelID/cancel`:Cancel a specific parcel delivery order
+
+`POST /parcels`: Create a parcel delivery order
