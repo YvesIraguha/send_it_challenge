@@ -1,0 +1,33 @@
+{
+  "name": "send_it_challenge",
+  "version": "1.0.0",
+  "description": "SENDIT is a courier service for sending parcels around different destinations, and the cost is calculated based on the weight of the order. ",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "mocha --exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YvesIraguha/send_it_challenge.git"
+  },
+  "author": "iraguhaivos@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YvesIraguha/send_it_challenge/issues"
+  },
+  "homepage": "https://github.com/YvesIraguha/send_it_challenge#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "pug": "^2.0.3"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0",
+    "eslint": "^5.8.0",
+    "mocha": "^5.2.0"
+  }
+}
