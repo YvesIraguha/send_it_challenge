@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon ./dist/app.js",
     "test": "mocha dist/tests/test.js --exit",
-    "build": "babel src -d dist"
+    "build": "babel src -d dist",
+    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha dist/tests/test.js --exit"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "@babel/preset-env": "^7.1.6",
     "chai": "^4.2.0",
     "chai-http": "^4.2.0",
+    "coveralls": "^3.0.2",
     "eslint": "^5.9.0",
     "eslint-config-strongloop": "^2.1.0",
     "mocha": "^5.2.0"
