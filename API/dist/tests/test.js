@@ -13,8 +13,9 @@ var should = _chai.default.should();
 _chai.default.use(_chaiHttp.default);
 
 describe('/POST parcel', function () {
-  it('It should add a parcel in parcels', function (done) {
+  it('It should return the added object', function (done) {
     var parcel = {
+      "name": "T-shirts",
       "origin": "Kabarore",
       "destination": "Muramba",
       "userId": 3,
@@ -24,13 +25,14 @@ describe('/POST parcel', function () {
     _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
       res.should.have.status(200);
       res.body.should.be.a('object');
-      res.body.should.have.property('price').eql('30Rwf');
+      res.body.should.have.property('price').eql(30);
     });
 
     done();
   });
   it('It should display an eror message', function (done) {
     var parcel = {
+      "name": "T-shirts",
       "origin": "Matambi",
       "destination": "Muramba",
       "userId": 3,
@@ -84,7 +86,7 @@ describe("/PUT to cancel order", function () {
       done();
     });
   });
-  it("It should delete a user with id ", function (done) {
+  it("It should return an error message ", function (done) {
     var id = "nnn";
 
     _chai.default.request(_app.default).put("/api/v1/parcels/".concat(id, "/cancel")).end(function (error, res) {
