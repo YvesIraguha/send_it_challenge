@@ -11,6 +11,31 @@ router.use(cookieParser());
 router.use(session({secret:"@yvesiraguha"}));
 
 
+//get the list of all users. 
+parcelsRouter.get('/v1/users', (req,res)=>{
+	if (users.length>0){
+		res.send(users);
+	}else{
+		res.send({message:"There is no user at the moment."});
+	}
+});
+	
+
+//create a user 
+parcelsRouter.post('/v1/users',(req,res)=>{
+	let name = req.body.name;
+	let email = req.body.email;
+	let userId = users.length+1; 
+
+	let user1 = {name,email,userId};	
+	if (!name || !email){
+			res.send({message:"A user should have name and email"})
+	}else{
+			users.push(user1);
+			res.send(user1);
+			}; 
+});
+
 //declare the variable to store users. 
 let users =[];
 //Send users the link for signin up
