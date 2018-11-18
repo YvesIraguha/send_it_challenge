@@ -1,4 +1,4 @@
-import express from 'express';
+import express from 'express'; 
 const parcelsRouter = express.Router(); 
 
 
@@ -10,7 +10,6 @@ let orders = [];
 parcelsRouter.get('/',(req,res)=>{
 	res.redirect("/v1/parcels");
 })
-
 
 
 //get the list of all users. 
@@ -41,8 +40,7 @@ parcelsRouter.post('/v1/users',(req,res)=>{
 
 //Dealing with parcels.
 
-//fetch a parcel by id
-parcelsRouter.get('/v1/parcels/:id',(req,res)=>{
+const fetchParcelById = (req,res)=>{
 			let parcelId = parseInt(req.params.id); 
 			let parcel = orders.find((order)=>order.id===parcelId);
 			//send it.
@@ -52,18 +50,9 @@ parcelsRouter.get('/v1/parcels/:id',(req,res)=>{
 				//send the error page 
 				res.send({message:"Ooops! no order with that id"});
 			};
-			
-
-		});
-
-
-
-//Route for accepting data from the parcel creation. 
-parcelsRouter.post('/v1/parcels',(req,res)=>{
-		let origin = req.body.origin; 
-		let destination = req.body.destination; 
-		let weight = req.body.weight;
-		let userId=req.body.userId; 
+		};
+const createParcel = (req,res)=>{
+		let { origin, destination, weight, userId } = reg.body;
 		let price = parseFloat(weight)*100;		
 		let id = orders.length +1;
 		if (!origin || !destination || !userId || !weight || isNaN(weight)){
@@ -74,11 +63,9 @@ parcelsRouter.post('/v1/parcels',(req,res)=>{
 			res.send(order);
 		};		
 		
-});
+}
 
- 
-//fetch all delivery orders made by a specific user
-parcelsRouter.get("/v1/users/:id/parcels",(req,res)=>{
+const deliveryOrdersByUser =(req,res)=>{
 	let userId = parseInt(req.params.id); 
 	//find the order where the owner is equal to the email
 	let specificOrders = orders.filter((item) => item.userId=== userId);
@@ -88,22 +75,17 @@ parcelsRouter.get("/v1/users/:id/parcels",(req,res)=>{
 		//Redirect to error page
 		res.send({message:"There is no order of the user you specified"});
 	};
-});
+};
 
-
-//Fetch all orders made. 
-parcelsRouter.get("/v1/parcels",(req,res)=>{
+const fetchAllDeliveryOrders = (req,res)=>{
 	if (orders.length>0){
 		res.send(orders);
 	}else{
 		//send a user the error message; 
 		res.send({message:"Ooops! there is no order at the moment "});
 	};
-});
-
-
-//the codes for canceling a delivery order with put method
-parcelsRouter.put('/v1/parcels/:id/cancel',(req,res)=>{
+};
+const cancelDeliveryOrder = (req,res)=>{
 	let parcelId = parseInt(req.params.id); 
 	let parcel =orders.find((order)=>order.id===parcelId); 	
 	if (parcel){
@@ -113,6 +95,17 @@ parcelsRouter.put('/v1/parcels/:id/cancel',(req,res)=>{
 		res.send({message:"There is no parcel with that Id"});
 	};	
 		
-});
+};
+
+//fetch a parcel by id
+parcelsRouter.get('/v1/parcels/:id',fetchParcelById)
+//Route for accepting data from the parcel creation. 
+parcelsRouter.post('/v1/parcels',createParcel); 
+//fetch all delivery orders made by a specific user
+parcelsRouter.get("/v1/users/:id/parcels",deliveryOrdersByUser);
+//Fetch all orders made. 
+parcelsRouter.get("/v1/parcels",fetchAllDeliveryOrders);
+//the codes for canceling a delivery order with put method
+parcelsRouter.put('/v1/parcels/:id/cancel',cancelDeliveryOrder);
 
 export default parcelsRouter;
