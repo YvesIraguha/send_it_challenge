@@ -4,16 +4,16 @@ SendIT is a courier service that helps users deliver parcels to different destin
 
 # Hit over the links below to see the templates 
 
-The template for admin to view all deliveries: [Deliveries](https://yvesiraguha.github.io/send_it_challenge/UI/delivery_orders_for_admin.html)
+The template for admin to view all deliveries: [Deliveries](https://yvesiraguha.github.io/send_it_challenge/UI/html/delivery_orders_for_admin.html)
 
 
-The template for deliveries made by each user: [Deliveries by a user](https://yvesiraguha.github.io/send_it_challenge/UI/delivery_order_for_user.html)
+The template for deliveries made by each user: [Deliveries by a user](https://yvesiraguha.github.io/send_it_challenge/UI/html/delivery_order_for_user.html)
 
-The template for creating a delivery: [Create parcel delivery order](https://yvesiraguha.github.io/send_it_challenge/UI/index.html) 
+The template for creating a delivery: [Create parcel delivery order](https://yvesiraguha.github.io/send_it_challenge/UI/html/index.html) 
 
-The template for sign up page: [Sign up](https://yvesiraguha.github.io/send_it_challenge/UI/signup.html)
+The template for sign up page: [Sign up](https://yvesiraguha.github.io/send_it_challenge/UI/html/signup.html)
 
-The template for sign in page: [Sign in](https://yvesiraguha.github.io/send_it_challenge/UI/signin.html)
+The template for sign in page: [Sign in](https://yvesiraguha.github.io/send_it_challenge/UI/html/signin.html)
 
 # API 
 ## Endpoints
