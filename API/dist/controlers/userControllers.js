@@ -5,17 +5,17 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var users = [];
-var userControllers = {}; //fetch all users.
+var userControllers = {}; // fetch all users.
 
 var fetchAllUsers = function fetchAllUsers(req, res) {
   if (users.length > 0) {
     res.send(users);
   } else {
     res.send({
-      message: "There is no user at the moment."
+      message: 'There is no user at the moment.'
     });
   }
-}; //create a user. 
+}; // create a user.
 
 
 var createUser = function createUser(req, res) {
@@ -28,21 +28,19 @@ var createUser = function createUser(req, res) {
   });
 
   if (specificUser) {
-    //XXX include the link to sign in with a message;
-    res.end("account already taken");
+    // XXX include the link to sign in with a message;
+    res.end('account already taken');
   } else {
     users.push(user1);
     req.session.user = user1;
     res.redirect(301, '/api/v1/');
   }
-
-  ;
-}; //send sign up page. 
+}; // send sign up page.
 
 
 var singUpPage = function singUpPage(req, res) {
-  res.render("signup");
-}; //get a user
+  res.render('signup');
+}; // get a user
 
 
 var getUser = function getUser(req, res) {
@@ -55,11 +53,9 @@ var getUser = function getUser(req, res) {
     res.end("<h1>I got him</h1><h2>".concat(specificUser.id, ", I am ").concat(specificUser.name, ",my email is ").concat(specificUser.email));
   } else {
     console.log(userId);
-    res.end("<h1>No user of that name</h1>");
+    res.end('<h1>No user of that name</h1>');
   }
-
-  ;
-}; //Login data processing 
+}; // Login data processing
 
 
 var login = function login(req, res) {
@@ -67,30 +63,25 @@ var login = function login(req, res) {
     if (user.email === req.body.email && user.password === req.body.email) {
       return user;
     }
-
-    ;
   });
 
   if (specificUser) {
-    req.session.user = specificUser; //redirect the user to the next page. 
+    req.session.user = specificUser; // redirect the user to the next page.
 
-    res.redirect("/api/v1/");
+    res.redirect('/api/v1/');
   }
 
-  ;
-  res.end("Invalid login");
-}; //login verification; 
+  res.end('Invalid login');
+}; // login verification;
 
 
 var loginRequired = function loginRequired(req, res) {
   if (req.session.user) {
     next();
   } else {
-    res.end("Not looged in");
+    res.end('Not looged in');
   }
-
-  ;
-}; //sign out 
+}; // sign out
 
 
 var signOut = function signOut(req, res) {
@@ -98,18 +89,15 @@ var signOut = function signOut(req, res) {
     if (user.email === req.body.email && user.password === req.body.email) {
       return user;
     }
-
-    ;
   });
 
   if (specificUser) {
-    req.session.user = specificUser; //redirect the user to the next page. 
+    req.session.user = specificUser; // redirect the user to the next page.
 
-    res.redirect("/api/v1/");
+    res.redirect('/api/v1/');
   }
 
-  ;
-  res.end("Invalid login");
+  res.end('Invalid login');
 };
 
 userControllers.fetchAllUsers = fetchAllUsers;

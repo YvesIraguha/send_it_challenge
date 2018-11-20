@@ -11,7 +11,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-//Class for defining a parcel model
+// Class for defining a parcel model
 var Parcel =
 /*#__PURE__*/
 function () {
@@ -30,11 +30,11 @@ function () {
   _createClass(Parcel, [{
     key: "setPrice",
     value: function setPrice() {
-      if (typeof this.weight === "number") {
+      if (typeof this.weight === 'number') {
         return this.price = parseFloat(this.weight) * 100;
-      } else {
-        return this.price = 0;
       }
+
+      return this.price = 0;
     }
   }]);
 

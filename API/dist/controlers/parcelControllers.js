@@ -9,27 +9,25 @@ var _parcel = _interopRequireDefault(require("../models/parcel"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var controllers = {}; //declare the variable to store orders. 
+var controllers = {}; // declare the variable to store orders.
 
-var orders = []; //fetch a parcel 
+var orders = []; // fetch a parcel
 
 var fetchParcelById = function fetchParcelById(req, res) {
   var parcelId = parseInt(req.params.id);
   var parcel = orders.find(function (order) {
     return order.id === parcelId;
-  }); //send it.
+  }); // send it.
 
   if (parcel) {
     res.status(200).send(parcel);
   } else {
-    //send the error page 
+    // send the error page
     res.send({
-      message: "Ooops! no order with that id"
+      message: 'Ooops! no order with that id'
     });
   }
-
-  ;
-}; //create parcel 
+}; // create parcel
 
 
 var createParcel = function createParcel(req, res) {
@@ -39,24 +37,68 @@ var createParcel = function createParcel(req, res) {
       destination = _req$body.destination,
       weight = _req$body.weight,
       userId = _req$body.userId;
-  var id = orders.length + 1;
+  var existingOrder = orders.find(function (order) {
+    return order.name === name;
+  });
 
-  if (!origin || !destination || !userId || !weight || isNaN(weight)) {
-    res.send({
-      message: "the order should have origin, destination, userId, and weight of type number fields"
-    });
+  if (existingOrder === undefined) {
+    var id = orders.length + 1;
+    var fieldsValidation = /[a-zA-Z]+/;
+
+    if (!origin) {
+      res.send({
+        message: 'The order should have the origin'
+      });
+    } else if (!name) {
+      res.send({
+        message: 'The order should have a name'
+      });
+    } else if (!destination) {
+      res.send({
+        message: 'The order should have the destination'
+      });
+    } else if (!userId) {
+      res.send({
+        message: 'The order should have the user id'
+      });
+    } else if (!weight) {
+      res.send({
+        message: 'The order should have the weight'
+      });
+    } else if (isNaN(weight)) {
+      res.send({
+        message: 'Invalid weight, the weight should be number'
+      });
+    } else if (!fieldsValidation.test(name)) {
+      res.send({
+        message: 'Invalid name, the name should start with a letter'
+      });
+    } else if (!fieldsValidation.test(origin)) {
+      res.send({
+        message: 'Invalid origin, the origin should be a place'
+      });
+    } else if (!fieldsValidation.test(destination)) {
+      res.send({
+        message: 'Invalid destination, the destination should be a place'
+      });
+    } else {
+      var order = new _parcel.default(id, name, origin, destination, weight, userId);
+      orders.push(order);
+      res.status(201).send({
+        message: 'The order was successfully created',
+        order: order
+      });
+    }
   } else {
-    var order = new _parcel.default(id, name, origin, destination, weight, userId);
-    orders.push(order);
-    res.send(order);
+    res.send({
+      message: 'Cannot create two orders with the same name'
+    });
   }
-
-  ;
-}; //Fetch a delivery order by a user. 
+}; // Fetch a delivery order by a user.
 
 
 var deliveryOrdersByUser = function deliveryOrdersByUser(req, res) {
-  var userId = parseInt(req.params.id); //find the order where the owner is equal to the email
+  var userId = parseInt(req.params.id); // find the order where the owner is equal to the email
 
   var specificOrders = orders.filter(function (item) {
     return item.userId === userId;
@@ -65,28 +107,17 @@ var deliveryOrdersByUser = function deliveryOrdersByUser(req, res) {
   if (specificOrders) {
     res.send(specificOrders);
   } else {
-    //Redirect to error page
+    // Redirect to error page
     res.send({
-      message: "There is no order of the user you specified"
+      message: 'There is no order of the user you specified'
     });
   }
-
-  ;
-}; //fetch all delivery orders
+}; // fetch all delivery orders
 
 
 var fetchAllDeliveryOrders = function fetchAllDeliveryOrders(req, res) {
-  if (orders.length > 0) {
-    res.send(orders);
-  } else {
-    //send a user the error message; 
-    res.send({
-      message: "Ooops! there is no order at the moment "
-    });
-  }
-
-  ;
-}; //cancel a delivery order
+  res.send(orders);
+}; // cancel a delivery order
 
 
 var cancelDeliveryOrder = function cancelDeliveryOrder(req, res) {
@@ -97,14 +128,17 @@ var cancelDeliveryOrder = function cancelDeliveryOrder(req, res) {
 
   if (parcel) {
     orders.splice(orders.indexOf(parcel), 1);
-    res.send(parcel);
+    parcel.status = 'Canceled';
+    orders.push(parcel);
+    res.send({
+      message: 'Order successfully canceled',
+      parcel: parcel
+    });
   } else {
     res.send({
-      message: "There is no parcel with that Id"
+      message: 'Invalid Id'
     });
   }
-
-  ;
 };
 
 controllers.fetchParcelById = fetchParcelById;
