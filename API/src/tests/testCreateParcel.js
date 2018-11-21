@@ -116,7 +116,7 @@ describe('/POST parcel', () => {
         if (error) done(error);
         // res.should.have.status(200);
         res.body.should.be.a('object');
-        res.body.should.have.property('message').eql('The order should have a name');
+        res.body.should.have.property('message').eql('Please provide all the required fields');
         done();
       });
     });
@@ -131,7 +131,7 @@ describe('/POST parcel', () => {
         if (error) done(error);
         // res.should.have.status(201);
         res.body.should.be.a('object');
-        res.body.should.have.property('message').eql('The order should have the origin');
+        res.body.should.have.property('message').eql('Please provide all the required fields');
         done();
       });
     });
@@ -146,7 +146,7 @@ describe('/POST parcel', () => {
         if (error) done(error);
         // res.should.have.status(201);
         res.body.should.be.a('object');
-        res.body.should.have.property('message').eql('The order should have the destination');
+        res.body.should.have.property('message').eql('Please provide all the required fields');
         done();
       });
     });
@@ -161,7 +161,7 @@ describe('/POST parcel', () => {
         if (error) done(error);
         // res.should.have.status(201);
         res.body.should.be.a('object');
-        res.body.should.have.property('message').eql('The order should have the user id');
+        res.body.should.have.property('message').eql('Please provide all the required fields');
         done();
       });
     });

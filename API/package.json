@@ -20,9 +20,10 @@
   },
   "homepage": "https://github.com/YvesIraguha/send_it_challenge#readme",
   "dependencies": {
-    "express": "^4.16.4",
     "chai": "^4.2.0",
-    "chai-http": "^4.2.0"
+    "chai-http": "^4.2.0",
+    "express": "^4.16.4",
+    "pg": "^7.6.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.5",

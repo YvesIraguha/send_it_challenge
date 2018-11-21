@@ -7,11 +7,11 @@ class Parcel {
     this.destination = destination;
     this.weight = weight;
     this.userId = userId;
-	    this.setPrice();
+	  this.setPrice();
   }
 
   setPrice() {
-    if (typeof this.weight === 'number') {
+    if ( Number(this.weight)) {
       return this.price = parseFloat(this.weight) * 100;
     }
     return this.price = 0;

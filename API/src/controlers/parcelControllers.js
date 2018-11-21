@@ -26,16 +26,8 @@ const createParcel = (req, res) => {
   if (existingOrder === undefined) {
     const id = orders.length + 1;
     const fieldsValidation = /[a-zA-Z]+/;
-    if (!origin) {
-      res.send({ message: 'The order should have the origin' });
-    } else if (!name) {
-      res.send({ message: 'The order should have a name' });
-    } else if (!destination) {
-      res.send({ message: 'The order should have the destination' });
-    } else if (!userId) {
-      res.send({ message: 'The order should have the user id' });
-    } else if (!weight) {
-      res.send({ message: 'The order should have the weight' });
+    if (!origin || !name || !destination || !userId || !weight ) {
+      res.send({ message: 'Please provide all the required fields' });
     } else if (isNaN(weight)) {
       res.send({ message: 'Invalid weight, the weight should be number' });
     } else if (!fieldsValidation.test(name)) {
@@ -78,9 +70,9 @@ const cancelDeliveryOrder = (req, res) => {
   const parcel = orders.find(order => order.id === parcelId);
   if (parcel) {
     orders.splice(orders.indexOf(parcel), 1);
-    parcel.status = 'Canceled';
+    parcel.status = 'Cancelled';
     orders.push(parcel);
-    res.send({ message: 'Order successfully canceled', parcel });
+    res.send({ message: 'Order successfully cancelled', parcel });
   } else {
     res.send({ message: 'Invalid Id' });
   }
