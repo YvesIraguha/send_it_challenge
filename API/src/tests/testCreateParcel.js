@@ -7,8 +7,7 @@ import app from '../app';
 const should = chai.should();
 
 chai.use(chaiHttp);
-
-describe('/POST parcel', () => {
+describe('/POST parcel', () => {    
   describe('Successful order creation', () => {
     it('It should acknowledge that parcel was created with created object', (done) => {
       const parcel = {

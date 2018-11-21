@@ -4,7 +4,7 @@ import { Pool } from 'pg';
 //
 
 //instantiate the connection string 
-const connectionString = ; 
+//const connectionString 
 const pool = new Pool();
 
 const connect = async () => {

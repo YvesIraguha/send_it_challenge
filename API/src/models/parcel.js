@@ -11,7 +11,7 @@ class Parcel {
   }
 
   setPrice() {
-    if ( Number(this.weight)) {
+    if (Number(this.weight)) {
       return this.price = parseFloat(this.weight) * 100;
     }
     return this.price = 0;

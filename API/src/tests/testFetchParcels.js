@@ -7,6 +7,19 @@ import app from '../app';
 const should = chai.should();
 
 describe('/GET parcels ', () => {
+  beforeEach((done) =>{
+    const parcel = {
+      name: 'T-shirts',
+      origin: 'Kabarore',
+      destination: 'Muramba',
+      userId: 3,
+      weight: 0.3,
+    };
+    chai.request(app).post('/api/v1/parcels').send(parcel).end((error,res) => {
+      if (error) done(error);
+      done();
+    })
+  })
   it('it should return an order with a given id', (done) => {
     const id = '1';
     chai.request(app).get(`/api/v1/parcels/${id}`).end((error, res) => {

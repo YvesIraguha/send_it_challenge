@@ -1,44 +1,28 @@
 import express from 'express';
-import controllers from '../controlers/userControllers';
+import userControllers from '../controlers/userControllers';
 
+// instantiate users router
 const usersRouter = express.Router();
 
-
-// declare the variable to store users.
-const users = [];
-
 // get the list of all users.
-usersRouter.get('/v1/users');
+usersRouter.get('/', userControllers.fetchAllUsers);
 
-// create a user
-usersRouter.post('/v1/users');
-
-// The route to fetch all users temporaryly for signing up
-usersRouter.get('/users/signup');
+// The route for signing up link
+// usersRouter.get('/signup', userControllers.signUpPage);
 
 // get a specific user by id
-usersRouter.get('/users/:id');
-
-// the function for checking if a user is looged in.
-
+usersRouter.get('/:id', userControllers.getUser);
 
 // accept the data from users signing up
-usersRouter.post('/users/signup');
+usersRouter.post('/signup', userControllers.createUser);
 
-// The the login page;
-usersRouter.get('/users/signin', (req, res) => {
-  res.render('signin');
-});
+// The login page;
+//usersRouter.get('/signin', userControllers.loginPage);
 
 // the login data
-usersRouter.post('/users/signin');
+usersRouter.post('/signin',userControllers.login);
 
 // sign out.
-usersRouter.get('/signout', (req, res) => {
-  req.session.destroy(() => {
-    console.log('A user loged out');
-  });
-  res.redirect('/users/signin');
-});
+usersRouter.get('/signout', userControllers.signOut);
 
 export default usersRouter;

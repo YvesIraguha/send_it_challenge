@@ -2,7 +2,7 @@ import Parcel from '../models/parcel';
 
 const controllers = {};
 // declare the variable to store orders.
-const orders = [];
+let orders = [];
 
 // fetch a parcel
 const fetchParcelById = (req, res) => {
@@ -26,9 +26,10 @@ const createParcel = (req, res) => {
   if (existingOrder === undefined) {
     const id = orders.length + 1;
     const fieldsValidation = /[a-zA-Z]+/;
-    if (!origin || !name || !destination || !userId || !weight ) {
+    if (!origin || !name || !destination || !userId || !weight) {
       res.send({ message: 'Please provide all the required fields' });
-    } else if (isNaN(weight)) {
+      return; 
+    } else if (!Number(weight)) {
       res.send({ message: 'Invalid weight, the weight should be number' });
     } else if (!fieldsValidation.test(name)) {
       res.send({ message: 'Invalid name, the name should start with a letter' });
@@ -77,12 +78,65 @@ const cancelDeliveryOrder = (req, res) => {
     res.send({ message: 'Invalid Id' });
   }
 };
+//delete all delivery orders
+const deleteOrders = (req,res) =>{
+  orders =[];
+  console.log(orders);
+  res.status(200).send({message:"Orders deleted successfully"});
+}
+
+//change the status of a parcel delivery order 
+const updateStatus = (req,res) =>{
+  let orderid = req.params.id;
+  let { status } = req.body; 
+  let parcel = orders.find((item) => item.id === orderid);
+  if (parcel) {
+    orders.splice(orders.indexOf(parcel),1);
+    parcel.status = status;
+    orders.push(parcel);
+    res.status(200).send({message:"The parcel was updated successfully", parcel,})
+  }else{
+    res.status(400).send({message:"No order with that id"});
+  };
+};
+
+//change the location of a destination delivery order
+const changeDestination = (req,res) => {
+  let { id } = req.params;
+  let { destination } = req.body; 
+  let parcel = orders.find((item) => item.id === id);
+  if (parcel){
+    orders.splice(orders.indexOf(parcel),1);
+    parcel.destination = destination;
+    orders.push(parcel);
+    res.status(200).send({message:"The parcel was updated successfully",parcel,})
+  }else{
+    res.status(400).send({message:'No order with that id'});
+  }
+}
+
+//change the present location of a parcel delivery order
+const changePresentLocation = (req,res) => {
+  let { id } = req.params;
+  let { destination } = req.body; 
+  let parcel = orders.find((item) => item.id === id);
+  if (parcel){
+    orders.splice(orders.indexOf(parcel),1);
+    orders.push(parcel);
+    res.status(200).send({message:'The parcel was updated successfully',parcel})
+  }else{
+    res.status(400).send({message:'No order with that id'});
+  }
+}
 
 controllers.fetchParcelById = fetchParcelById;
 controllers.fetchAllDeliveryOrders = fetchAllDeliveryOrders;
 controllers.cancelDeliveryOrder = cancelDeliveryOrder;
 controllers.createParcel = createParcel;
 controllers.deliveryOrdersByUser = deliveryOrdersByUser;
-
+controllers.deleteOrders = deleteOrders; 
+controllers.changeDestination = changeDestination;
+controllers.changePresentLocation = changePresentLocation;
+controllers.updateStatus = updateStatus; 
 
 export default controllers;

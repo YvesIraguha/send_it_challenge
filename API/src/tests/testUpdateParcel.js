@@ -8,8 +8,8 @@ describe('/PUT to cancel order', () => {
     chai.request(app).put(`/api/v1/parcels/${id}/cancel`).end((error, res) => {
       res.should.have.status(200);
       res.body.should.be.a('object');
-      res.body.should.have.property('message').eql('Order successfully canceled');
-      res.body.parcel.should.have.property('status').eql('Canceled');
+      res.body.should.have.property('message').eql('Order successfully cancelled');
+      res.body.parcel.should.have.property('status').eql('Cancelled');
       done();
     });
   });
