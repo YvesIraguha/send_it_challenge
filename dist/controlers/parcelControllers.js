@@ -129,7 +129,7 @@ var cancelDeliveryOrder = function cancelDeliveryOrder(req, res) {
     });
   } else {
     res.status(400).send({
-      message: 'Invalid Id'
+      message: 'Invalid id'
     });
   }
 }; // delete all delivery orders
