@@ -21,19 +21,19 @@ parcelsRouter.get('/users/:id/parcels', controllers.deliveryOrdersByUser);
 // Fetch all orders made.
 parcelsRouter.get('/parcels', controllers.fetchAllDeliveryOrders);
 
-//delete all delivey orders.
-parcelsRouter.delete('/parcels', controllers.deleteOrders)
+// delete all delivey orders.
+parcelsRouter.delete('/parcels', controllers.deleteOrders);
 
 // cancel a delivery order with put method
-parcelsRouter.put('/parcels/:id/cancel', authentication,controllers.cancelDeliveryOrder);
+parcelsRouter.put('/parcels/:id/cancel', controllers.cancelDeliveryOrder);
 
-//change the status of the parcel delivery order
-parcelsRouter.put('/parcels/:id/status', authentication, controllers.updateStatus); 
+// change the status of the parcel delivery order
+parcelsRouter.put('/parcels/:id/status', controllers.updateStatus);
 
-//change the destination of a parcel delivery order
-parcelsRouter.put('/parcels/:id/destination', authentication,  controllers.changeDestination);
+// change the destination of a parcel delivery order
+parcelsRouter.put('/parcels/:id/destination', controllers.changeDestination);
 
-//change the present location of the parcel 
-parcelsRouter.put('/parcels/:id/presentLocation', authentication, controllers.changePresentLocation);
+// change the present location of the parcel
+parcelsRouter.put('/parcels/:id/presentLocation', controllers.changePresentLocation);
 
 export default parcelsRouter;

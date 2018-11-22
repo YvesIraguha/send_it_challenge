@@ -28,7 +28,6 @@ const createParcel = (req, res) => {
     const fieldsValidation = /[a-zA-Z]+/;
     if (!origin || !name || !destination || !userId || !weight) {
       res.send({ message: 'Please provide all the required fields' });
-      return; 
     } else if (!Number(weight)) {
       res.send({ message: 'Invalid weight, the weight should be number' });
     } else if (!fieldsValidation.test(name)) {
@@ -40,7 +39,7 @@ const createParcel = (req, res) => {
     } else {
       const order = new Parcel(id, name, origin, destination, weight, userId);
       orders.push(order);
-      res.status(201).send({ message: 'The order was successfully created', order });
+      res.status(200).send({ message: 'The order was successfully created', order });
     }
   } else {
     res.send({ message: 'Cannot create two orders with the same name' });
@@ -73,70 +72,70 @@ const cancelDeliveryOrder = (req, res) => {
     orders.splice(orders.indexOf(parcel), 1);
     parcel.status = 'Cancelled';
     orders.push(parcel);
-    res.send({ message: 'Order successfully cancelled', parcel });
+    res.status(200).send({ message: 'Order successfully cancelled', parcel });
   } else {
-    res.send({ message: 'Invalid Id' });
+    res.status(200).send({ message: 'Invalid Id' });
   }
 };
-//delete all delivery orders
-const deleteOrders = (req,res) =>{
-  orders =[];
+// delete all delivery orders
+const deleteOrders = (req, res) => {
+  orders = [];
   console.log(orders);
-  res.status(200).send({message:"Orders deleted successfully"});
-}
+  res.status(200).send({ message: 'Orders deleted successfully' });
+};
 
-//change the status of a parcel delivery order 
-const updateStatus = (req,res) =>{
-  let orderid = req.params.id;
-  let { status } = req.body; 
-  let parcel = orders.find((item) => item.id === orderid);
-  if (parcel) {
-    orders.splice(orders.indexOf(parcel),1);
+// change the status of a parcel delivery order
+const updateStatus = (req, res) => {
+  const orderid = parseInt(req.params.id);
+  const { status } = req.body;
+  const parcel = orders.find(item => item.id === orderid);
+  if (parcel !== undefined) {
+    orders.splice(orders.indexOf(parcel), 1);
     parcel.status = status;
     orders.push(parcel);
-    res.status(200).send({message:"The parcel was updated successfully", parcel,})
-  }else{
-    res.status(400).send({message:"No order with that id"});
-  };
+    res.status(200).send({ message: 'The parcel was updated successfully', parcel });
+  } else {
+    res.status(200).send({ message: 'No order with that id' });
+  }
 };
 
-//change the location of a destination delivery order
-const changeDestination = (req,res) => {
-  let { id } = req.params;
-  let { destination } = req.body; 
-  let parcel = orders.find((item) => item.id === id);
-  if (parcel){
-    orders.splice(orders.indexOf(parcel),1);
+// change the location of a destination delivery order
+const changeDestination = (req, res) => {
+  const { id } = parseInt(req.params.id);
+  const { destination } = req.body;
+  const parcel = orders.find(item => item.id === id);
+  if (parcel !== undefined) {
+    orders.splice(orders.indexOf(parcel), 1);
     parcel.destination = destination;
     orders.push(parcel);
-    res.status(200).send({message:"The parcel was updated successfully",parcel,})
-  }else{
-    res.status(400).send({message:'No order with that id'});
+    res.status(200).send({ message: 'The parcel was updated successfully', parcel });
+  } else {
+    res.status(200).send({ message: 'No order with that id' });
   }
-}
+};
 
-//change the present location of a parcel delivery order
-const changePresentLocation = (req,res) => {
-  let { id } = req.params;
-  let { destination } = req.body; 
-  let parcel = orders.find((item) => item.id === id);
-  if (parcel){
-    orders.splice(orders.indexOf(parcel),1);
+// change the present location of a parcel delivery order
+const changePresentLocation = (req, res) => {
+  const { id } = parseInt(req.params.id);
+  const { destination } = req.body;
+  const parcel = orders.find(item => item.id === id);
+  if (parcel) {
+    orders.splice(orders.indexOf(parcel), 1);
     orders.push(parcel);
-    res.status(200).send({message:'The parcel was updated successfully',parcel})
-  }else{
-    res.status(400).send({message:'No order with that id'});
+    res.status(200).send({ message: 'The parcel was updated successfully', parcel });
+  } else {
+    res.status(200).send({ message: 'No order with that id' });
   }
-}
+};
 
 controllers.fetchParcelById = fetchParcelById;
 controllers.fetchAllDeliveryOrders = fetchAllDeliveryOrders;
 controllers.cancelDeliveryOrder = cancelDeliveryOrder;
 controllers.createParcel = createParcel;
 controllers.deliveryOrdersByUser = deliveryOrdersByUser;
-controllers.deleteOrders = deleteOrders; 
+controllers.deleteOrders = deleteOrders;
 controllers.changeDestination = changeDestination;
 controllers.changePresentLocation = changePresentLocation;
-controllers.updateStatus = updateStatus; 
+controllers.updateStatus = updateStatus;
 
 export default controllers;

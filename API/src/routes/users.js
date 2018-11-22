@@ -17,10 +17,10 @@ usersRouter.get('/:id', userControllers.getUser);
 usersRouter.post('/signup', userControllers.createUser);
 
 // The login page;
-//usersRouter.get('/signin', userControllers.loginPage);
+// usersRouter.get('/signin', userControllers.loginPage);
 
 // the login data
-usersRouter.post('/signin',userControllers.login);
+usersRouter.post('/signin', userControllers.login);
 
 // sign out.
 usersRouter.get('/signout', userControllers.signOut);

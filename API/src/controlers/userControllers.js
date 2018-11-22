@@ -16,16 +16,20 @@ const fetchAllUsers = (req, res) => {
 
 // create a user.
 const createUser = (req, res) => {
-  const { id,name, email, password } = req.body;
+  const {
+    id, name, email, password,
+  } = req.body;
   const specificUser = users.find(user => user.email === email);
   if (specificUser) {
     // XXX include the link to sign in with a message;
-    res.end('The email is already in use');
+    res.send({ message: 'The email is already in use' });
+  } else if (!name || !email || !password) {
+    res.send({ message: 'Please complete the required fields' });
   } else {
     // generate the id and pass to a user
-    let user1 = new User(id, name, email, password);
-    users.push(user1);    
-    res.status(200).send({message:'user registered successfully',user1, })
+    const user1 = new User(id, name, email, password);
+    users.push(user1);
+    res.send({ message: 'user registered successfully', user1 });
   }
 };
 
@@ -56,7 +60,7 @@ const login = (req, res) => {
   if (specificUser) {
     req.session.user = specificUser;
     // redirect the user to the next page.
-    res.status(200).send({message:'User logged in successfully'})
+    res.status(200).send({ message: 'User logged in successfully' });
   }
 
   res.send('Invalid login');
@@ -81,7 +85,6 @@ const signOut = (req, res) => {
   }
   res.end('Invalid login');
 };
-
 
 
 userControllers.fetchAllUsers = fetchAllUsers;

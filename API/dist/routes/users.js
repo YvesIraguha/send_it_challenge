@@ -11,33 +11,22 @@ var _userControllers = _interopRequireDefault(require("../controlers/userControl
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var usersRouter = _express.default.Router(); // declare the variable to store users.
+// instantiate users router
+var usersRouter = _express.default.Router(); // get the list of all users.
 
 
-var users = []; // get the list of all users.
+usersRouter.get('/', _userControllers.default.fetchAllUsers); // The route for signing up link
+// usersRouter.get('/signup', userControllers.signUpPage);
+// get a specific user by id
 
-usersRouter.get('/v1/users'); // create a user
+usersRouter.get('/:id', _userControllers.default.getUser); // accept the data from users signing up
 
-usersRouter.post('/v1/users'); // The route to fetch all users temporaryly for signing up
+usersRouter.post('/signup', _userControllers.default.createUser); // The login page;
+// usersRouter.get('/signin', userControllers.loginPage);
+// the login data
 
-usersRouter.get('/users/signup'); // get a specific user by id
+usersRouter.post('/signin', _userControllers.default.login); // sign out.
 
-usersRouter.get('/users/:id'); // the function for checking if a user is looged in.
-// accept the data from users signing up
-
-usersRouter.post('/users/signup'); // The the login page;
-
-usersRouter.get('/users/signin', function (req, res) {
-  res.render('signin');
-}); // the login data
-
-usersRouter.post('/users/signin'); // sign out.
-
-usersRouter.get('/signout', function (req, res) {
-  req.session.destroy(function () {
-    console.log('A user loged out');
-  });
-  res.redirect('/users/signin');
-});
+usersRouter.get('/signout', _userControllers.default.signOut);
 var _default = usersRouter;
 exports.default = _default;

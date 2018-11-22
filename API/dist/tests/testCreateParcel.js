@@ -12,7 +12,13 @@ var should = _chai.default.should();
 
 _chai.default.use(_chaiHttp.default);
 
-describe('/POST parcel', function () {
+describe('It should test parcel creation', function () {
+  beforeEach('Clear data from database', function (done) {
+    _chai.default.request(_app.default).delete('/api/v1/parcels').end(function (error, res) {
+      if (error) done(error);
+      done();
+    });
+  });
   describe('Successful order creation', function () {
     it('It should acknowledge that parcel was created with created object', function (done) {
       var parcel = {
@@ -24,8 +30,8 @@ describe('/POST parcel', function () {
       };
 
       _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
-        if (error) done(error); // res.should.have.status(201);
-
+        if (error) done(error);
+        res.should.have.status(200);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('The order was successfully created');
         res.body.should.have.property('order');
@@ -48,8 +54,8 @@ describe('/POST parcel', function () {
       };
 
       _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
-        if (error) done(error); // res.should.have.status(201);
-
+        if (error) done(error);
+        res.should.have.status(200);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('Invalid weight, the weight should be number');
         done();
@@ -65,8 +71,8 @@ describe('/POST parcel', function () {
       };
 
       _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
-        if (error) done(error); // res.should.have.status(201);
-
+        if (error) done(error);
+        res.should.have.status(200);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('Invalid name, the name should start with a letter');
         done();
@@ -82,8 +88,8 @@ describe('/POST parcel', function () {
       };
 
       _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
-        if (error) done(error); // res.should.have.status(201);
-
+        if (error) done(error);
+        res.should.have.status(200);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('Invalid origin, the origin should be a place');
         done();
@@ -99,8 +105,8 @@ describe('/POST parcel', function () {
       };
 
       _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
-        if (error) done(error); // res.should.have.status(201);
-
+        if (error) done(error);
+        res.should.have.status(200);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('Invalid destination, the destination should be a place');
         done();
@@ -120,7 +126,7 @@ describe('/POST parcel', function () {
         if (error) done(error); // res.should.have.status(200);
 
         res.body.should.be.a('object');
-        res.body.should.have.property('message').eql('The order should have a name');
+        res.body.should.have.property('message').eql('Please provide all the required fields');
         done();
       });
     });
@@ -136,7 +142,7 @@ describe('/POST parcel', function () {
         if (error) done(error); // res.should.have.status(201);
 
         res.body.should.be.a('object');
-        res.body.should.have.property('message').eql('The order should have the origin');
+        res.body.should.have.property('message').eql('Please provide all the required fields');
         done();
       });
     });
@@ -152,7 +158,7 @@ describe('/POST parcel', function () {
         if (error) done(error); // res.should.have.status(201);
 
         res.body.should.be.a('object');
-        res.body.should.have.property('message').eql('The order should have the destination');
+        res.body.should.have.property('message').eql('Please provide all the required fields');
         done();
       });
     });
@@ -168,7 +174,7 @@ describe('/POST parcel', function () {
         if (error) done(error); // res.should.have.status(201);
 
         res.body.should.be.a('object');
-        res.body.should.have.property('message').eql('The order should have the user id');
+        res.body.should.have.property('message').eql('Please provide all the required fields');
         done();
       });
     });

@@ -1,13 +1,8 @@
-
 // import chai from 'chai';
 // import chaiHttp from 'chai-http';
 // import app from '../app';
-
-
 // const should = chai.should();
-
 // chai.use(chaiHttp);
-
 // describe('/POST create a user', () => {
 //   it('Created user successfully', (done) => {
 //     const user = {
@@ -96,3 +91,4 @@
 //     });
 //   });
 // });
+"use strict";

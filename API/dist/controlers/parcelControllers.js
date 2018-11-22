@@ -45,27 +45,11 @@ var createParcel = function createParcel(req, res) {
     var id = orders.length + 1;
     var fieldsValidation = /[a-zA-Z]+/;
 
-    if (!origin) {
+    if (!origin || !name || !destination || !userId || !weight) {
       res.send({
-        message: 'The order should have the origin'
+        message: 'Please provide all the required fields'
       });
-    } else if (!name) {
-      res.send({
-        message: 'The order should have a name'
-      });
-    } else if (!destination) {
-      res.send({
-        message: 'The order should have the destination'
-      });
-    } else if (!userId) {
-      res.send({
-        message: 'The order should have the user id'
-      });
-    } else if (!weight) {
-      res.send({
-        message: 'The order should have the weight'
-      });
-    } else if (isNaN(weight)) {
+    } else if (!Number(weight)) {
       res.send({
         message: 'Invalid weight, the weight should be number'
       });
@@ -84,7 +68,7 @@ var createParcel = function createParcel(req, res) {
     } else {
       var order = new _parcel.default(id, name, origin, destination, weight, userId);
       orders.push(order);
-      res.status(201).send({
+      res.status(200).send({
         message: 'The order was successfully created',
         order: order
       });
@@ -128,15 +112,96 @@ var cancelDeliveryOrder = function cancelDeliveryOrder(req, res) {
 
   if (parcel) {
     orders.splice(orders.indexOf(parcel), 1);
-    parcel.status = 'Canceled';
+    parcel.status = 'Cancelled';
     orders.push(parcel);
-    res.send({
-      message: 'Order successfully canceled',
+    res.status(200).send({
+      message: 'Order successfully cancelled',
       parcel: parcel
     });
   } else {
-    res.send({
+    res.status(200).send({
       message: 'Invalid Id'
+    });
+  }
+}; // delete all delivery orders
+
+
+var deleteOrders = function deleteOrders(req, res) {
+  orders = [];
+  console.log(orders);
+  res.status(200).send({
+    message: 'Orders deleted successfully'
+  });
+}; // change the status of a parcel delivery order
+
+
+var updateStatus = function updateStatus(req, res) {
+  var orderid = parseInt(req.params.id);
+  var status = req.body.status;
+  var parcel = orders.find(function (item) {
+    return item.id === orderid;
+  });
+
+  if (parcel !== undefined) {
+    orders.splice(orders.indexOf(parcel), 1);
+    parcel.status = status;
+    orders.push(parcel);
+    res.status(200).send({
+      message: 'The parcel was updated successfully',
+      parcel: parcel
+    });
+  } else {
+    res.status(200).send({
+      message: 'No order with that id'
+    });
+  }
+}; // change the location of a destination delivery order
+
+
+var changeDestination = function changeDestination(req, res) {
+  var _parseInt = parseInt(req.params.id),
+      id = _parseInt.id;
+
+  var destination = req.body.destination;
+  var parcel = orders.find(function (item) {
+    return item.id === id;
+  });
+
+  if (parcel !== undefined) {
+    orders.splice(orders.indexOf(parcel), 1);
+    parcel.destination = destination;
+    orders.push(parcel);
+    res.status(200).send({
+      message: 'The parcel was updated successfully',
+      parcel: parcel
+    });
+  } else {
+    res.status(200).send({
+      message: 'No order with that id'
+    });
+  }
+}; // change the present location of a parcel delivery order
+
+
+var changePresentLocation = function changePresentLocation(req, res) {
+  var _parseInt2 = parseInt(req.params.id),
+      id = _parseInt2.id;
+
+  var destination = req.body.destination;
+  var parcel = orders.find(function (item) {
+    return item.id === id;
+  });
+
+  if (parcel) {
+    orders.splice(orders.indexOf(parcel), 1);
+    orders.push(parcel);
+    res.status(200).send({
+      message: 'The parcel was updated successfully',
+      parcel: parcel
+    });
+  } else {
+    res.status(200).send({
+      message: 'No order with that id'
     });
   }
 };
@@ -146,5 +211,9 @@ controllers.fetchAllDeliveryOrders = fetchAllDeliveryOrders;
 controllers.cancelDeliveryOrder = cancelDeliveryOrder;
 controllers.createParcel = createParcel;
 controllers.deliveryOrdersByUser = deliveryOrdersByUser;
+controllers.deleteOrders = deleteOrders;
+controllers.changeDestination = changeDestination;
+controllers.changePresentLocation = changePresentLocation;
+controllers.updateStatus = updateStatus;
 var _default = controllers;
 exports.default = _default;

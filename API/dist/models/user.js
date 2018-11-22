@@ -11,35 +11,30 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-// Class for defining a parcel model
-var Parcel =
+// Define a class for creating a user
+var User =
 /*#__PURE__*/
 function () {
-  function Parcel(id, name, origin, destination, weight, userId) {
-    _classCallCheck(this, Parcel);
+  function User(id, name, email, password) {
+    _classCallCheck(this, User);
 
     this.id = id;
     this.name = name;
-    this.origin = origin;
-    this.destination = destination;
-    this.weight = weight;
-    this.userId = userId;
-    this.setPrice();
-  }
+    this.email = email;
+    this.setPassword(password);
+  } // define a function to hash the password.
 
-  _createClass(Parcel, [{
-    key: "setPrice",
-    value: function setPrice() {
-      if (Number(this.weight)) {
-        return this.price = parseFloat(this.weight) * 100;
-      }
 
-      return this.price = 0;
+  _createClass(User, [{
+    key: "setPassword",
+    value: function setPassword(password) {
+      // hash the password
+      return this.password = password;
     }
   }]);
 
-  return Parcel;
+  return User;
 }();
 
-var _default = Parcel;
+var _default = User;
 exports.default = _default;

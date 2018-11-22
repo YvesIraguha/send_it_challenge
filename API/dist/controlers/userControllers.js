@@ -4,6 +4,12 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+var _user = _interopRequireDefault(require("../models/user"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// declare the variable to store users.
 var users = [];
 var userControllers = {}; // fetch all users.
 
@@ -20,6 +26,7 @@ var fetchAllUsers = function fetchAllUsers(req, res) {
 
 var createUser = function createUser(req, res) {
   var _req$body = req.body,
+      id = _req$body.id,
       name = _req$body.name,
       email = _req$body.email,
       password = _req$body.password;
@@ -29,38 +36,49 @@ var createUser = function createUser(req, res) {
 
   if (specificUser) {
     // XXX include the link to sign in with a message;
-    res.end('account already taken');
+    res.send({
+      message: 'The email is already in use'
+    });
+  } else if (!name || !email || !password) {
+    res.send({
+      message: 'Please complete the required fields'
+    });
   } else {
+    // generate the id and pass to a user
+    var user1 = new _user.default(id, name, email, password);
     users.push(user1);
-    req.session.user = user1;
-    res.redirect(301, '/api/v1/');
+    res.send({
+      message: 'user registered successfully',
+      user1: user1
+    });
   }
 }; // send sign up page.
-
-
-var singUpPage = function singUpPage(req, res) {
-  res.render('signup');
-}; // get a user
+// const singUpPage = (req, res) => {
+//   res.send('signup');
+// };
+// get a user
 
 
 var getUser = function getUser(req, res) {
-  var userId = parseInt(req.params.id);
+  var id = parseInt(req.params.id);
   var specificUser = users.find(function (item) {
-    return item.id === userId;
+    return item.id === id;
   });
 
   if (specificUser) {
-    res.end("<h1>I got him</h1><h2>".concat(specificUser.id, ", I am ").concat(specificUser.name, ",my email is ").concat(specificUser.email));
+    res.status(200).send(specificUser);
   } else {
-    console.log(userId);
-    res.end('<h1>No user of that name</h1>');
+    res.send({
+      message: 'There is no user with that id'
+    });
   }
 }; // Login data processing
 
 
 var login = function login(req, res) {
   var specificUser = users.find(function (user) {
-    if (user.email === req.body.email && user.password === req.body.email) {
+    // replace the password given with the hashed password
+    if (user.email === req.body.email && user.password === req.body) {
       return user;
     }
   });
@@ -68,10 +86,12 @@ var login = function login(req, res) {
   if (specificUser) {
     req.session.user = specificUser; // redirect the user to the next page.
 
-    res.redirect('/api/v1/');
+    res.status(200).send({
+      message: 'User logged in successfully'
+    });
   }
 
-  res.end('Invalid login');
+  res.send('Invalid login');
 }; // login verification;
 
 
@@ -86,9 +106,7 @@ var loginRequired = function loginRequired(req, res) {
 
 var signOut = function signOut(req, res) {
   var specificUser = users.find(function (user) {
-    if (user.email === req.body.email && user.password === req.body.email) {
-      return user;
-    }
+    return user.email === req.body.email && user.password === req.body.password;
   });
 
   if (specificUser) {
@@ -106,8 +124,5 @@ userControllers.createUser = createUser;
 userControllers.loginRequired = loginRequired;
 userControllers.login = login;
 userControllers.signOut = signOut;
-userControllers.signUpPage = signUpPage;
-var _default = {
-  userControllers: userControllers
-};
+var _default = userControllers;
 exports.default = _default;

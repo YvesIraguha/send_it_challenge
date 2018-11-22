@@ -1,7 +1,9 @@
 import express from 'express';
+import dotenv from 'dotenv';
 import parcelsRouter from './routes/parcels';
 import usersRouter from './routes/users';
 
+dotenv.config();
 // instantiate the app;
 const app = express();
 // set the middle ware to use for body parsing
