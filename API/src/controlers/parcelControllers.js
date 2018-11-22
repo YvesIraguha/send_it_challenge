@@ -1,4 +1,7 @@
 import Parcel from '../models/parcel';
+import queries from '../db/sqlQueries';
+import execute from '../db/connection';
+import 'babel-polyfill';
 
 const controllers = {};
 // declare the variable to store orders.
@@ -8,12 +11,13 @@ let orders = [];
 const fetchParcelById = (req, res) => {
   const parcelId = parseInt(req.params.id);
   const parcel = orders.find(order => order.id === parcelId);
+  //const parcel = execute(queries.getSpecificParcel,[parcelId]);
   // send it.
   if (parcel) {
     res.status(200).send(parcel);
   } else {
     // send the error page
-    res.send({ message: 'Ooops! no order with that id' });
+    res.status(400).send({ message: 'Ooops! no order with that id' });
   }
 };
 
@@ -38,6 +42,7 @@ const createParcel = (req, res) => {
       res.send({ message: 'Invalid destination, the destination should be a place' });
     } else {
       const order = new Parcel(id, name, origin, destination, weight, userId);
+      //execute(queries.insertIntoDatabase,[order.id,order.name,order.origin,order.destination,order.weight,order.userId,order.price]); 
       orders.push(order);
       res.status(200).send({ message: 'The order was successfully created', order });
     }
@@ -51,6 +56,7 @@ const deliveryOrdersByUser = (req, res) => {
   const userId = parseInt(req.params.id);
   // find the order where the owner is equal to the email
   const specificOrders = orders.filter(item => item.userId === userId);
+  //const specificOrders = execute(queries.ordersForUser,[userId])
   if (specificOrders) {
     res.send(specificOrders);
   } else {
@@ -61,6 +67,7 @@ const deliveryOrdersByUser = (req, res) => {
 
 // fetch all delivery orders
 const fetchAllDeliveryOrders = (req, res) => {
+  //let orders = execute(`SELECT * FROM parcels`);
   res.send(orders);
 };
 
@@ -68,19 +75,20 @@ const fetchAllDeliveryOrders = (req, res) => {
 const cancelDeliveryOrder = (req, res) => {
   const parcelId = parseInt(req.params.id);
   const parcel = orders.find(order => order.id === parcelId);
+  //const parcel = execute(queries.statusUpdate,[parcelId,'Cancelled']);
   if (parcel) {
     orders.splice(orders.indexOf(parcel), 1);
     parcel.status = 'Cancelled';
     orders.push(parcel);
     res.status(200).send({ message: 'Order successfully cancelled', parcel });
   } else {
-    res.status(200).send({ message: 'Invalid Id' });
+    res.status(400).send({ message: 'Invalid id' });
   }
 };
 // delete all delivery orders
 const deleteOrders = (req, res) => {
+  //execute(`DROP TABLE parcels`);
   orders = [];
-  console.log(orders);
   res.status(200).send({ message: 'Orders deleted successfully' });
 };
 
@@ -89,6 +97,7 @@ const updateStatus = (req, res) => {
   const orderid = parseInt(req.params.id);
   const { status } = req.body;
   const parcel = orders.find(item => item.id === orderid);
+  //const parcel = execute(queries.statusUpdate,[orderid,status]);
   if (parcel !== undefined) {
     orders.splice(orders.indexOf(parcel), 1);
     parcel.status = status;
@@ -104,6 +113,7 @@ const changeDestination = (req, res) => {
   const { id } = parseInt(req.params.id);
   const { destination } = req.body;
   const parcel = orders.find(item => item.id === id);
+  //const parcel = execute(queries.destinationUpdate,[id, destination])
   if (parcel !== undefined) {
     orders.splice(orders.indexOf(parcel), 1);
     parcel.destination = destination;
@@ -116,9 +126,11 @@ const changeDestination = (req, res) => {
 
 // change the present location of a parcel delivery order
 const changePresentLocation = (req, res) => {
-  const { id } = parseInt(req.params.id);
-  const { destination } = req.body;
-  const parcel = orders.find(item => item.id === id);
+  let { id } = parseInt(req.params.id);
+  let { presentLocation } = req.body;
+  let parcel = orders.find(item => item.id === id);
+  //let parcel = execute(queries.presentLocationUpdate,[id,presentLocation])
+
   if (parcel) {
     orders.splice(orders.indexOf(parcel), 1);
     orders.push(parcel);

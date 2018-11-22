@@ -1,4 +1,7 @@
 import User from '../models/user';
+import queries from '../db/sqlQueries';
+import execute from '../db/connection';
+import 'babel-polyfill';
 
 // declare the variable to store users.
 const users = [];
@@ -7,6 +10,7 @@ const userControllers = {};
 
 // fetch all users.
 const fetchAllUsers = (req, res) => {
+  //let users = execute(`SELECT * FROM users`);
   if (users.length > 0) {
     res.send(users);
   } else {
@@ -16,20 +20,29 @@ const fetchAllUsers = (req, res) => {
 
 // create a user.
 const createUser = (req, res) => {
-  const {
+  let {
     id, name, email, password,
   } = req.body;
-  const specificUser = users.find(user => user.email === email);
+  let specificUser = users.find(user => user.email === email);
+  //let specificUser = execute(queries.checkuser,[id])
   if (specificUser) {
     // XXX include the link to sign in with a message;
     res.send({ message: 'The email is already in use' });
   } else if (!name || !email || !password) {
     res.send({ message: 'Please complete the required fields' });
   } else {
-    // generate the id and pass to a user
-    const user1 = new User(id, name, email, password);
+    let fieldsValidation = /^[a-zA-Z]+/;
+    if (!fieldsValidation.test(name)){
+      res.status(400).send({message:"Invalid name, the name should start with letter"})
+    }else if(!fieldsValidation.test(email)){
+      res.status(400).send({message:'Invalid email, the email should start with letter'})
+    }else{
+      // generate the id and pass to a user
+    let user1 = new User(id, name, email, password);
+    //execute(queries.registerUser,[user1.id,user1.name,user1.email,user1.password]);
     users.push(user1);
     res.send({ message: 'user registered successfully', user1 });
+    }    
   }
 };
 
@@ -40,8 +53,9 @@ const createUser = (req, res) => {
 
 // get a user
 const getUser = (req, res) => {
-  const id = parseInt(req.params.id);
-  const specificUser = users.find(item => item.id === id);
+  let id = parseInt(req.params.id);
+  let specificUser = users.find(item => item.id === id);
+  //let specificUser = execute(queries.checkUser,[id]);
   if (specificUser) {
     res.status(200).send(specificUser);
   } else {
@@ -51,7 +65,8 @@ const getUser = (req, res) => {
 
 // Login data processing
 const login = (req, res) => {
-  const specificUser = users.find((user) => {
+  let specificUser = users.find((user) => {
+    //let specificUser = execute(queries.checkUser,[id])
     // replace the password given with the hashed password
     if (user.email === req.body.email && user.password === req.body) {
       return user;

@@ -19,7 +19,7 @@ beforeEach('Create a data in database', (done) => {
   });
 });
 
-describe('/GET parcels ', () => {
+describe('It should test fetching parcels ', () => {
   beforeEach((done) => {
     const parcel = {
       name: 'T-shirts',

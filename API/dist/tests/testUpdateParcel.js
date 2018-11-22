@@ -8,7 +8,7 @@ var _app = _interopRequireDefault(require("../app"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-describe('/PUT to cancel order', function () {
+describe('It should test updating parcels', function () {
   before('Create user ', function (done) {
     var order = {
       name: 'T-shirts',

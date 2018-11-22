@@ -20,12 +20,12 @@ beforeEach('Create data', (done) => {
   });
 });
 
-describe('/Get a user', () => {
+describe('It should test fetching all users', () => {
   it('It should return the list of all user', (done) => {
     chai.request(app).get('/api/v1/users').end((error, res) => {
       if (error) done(error);
       res.should.have.status(200);
-      res.body.should.be.a('object');
+      res.body.should.be.a('array');
       done();
     });
   });

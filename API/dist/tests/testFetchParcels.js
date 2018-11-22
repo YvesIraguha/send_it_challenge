@@ -24,7 +24,7 @@ beforeEach('Create a data in database', function (done) {
     done();
   });
 });
-describe('/GET parcels ', function () {
+describe('It should test fetching parcels ', function () {
   beforeEach(function (done) {
     var parcel = {
       name: 'T-shirts',

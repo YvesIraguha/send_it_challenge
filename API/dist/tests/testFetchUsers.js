@@ -24,12 +24,12 @@ beforeEach('Create data', function (done) {
     done();
   });
 });
-describe('/Get a user', function () {
+describe('It should test fetching all users', function () {
   it('It should return the list of all user', function (done) {
     _chai.default.request(_app.default).get('/api/v1/users').end(function (error, res) {
       if (error) done(error);
       res.should.have.status(200);
-      res.body.should.be.a('object');
+      res.body.should.be.a('array');
       done();
     });
   });

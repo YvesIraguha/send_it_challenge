@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http';
 import app from '../app';
 
 
-describe('/PUT to cancel order', () => {
+describe('It should test updating parcels', () => {
   before('Create user ', (done) => {
     const order = {
       name: 'T-shirts',

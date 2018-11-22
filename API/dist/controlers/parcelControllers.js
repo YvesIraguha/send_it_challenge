@@ -7,6 +7,12 @@ exports.default = void 0;
 
 var _parcel = _interopRequireDefault(require("../models/parcel"));
 
+var _sqlQueries = _interopRequireDefault(require("../db/sqlQueries"));
+
+var _connection = _interopRequireDefault(require("../db/connection"));
+
+require("babel-polyfill");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var controllers = {}; // declare the variable to store orders.
@@ -17,13 +23,14 @@ var fetchParcelById = function fetchParcelById(req, res) {
   var parcelId = parseInt(req.params.id);
   var parcel = orders.find(function (order) {
     return order.id === parcelId;
-  }); // send it.
+  }); //const parcel = execute(queries.getSpecificParcel,[parcelId]);
+  // send it.
 
   if (parcel) {
     res.status(200).send(parcel);
   } else {
     // send the error page
-    res.send({
+    res.status(400).send({
       message: 'Ooops! no order with that id'
     });
   }
@@ -66,7 +73,8 @@ var createParcel = function createParcel(req, res) {
         message: 'Invalid destination, the destination should be a place'
       });
     } else {
-      var order = new _parcel.default(id, name, origin, destination, weight, userId);
+      var order = new _parcel.default(id, name, origin, destination, weight, userId); //execute(queries.insertIntoDatabase,[order.id,order.name,order.origin,order.destination,order.weight,order.userId,order.price]); 
+
       orders.push(order);
       res.status(200).send({
         message: 'The order was successfully created',
@@ -86,7 +94,7 @@ var deliveryOrdersByUser = function deliveryOrdersByUser(req, res) {
 
   var specificOrders = orders.filter(function (item) {
     return item.userId === userId;
-  });
+  }); //const specificOrders = execute(queries.ordersForUser,[userId])
 
   if (specificOrders) {
     res.send(specificOrders);
@@ -100,6 +108,7 @@ var deliveryOrdersByUser = function deliveryOrdersByUser(req, res) {
 
 
 var fetchAllDeliveryOrders = function fetchAllDeliveryOrders(req, res) {
+  //let orders = execute(`SELECT * FROM parcels`);
   res.send(orders);
 }; // cancel a delivery order
 
@@ -108,7 +117,7 @@ var cancelDeliveryOrder = function cancelDeliveryOrder(req, res) {
   var parcelId = parseInt(req.params.id);
   var parcel = orders.find(function (order) {
     return order.id === parcelId;
-  });
+  }); //const parcel = execute(queries.statusUpdate,[parcelId,'Cancelled']);
 
   if (parcel) {
     orders.splice(orders.indexOf(parcel), 1);
@@ -119,7 +128,7 @@ var cancelDeliveryOrder = function cancelDeliveryOrder(req, res) {
       parcel: parcel
     });
   } else {
-    res.status(200).send({
+    res.status(400).send({
       message: 'Invalid Id'
     });
   }
@@ -127,8 +136,8 @@ var cancelDeliveryOrder = function cancelDeliveryOrder(req, res) {
 
 
 var deleteOrders = function deleteOrders(req, res) {
+  //execute(`DROP TABLE parcels`);
   orders = [];
-  console.log(orders);
   res.status(200).send({
     message: 'Orders deleted successfully'
   });
@@ -140,7 +149,7 @@ var updateStatus = function updateStatus(req, res) {
   var status = req.body.status;
   var parcel = orders.find(function (item) {
     return item.id === orderid;
-  });
+  }); //const parcel = execute(queries.statusUpdate,[orderid,status]);
 
   if (parcel !== undefined) {
     orders.splice(orders.indexOf(parcel), 1);
@@ -165,7 +174,7 @@ var changeDestination = function changeDestination(req, res) {
   var destination = req.body.destination;
   var parcel = orders.find(function (item) {
     return item.id === id;
-  });
+  }); //const parcel = execute(queries.destinationUpdate,[id, destination])
 
   if (parcel !== undefined) {
     orders.splice(orders.indexOf(parcel), 1);
@@ -187,10 +196,10 @@ var changePresentLocation = function changePresentLocation(req, res) {
   var _parseInt2 = parseInt(req.params.id),
       id = _parseInt2.id;
 
-  var destination = req.body.destination;
+  var presentLocation = req.body.presentLocation;
   var parcel = orders.find(function (item) {
     return item.id === id;
-  });
+  }); //let parcel = execute(queries.presentLocationUpdate,[id,presentLocation])
 
   if (parcel) {
     orders.splice(orders.indexOf(parcel), 1);
