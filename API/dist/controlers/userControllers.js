@@ -20,15 +20,19 @@ var users = [];
 var userControllers = {}; // fetch all users.
 
 var fetchAllUsers = function fetchAllUsers(req, res) {
-  //let users = execute(`SELECT * FROM users`);
-  if (users.length > 0) {
-    res.send(users);
-  } else {
-    res.send({
-      message: 'There is no user at the moment.'
-    });
-  }
-}; // create a user.
+  var users = (0, _connection.default)("SELECT * FROM users");
+  users.then(function (response) {
+    if (response.length > 0) {
+      res.send(response);
+    } else {
+      res.send({
+        message: 'There is no user at the moment.'
+      });
+    }
+  }).catch(function (error) {
+    return console.log(error);
+  });
+}; // create a user
 
 
 var createUser = function createUser(req, res) {
@@ -39,7 +43,7 @@ var createUser = function createUser(req, res) {
       password = _req$body.password;
   var specificUser = users.find(function (user) {
     return user.email === email;
-  }); //let specificUser = execute(queries.checkuser,[id])
+  }); // let specificUser = execute(queries.checkuser,[id])
 
   if (specificUser) {
     // XXX include the link to sign in with a message;
@@ -55,7 +59,7 @@ var createUser = function createUser(req, res) {
 
     if (!fieldsValidation.test(name)) {
       res.status(400).send({
-        message: "Invalid name, the name should start with letter"
+        message: 'Invalid name, the name should start with letter'
       });
     } else if (!fieldsValidation.test(email)) {
       res.status(400).send({
@@ -63,13 +67,17 @@ var createUser = function createUser(req, res) {
       });
     } else {
       // generate the id and pass to a user
-      var user1 = new _user.default(id, name, email, password); //execute(queries.registerUser,[user1.id,user1.name,user1.email,user1.password]);
-
-      users.push(user1);
-      res.send({
-        message: 'user registered successfully',
-        user1: user1
-      });
+      var user1 = new _user.default(id, name, email, password);
+      var promise = (0, _connection.default)(_sqlQueries.default.registerUser, [user1.name, user1.email, user1.password]);
+      promise.then(function (response) {
+        res.status(200).send({
+          message: "usercreated successfully",
+          user1: user1
+        });
+      }).catch(function (error) {
+        console.log(error);
+      }); // users.push(user1);
+      // res.send({ message: 'user registered successfully', user1 });
     }
   }
 }; // send sign up page.
@@ -80,24 +88,26 @@ var createUser = function createUser(req, res) {
 
 
 var getUser = function getUser(req, res) {
-  var id = parseInt(req.params.id);
-  var specificUser = users.find(function (item) {
-    return item.id === id;
-  }); //let specificUser = execute(queries.checkUser,[id]);
+  var id = parseInt(req.params.id); // const specificUser = users.find(item => item.id === id);
 
-  if (specificUser) {
-    res.status(200).send(specificUser);
-  } else {
-    res.send({
-      message: 'There is no user with that id'
-    });
-  }
+  var specificUser = (0, _connection.default)("SELECT * FROM users WHERE id =$1", [id]);
+  specificUser.then(function (response) {
+    if (response) {
+      res.status(200).send(response[0]);
+    } else {
+      res.send({
+        message: 'There is no user with that id'
+      });
+    }
+  }).catch(function (error) {
+    return console.log(error);
+  });
 }; // Login data processing
 
 
 var login = function login(req, res) {
   var specificUser = users.find(function (user) {
-    //let specificUser = execute(queries.checkUser,[id])
+    // let specificUser = execute(queries.checkUser,[id])
     // replace the password given with the hashed password
     if (user.email === req.body.email && user.password === req.body) {
       return user;

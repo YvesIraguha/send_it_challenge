@@ -26,7 +26,7 @@ describe('It should test parcel creation', () => {
       };
       chai.request(app).post('/api/v1/parcels').send(parcel).end((error, res) => {
         if (error) done(error);
-        res.should.have.status(200);
+        res.should.have.status(201);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('The order was successfully created');
         res.body.should.have.property('order');
@@ -50,7 +50,7 @@ describe('It should test parcel creation', () => {
       };
       chai.request(app).post('/api/v1/parcels').send(parcel).end((error, res) => {
         if (error) done(error);
-        res.should.have.status(200);
+        res.should.have.status(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('Invalid weight, the weight should be number');
         done();
@@ -67,7 +67,7 @@ describe('It should test parcel creation', () => {
       };
       chai.request(app).post('/api/v1/parcels').send(parcel).end((error, res) => {
         if (error) done(error);
-        res.should.have.status(200);
+        res.should.have.status(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('Invalid name, the name should start with a letter');
         done();
@@ -84,7 +84,7 @@ describe('It should test parcel creation', () => {
       };
       chai.request(app).post('/api/v1/parcels').send(parcel).end((error, res) => {
         if (error) done(error);
-        res.should.have.status(200);
+        res.should.have.status(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('Invalid origin, the origin should be a place');
         done();
@@ -101,7 +101,7 @@ describe('It should test parcel creation', () => {
       };
       chai.request(app).post('/api/v1/parcels').send(parcel).end((error, res) => {
         if (error) done(error);
-        res.should.have.status(200);
+        res.should.have.status(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('Invalid destination, the destination should be a place');
         done();
@@ -120,7 +120,7 @@ describe('It should test parcel creation', () => {
       };
       chai.request(app).post('/api/v1/parcels').send(parcel).end((error, res) => {
         if (error) done(error);
-        // res.should.have.status(200);
+        res.should.have.status(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('Please provide all the required fields');
         done();
@@ -135,7 +135,7 @@ describe('It should test parcel creation', () => {
       };
       chai.request(app).post('/api/v1/parcels').send(parcel).end((error, res) => {
         if (error) done(error);
-        // res.should.have.status(201);
+        res.should.have.status(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('Please provide all the required fields');
         done();
@@ -150,7 +150,7 @@ describe('It should test parcel creation', () => {
       };
       chai.request(app).post('/api/v1/parcels').send(parcel).end((error, res) => {
         if (error) done(error);
-        // res.should.have.status(201);
+        res.should.have.status(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('Please provide all the required fields');
         done();
@@ -165,7 +165,7 @@ describe('It should test parcel creation', () => {
       };
       chai.request(app).post('/api/v1/parcels').send(parcel).end((error, res) => {
         if (error) done(error);
-        // res.should.have.status(201);
+        res.should.have.status(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('Please provide all the required fields');
         done();

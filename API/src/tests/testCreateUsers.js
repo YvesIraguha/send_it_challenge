@@ -10,8 +10,8 @@ chai.use(chaiHttp);
 
 describe('It should test creating a user', () => {
   it('Created user successfully', (done) => {
-    let user = {
-      id:1,
+    const user = {
+      id: 1,
       name: 'Yves Iraguha',
       email: 'alfheaagd@gmail.com',
       password: 'afhasiujfsia',
@@ -28,8 +28,8 @@ describe('It should test creating a user', () => {
   });
   describe('Should test invalid fields', () => {
     it('An invalid name error', (done) => {
-      let user = {
-        id:1,
+      const user = {
+        id: 1,
         name: '121231231',
         email: 'afafhag@gmail.com',
         password: 'afafsafgafsdf',
@@ -41,8 +41,8 @@ describe('It should test creating a user', () => {
       });
     });
     it('An invalid email error', (done) => {
-      let user = {
-        id:1,
+      const user = {
+        id: 1,
         name: 'Yves Iraguha',
         email: '1221afhafhahf@gmail.com',
         password: 'afafsafgafsdf',
@@ -56,8 +56,8 @@ describe('It should test creating a user', () => {
   });
   describe('It should test missing fields errors', () => {
     it('A missing name error', (done) => {
-      let user = {
-        id:1,
+      const user = {
+        id: 1,
         email: 'afafafaf@gmail.com',
         password: 'afhafha',
       };
@@ -69,8 +69,8 @@ describe('It should test creating a user', () => {
       });
     });
     it('A missing email error', (done) => {
-      let user = {
-        id:1,
+      const user = {
+        id: 1,
         name: 'Yves Iraguha',
         password: 'afhafha',
       };
@@ -82,8 +82,8 @@ describe('It should test creating a user', () => {
       });
     });
     it('A missing password error', (done) => {
-     let user = {
-        id:1,
+      const user = {
+        id: 1,
         name: 'Yves Iraguha',
         email: 'afafafaf@gmail.com',
       };

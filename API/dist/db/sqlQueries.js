@@ -7,27 +7,27 @@ exports.default = void 0;
 
 require("babel-polyfill");
 
-var sqlQueries = {}; //Create table for parcels 
+var sqlQueries = {}; // Create table for parcels
 
-var createParcelsTable = "CREATE TABLE parcels (id SERIAL PRIMARY KEY,  name VARCHAR(20) NOT NULL,  origin VARCHAR(20) NOT NULL,  destination VARCHAR(20) NOT NULL,  weight INT NOT NULL,  price INT NOT NULL \n    )"; //Create users table 
+var createParcelsTable = "CREATE TABLE parcels (id SERIAL PRIMARY KEY,  name VARCHAR(20) NOT NULL,  origin VARCHAR(20) NOT NULL,  destination VARCHAR(20) NOT NULL,  weight INT NOT NULL,  price INT NOT NULL, presentLocation VARCHAR(20) NOT NULL, status VARCHAR(20))"; // Create users table
 
-var createusersTable = "CREATE TABLE users(id  SERIAL PRIMARY KEY,  name VARCHAR(20) NOT NULL,  email VARCHAR(20) NOT NULL,  password VARCHAR(20) NOT NULL \n    )"; //insert parcel into the database 
+var createusersTable = "CREATE TABLE users(id  SERIAL PRIMARY KEY,  name VARCHAR(20) NOT NULL,  email VARCHAR(20) NOT NULL,  password VARCHAR(20) NOT NULL \n    )"; // insert parcel into the database
 
-var insertIntoDatabase = "INSERT INTO parcels (id, name, origin, destination, weight, price) VALUES($1,$2,$3,$4,$5,$6)"; //Pull out a prcel from a database 
+var insertIntoDatabase = 'INSERT INTO parcels (id, name, origin, destination, weight, price, presentLocation) VALUES($1,$2,$3,$4,$5,$6,$7)'; // Pull out a prcel from a database
 
-var getSpecificParcel = "SELECT * FROM parcels WHERE id =$1 "; //Update status of a parcel 
+var getSpecificParcel = 'SELECT * FROM parcels WHERE id =$1 '; // Update status of a parcel
 
-var statusUpdate = "UPDATE parcels SET status = $1 WHERE id = $2"; //update destination of a parcel 
+var statusUpdate = 'UPDATE parcels SET status = $1 WHERE id = $2'; // update destination of a parcel
 
-var destinationUpdate = "UPDATE parcels SET destination = $1 WHERE id = $2\n"; //update present location 
+var destinationUpdate = "UPDATE parcels SET destination = $1 WHERE id = $2\n"; // update present location
 
-var presentLocationUpdate = "UPDATE parcels SET presentLocation = $1 WHERE id =$2"; //register user 
+var presentLocationUpdate = 'UPDATE parcels SET presentLocation = $1 WHERE id =$2'; // register user
 
-var registerUser = " INSERT INTO users (name, email, password) VALUES ($1,$2,$3)"; //Check if a user is logged 
+var registerUser = ' INSERT INTO users (name, email, password) VALUES ($1,$2,$3)'; // Check if a user is logged in
 
-var checkUSer = "SELECT * FROM users WHERE id = $id"; //SELECT orders that belongs to a particular user
+var checkUSer = 'SELECT * FROM users WHERE id = $id'; // SELECT orders that belongs to a particular user
 
-var ordersForUser = "SELECT * FROM parcels JOIN users on players.userid = users.id WHERE players.usid =$1";
+var ordersForUser = 'SELECT * FROM parcels JOIN users on players.userid = users.id WHERE players.usid =$1';
 sqlQueries.checkUSer = checkUSer;
 sqlQueries.createParcelsTable = createParcelsTable;
 sqlQueries.createusersTable = createusersTable;

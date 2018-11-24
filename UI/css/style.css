@@ -26,7 +26,7 @@ li a {
 li a:hover {
     background-color: #111;
 }
-#signup, #signin,#userProfile{	
+#signup, #signin{	
 	border: 2px solid green;
 	padding:20px;
 	width:400px;
@@ -35,6 +35,13 @@ li a:hover {
 	background-color: white;
 }
 
+#userProfile{	
+	border: 2px solid green;
+	width:80%;
+	padding:30px;
+	margin:100px auto;
+	background-color: white;
+}
 
 #delivary, #adminDelivary,#homePage {
 	border: 3px solid #ddd;

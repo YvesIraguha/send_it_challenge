@@ -10,7 +10,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var should = _chai.default.should();
 
-beforeEach('Create a data in database', function (done) {
+beforeEach('Create a data in memory', function (done) {
   var order = {
     name: 'Socks',
     origin: 'Kabarore',
@@ -25,7 +25,7 @@ beforeEach('Create a data in database', function (done) {
   });
 });
 describe('It should test fetching parcels ', function () {
-  beforeEach(function (done) {
+  before('Create a record', function (done) {
     var parcel = {
       name: 'T-shirts',
       origin: 'Kabarore',

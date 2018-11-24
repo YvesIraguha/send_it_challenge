@@ -5,7 +5,7 @@ import app from '../app';
 
 
 const should = chai.should();
-beforeEach('Create a data in database', (done) => {
+beforeEach('Create a data in memory', (done) => {
   const order = {
     name: 'Socks',
     origin: 'Kabarore',
@@ -20,7 +20,7 @@ beforeEach('Create a data in database', (done) => {
 });
 
 describe('It should test fetching parcels ', () => {
-  beforeEach((done) => {
+  before('Create a record', (done) => {
     const parcel = {
       name: 'T-shirts',
       origin: 'Kabarore',
