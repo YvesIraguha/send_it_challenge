@@ -11,24 +11,24 @@ const createusersTable = `CREATE TABLE users(id  SERIAL PRIMARY KEY,  name VARCH
 
 
 // insert parcel into the database
-const insertIntoDatabase = 'INSERT INTO parcels (id, name, origin, destination, weight, price, presentLocation) VALUES($1,$2,$3,$4,$5,$6,$7)';
+const insertIntoDatabase = 'INSERT INTO parcels (id, name, origin, destination, weight, price, presentLocation) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING * ';
 
 // Pull out a prcel from a database
 const getSpecificParcel = 'SELECT * FROM parcels WHERE id =$1 ';
 
 // Update status of a parcel
-const statusUpdate = 'UPDATE parcels SET status = $1 WHERE id = $2';
+const statusUpdate = 'UPDATE parcels SET status = $1 WHERE id = $2 RETURNING * ';
 
 // update destination of a parcel
-const destinationUpdate = `UPDATE parcels SET destination = $1 WHERE id = $2
+const destinationUpdate = `UPDATE parcels SET destination = $1 WHERE id = $2 RETURNING *
 `;
 
 // update present location
-const presentLocationUpdate = 'UPDATE parcels SET presentLocation = $1 WHERE id =$2';
+const presentLocationUpdate = 'UPDATE parcels SET presentLocation = $1 WHERE id =$2 RETURNING * ';
 
 
 // register user
-const registerUser = ' INSERT INTO users (name, email, password) VALUES ($1,$2,$3)';
+const registerUser = ' INSERT INTO users (name, email, password) VALUES ($1,$2,$3) RETURNING *';
 // Check if a user is logged in
 const checkUSer = 'SELECT * FROM users WHERE id = $id';
 

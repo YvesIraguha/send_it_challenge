@@ -9,11 +9,11 @@ dotenv.config();
 // instantiate the connection string
 // const connectionString
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'sendit',
-  port: 5432,
-  password: 'airaguha',
+  user:process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database:process.env.DB_NAME,
+  port: process.env.DB_PORT,
+  password: process.env.DB_PASSWORD,
 });
 
 const connect = async () => pool.connect();

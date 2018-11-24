@@ -28,7 +28,7 @@ app.use(_express.default.urlencoded({
 app.use('/api/v1', _parcels.default);
 app.use('/api/v1/users', _users.default); // Set the port for listening on.
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT;
 app.listen(port); // export the app for testing
 
 var _default = app;
