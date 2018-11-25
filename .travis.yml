@@ -1,6 +1,8 @@
 language: node_js
 node_js:
   - "stable"
+addons:
+  postgresql: "9.6"
 services:
   - postgresql
 cache:
@@ -8,14 +10,9 @@ cache:
     - "node_modules"
 before_install:
   - npm i -g npm@6.4.1
-before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
+  - psql -c 'create database sendit;' -U postgres
 script: npm test
 after_success:
   - npm run coveralls
-env:
-- DB_USER='postgres'
-- DB_PASSWORD=''
-- DB_NAME= travis_ci_test 
-  
+
  
