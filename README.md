@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/YvesIraguha/send_it_challenge.svg?branch=master)](https://travis-ci.com/YvesIraguha/send_it_challenge)
+[![Build Status](https://travis-ci.com/YvesIraguha/send_it_challenge.svg?branch=master)](https://travis-ci.com/YvesIraguha/send_it_challenge) [![Coverage Status](https://coveralls.io/repos/github/YvesIraguha/send_it_challenge/badge.svg?branch=ch-setup-database-162110606)](https://coveralls.io/github/YvesIraguha/send_it_challenge?branch=ch-setup-database-162110606)
 # send_it_challenge
 SendIT is a courier service that helps users deliver parcels to different destinations. SendIt provides courier quotes on weight categories. 
 
