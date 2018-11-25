@@ -18,22 +18,24 @@ describe('It should test parcel creation', () => {
   describe('Successful order creation', () => {
     it('It should acknowledge that parcel was created with created object', (done) => {
       const parcel = {
+        id: 1,
         name: 'T-shirts',
         origin: 'Kabarore',
         destination: 'Muramba',
         userId: 3,
-        weight: 0.3,
+        weight: 3,
       };
       chai.request(app).post('/api/v1/parcels').send(parcel).end((error, res) => {
         if (error) done(error);
         res.should.have.status(201);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('The order was successfully created');
-        res.body.should.have.property('order');
-        res.body.order.should.have.property('name').eql('T-shirts');
-        res.body.order.should.have.property('origin').eql('Kabarore');
-        res.body.order.should.have.property('destination').eql('Muramba');
-        res.body.order.should.have.property('userId').eql(3);
+        res.body.should.have.property('response');
+        res.body.response.should.have.property('name').eql('T-shirts');
+        res.body.response.should.have.property('origin').eql('Kabarore');
+        res.body.response.should.have.property('destination').eql('Muramba');
+        res.body.response.should.have.property('userid').eql(3);
+        res.body.response.should.have.property('price').eql(300);
         done();
       });
     });
@@ -42,6 +44,7 @@ describe('It should test parcel creation', () => {
   describe('invalid input', () => {
     it('It should display an invalid weight error', (done) => {
       const parcel = {
+        id: 1,
         name: 'Tshirts',
         origin: 'Matambi',
         destination: 'Muramba',
@@ -59,6 +62,7 @@ describe('It should test parcel creation', () => {
 
     it('It should display an invalid name error', (done) => {
       const parcel = {
+        id: 1,
         name: '123455',
         origin: 'Matambi',
         destination: 'Muramba',
@@ -76,6 +80,7 @@ describe('It should test parcel creation', () => {
 
     it('It should display an invalid origin error', (done) => {
       const parcel = {
+        id: 1,
         name: 'Tshirts',
         origin: '12345',
         destination: 'Muramba',
@@ -93,6 +98,7 @@ describe('It should test parcel creation', () => {
 
     it('It should display an invalid destination error', (done) => {
       const parcel = {
+        id: 1,
         name: 'Tshirts',
         origin: 'Kabarore',
         destination: '122331',
@@ -113,6 +119,7 @@ describe('It should test parcel creation', () => {
   describe('Absence of a field', () => {
     it('It should display a missing name error', (done) => {
       const parcel = {
+        id: 1,
         origin: 'Matambi',
         destination: 'Muramba',
         userId: 3,
@@ -128,6 +135,7 @@ describe('It should test parcel creation', () => {
     });
     it('It should display missing origin error', (done) => {
       const parcel = {
+        id: 1,
         name: 'T-shirts',
         destination: 'Muramba',
         userId: 3,
@@ -143,6 +151,7 @@ describe('It should test parcel creation', () => {
     });
     it('It should display missing destination error', (done) => {
       const parcel = {
+        id: 1,
         name: 'T-shirts',
         origin: 'Matambi',
         userId: 3,
@@ -158,6 +167,7 @@ describe('It should test parcel creation', () => {
     });
     it('It should display missing userId error', (done) => {
       const parcel = {
+        id: 1,
         name: 'T-shirts',
         origin: 'Matambi',
         destination: 'Kigali',

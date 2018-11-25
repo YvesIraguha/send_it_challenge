@@ -12,11 +12,17 @@ var should = _chai.default.should();
 
 _chai.default.use(_chaiHttp.default);
 
+beforeEach('Clear data from database', function (done) {
+  _chai.default.request(_app.default).delete('/api/v1/users').end(function (error, res) {
+    if (error) done(error);
+    done();
+  });
+});
 describe('It should test creating a user', function () {
   it('Created user successfully', function (done) {
     var user = {
       id: 1,
-      name: 'Yves Iraguha',
+      name: 'Yves',
       email: 'alfheaagd@gmail.com',
       password: 'afhasiujfsia'
     };
@@ -25,9 +31,9 @@ describe('It should test creating a user', function () {
       if (error) done(error);
       res.body.should.be.a('object');
       res.body.should.have.property('message').eql('user registered successfully');
-      res.body.user1.should.have.property('name').eql('Yves Iraguha');
-      res.body.user1.should.have.property('email').eql('alfheaagd@gmail.com');
-      res.body.user1.should.have.property('password').eql('afhasiujfsia');
+      res.body.response.should.have.property('name').eql('Yves');
+      res.body.response.should.have.property('email').eql('alfheaagd@gmail.com');
+      res.body.response.should.have.property('password').eql('afhasiujfsia');
       done();
     });
   });

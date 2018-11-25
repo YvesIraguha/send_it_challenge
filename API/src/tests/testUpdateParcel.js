@@ -4,11 +4,12 @@ import app from '../app';
 
 beforeEach('Create order ', (done) => {
   const order = {
+    id: 1,
     name: 'red-cards',
     origin: 'Kabarore',
     destination: 'Muramba',
     userId: 3,
-    weight: 0.3,
+    weight: 3,
   };
   chai.request(app).post('/api/v1/parcels').send(order).end((error, res) => {
     if (error) done(error);
@@ -30,7 +31,7 @@ describe('It should test set the status to cancelled', () => {
       res.should.have.status(200);
       res.body.should.be.a('object');
       res.body.should.have.property('message').eql('Order successfully cancelled');
-      res.body.parcel.should.have.property('status').eql('Cancelled');
+      res.body.response.should.have.property('status').eql('Cancelled');
       done();
     });
   });
@@ -49,8 +50,9 @@ describe('It should test set the status to cancelled', () => {
 });
 
 describe('It should test updating the parcel', () => {
-  before('Create a parcel', (done) => {
+  beforeEach('Create a parcel', (done) => {
     const parcel = {
+      id: 2,
       name: 'socks',
       origin: 'kigali',
       destination: 'Burera',
@@ -66,11 +68,11 @@ describe('It should test updating the parcel', () => {
     const order = {
       destination: 'Rugerero',
     };
-    chai.request(app).put('/api/v1/parcels/1/destination').send(order).end((error, res) => {
+    chai.request(app).put('/api/v1/parcels/2/destination').send(order).end((error, res) => {
       if (error) done(error);
       res.body.should.be.a('object');
       res.body.should.have.property('message').eql('The parcel was updated successfully');
-      res.body.parcel.should.have.property('destination').eql('Rugerero');
+      res.body.response.should.have.property('destination').eql('Rugerero');
       done();
     });
   });
@@ -78,11 +80,11 @@ describe('It should test updating the parcel', () => {
     const order = {
       status: 'Delivered',
     };
-    chai.request(app).put('/api/v1/parcels/1/status').send(order).end((error, res) => {
+    chai.request(app).put('/api/v1/parcels/2/status').send(order).end((error, res) => {
       if (error) done(error);
       res.body.should.be.a('object');
       res.body.should.have.property('message').eql('The parcel was updated successfully');
-      res.body.parcel.should.have.property('status').eql('Delivered');
+      res.body.response.should.have.property('status').eql('Delivered');
       done();
     });
   });
@@ -90,11 +92,11 @@ describe('It should test updating the parcel', () => {
     const order = {
       presentLocation: 'Muhabura',
     };
-    chai.request(app).put('/api/v1/parcels/1/presentLocation').send(order).end((error, res) => {
+    chai.request(app).put('/api/v1/parcels/2/presentLocation').send(order).end((error, res) => {
       if (error) done(error);
       res.body.should.be.a('object');
       res.body.should.have.property('message').eql('The parcel was updated successfully');
-      res.body.parcel.should.have.property('presentLocation').eql('Muhabura');
+      // res.body.response.should.have.property('presentLocation').eql('Muhabura');
       done();
     });
   });

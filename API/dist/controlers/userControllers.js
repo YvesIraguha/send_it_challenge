@@ -20,7 +20,7 @@ var users = [];
 var userControllers = {}; // fetch all users.
 
 var fetchAllUsers = function fetchAllUsers(req, res) {
-  var users = (0, _connection.default)("SELECT * FROM users");
+  var users = (0, _connection.default)('SELECT * FROM users');
   users.then(function (response) {
     if (response.length > 0) {
       res.send(response);
@@ -40,17 +40,14 @@ var createUser = function createUser(req, res) {
       id = _req$body.id,
       name = _req$body.name,
       email = _req$body.email,
-      password = _req$body.password;
-  var specificUser = users.find(function (user) {
-    return user.email === email;
-  }); // let specificUser = execute(queries.checkuser,[id])
+      password = _req$body.password; // const specificUser = users.find(user => user.email === email);
+  // // let specificUser = execute(queries.checkuser,[id])
+  // if (specificUser) {
+  // XXX include the link to sign in with a message;
+  //   res.send({ message: 'The email is already in use' });
+  // } else
 
-  if (specificUser) {
-    // XXX include the link to sign in with a message;
-    res.send({
-      message: 'The email is already in use'
-    });
-  } else if (!name || !email || !password) {
+  if (!name || !email || !password) {
     res.send({
       message: 'Please complete the required fields'
     });
@@ -68,11 +65,11 @@ var createUser = function createUser(req, res) {
     } else {
       // generate the id and pass to a user
       var user1 = new _user.default(id, name, email, password);
-      var promise = (0, _connection.default)(_sqlQueries.default.registerUser, [user1.name, user1.email, user1.password]);
+      var promise = (0, _connection.default)(_sqlQueries.default.registerUser, [user1.id, user1.name, user1.email, user1.password]);
       promise.then(function (response) {
         res.status(200).send({
-          message: "usercreated successfully",
-          user1: user1
+          message: 'user registered successfully',
+          response: response[0]
         });
       }).catch(function (error) {
         console.log(error);
@@ -90,7 +87,7 @@ var createUser = function createUser(req, res) {
 var getUser = function getUser(req, res) {
   var id = parseInt(req.params.id); // const specificUser = users.find(item => item.id === id);
 
-  var specificUser = (0, _connection.default)("SELECT * FROM users WHERE id =$1", [id]);
+  var specificUser = (0, _connection.default)('SELECT * FROM users WHERE id =$1', [id]);
   specificUser.then(function (response) {
     if (response) {
       res.status(200).send(response[0]);
@@ -149,11 +146,27 @@ var signOut = function signOut(req, res) {
   res.end('Invalid login');
 };
 
+var deleteUsers = function deleteUsers(req, res) {
+  var parcels = (0, _connection.default)('DELETE FROM users '); // orders = [];
+
+  parcels.then(function (response) {
+    res.status(200).send({
+      message: 'Orders deleted successfully',
+      response: response
+    });
+  }).catch(function (error) {
+    res.status(400).send({
+      error: error
+    });
+  });
+};
+
 userControllers.fetchAllUsers = fetchAllUsers;
 userControllers.getUser = getUser;
 userControllers.createUser = createUser;
 userControllers.loginRequired = loginRequired;
 userControllers.login = login;
 userControllers.signOut = signOut;
+userControllers.deleteUsers = deleteUsers;
 var _default = userControllers;
 exports.default = _default;

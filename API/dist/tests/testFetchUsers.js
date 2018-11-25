@@ -12,9 +12,10 @@ var should = _chai.default.should();
 
 _chai.default.use(_chaiHttp.default);
 
-beforeEach('Create data', function (done) {
+before('Create data', function (done) {
   var user = {
-    name: 'Yves Iragua',
+    id: 1,
+    name: 'Yves',
     email: 'iraguhaivos@gmail.com',
     password: 'whafhafha'
   };
@@ -29,7 +30,7 @@ describe('It should test fetching all users', function () {
     _chai.default.request(_app.default).get('/api/v1/users').end(function (error, res) {
       if (error) done(error);
       res.should.have.status(200);
-      res.body.should.be.a('array');
+      res.body.should.be.a('object');
       done();
     });
   });

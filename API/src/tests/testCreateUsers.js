@@ -7,12 +7,17 @@ import app from '../app';
 const should = chai.should();
 
 chai.use(chaiHttp);
-
+beforeEach('Clear data from database', (done) => {
+  chai.request(app).delete('/api/v1/users').end((error, res) => {
+    if (error) done(error);
+    done();
+  });
+});
 describe('It should test creating a user', () => {
   it('Created user successfully', (done) => {
     const user = {
       id: 1,
-      name: 'Yves Iraguha',
+      name: 'Yves',
       email: 'alfheaagd@gmail.com',
       password: 'afhasiujfsia',
     };
@@ -20,9 +25,9 @@ describe('It should test creating a user', () => {
       if (error) done(error);
       res.body.should.be.a('object');
       res.body.should.have.property('message').eql('user registered successfully');
-      res.body.user1.should.have.property('name').eql('Yves Iraguha');
-      res.body.user1.should.have.property('email').eql('alfheaagd@gmail.com');
-      res.body.user1.should.have.property('password').eql('afhasiujfsia');
+      res.body.response.should.have.property('name').eql('Yves');
+      res.body.response.should.have.property('email').eql('alfheaagd@gmail.com');
+      res.body.response.should.have.property('password').eql('afhasiujfsia');
       done();
     });
   });

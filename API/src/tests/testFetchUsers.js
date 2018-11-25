@@ -8,9 +8,10 @@ const should = chai.should();
 
 chai.use(chaiHttp);
 
-beforeEach('Create data', (done) => {
+before('Create data', (done) => {
   const user = {
-    name: 'Yves Iragua',
+    id:1,
+    name: 'Yves',
     email: 'iraguhaivos@gmail.com',
     password: 'whafhafha',
   };
@@ -25,7 +26,7 @@ describe('It should test fetching all users', () => {
     chai.request(app).get('/api/v1/users').end((error, res) => {
       if (error) done(error);
       res.should.have.status(200);
-      res.body.should.be.a('array');
+      res.body.should.be.a('object');
       done();
     });
   });
