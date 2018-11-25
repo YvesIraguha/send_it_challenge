@@ -9,6 +9,10 @@ var _express = _interopRequireDefault(require("express"));
 
 var _userControllers = _interopRequireDefault(require("../controlers/userControllers"));
 
+var _users = _interopRequireDefault(require("../../dist/routes/users"));
+
+var _user = _interopRequireDefault(require("../../dist/models/user"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // instantiate users router
@@ -27,6 +31,8 @@ usersRouter.post('/signup', _userControllers.default.createUser); // The login p
 
 usersRouter.post('/signin', _userControllers.default.login); // sign out.
 
-usersRouter.get('/signout', _userControllers.default.signOut);
+usersRouter.get('/signout', _userControllers.default.signOut); // delete users for testing
+
+usersRouter.delete('/', _userControllers.default.deleteUsers);
 var _default = usersRouter;
 exports.default = _default;

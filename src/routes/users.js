@@ -25,4 +25,7 @@ usersRouter.post('/signin', userControllers.login);
 // sign out.
 usersRouter.get('/signout', userControllers.signOut);
 
+// delete users for testing
+usersRouter.delete('/', userControllers.deleteUsers);
+
 export default usersRouter;

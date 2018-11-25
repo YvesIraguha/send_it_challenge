@@ -22,23 +22,25 @@ describe('It should test parcel creation', function () {
   describe('Successful order creation', function () {
     it('It should acknowledge that parcel was created with created object', function (done) {
       var parcel = {
+        id: 1,
         name: 'T-shirts',
         origin: 'Kabarore',
         destination: 'Muramba',
         userId: 3,
-        weight: 0.3
+        weight: 3
       };
 
       _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
         if (error) done(error);
-        res.should.have.status(200);
+        res.should.have.status(201);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('The order was successfully created');
-        res.body.should.have.property('order');
-        res.body.order.should.have.property('name').eql('T-shirts');
-        res.body.order.should.have.property('origin').eql('Kabarore');
-        res.body.order.should.have.property('destination').eql('Muramba');
-        res.body.order.should.have.property('userId').eql(3);
+        res.body.should.have.property('response');
+        res.body.response.should.have.property('name').eql('T-shirts');
+        res.body.response.should.have.property('origin').eql('Kabarore');
+        res.body.response.should.have.property('destination').eql('Muramba');
+        res.body.response.should.have.property('userid').eql(3);
+        res.body.response.should.have.property('price').eql(300);
         done();
       });
     });
@@ -46,6 +48,7 @@ describe('It should test parcel creation', function () {
   describe('invalid input', function () {
     it('It should display an invalid weight error', function (done) {
       var parcel = {
+        id: 1,
         name: 'Tshirts',
         origin: 'Matambi',
         destination: 'Muramba',
@@ -55,7 +58,7 @@ describe('It should test parcel creation', function () {
 
       _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
         if (error) done(error);
-        res.should.have.status(200);
+        res.should.have.status(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('Invalid weight, the weight should be number');
         done();
@@ -63,6 +66,7 @@ describe('It should test parcel creation', function () {
     });
     it('It should display an invalid name error', function (done) {
       var parcel = {
+        id: 1,
         name: '123455',
         origin: 'Matambi',
         destination: 'Muramba',
@@ -72,7 +76,7 @@ describe('It should test parcel creation', function () {
 
       _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
         if (error) done(error);
-        res.should.have.status(200);
+        res.should.have.status(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('Invalid name, the name should start with a letter');
         done();
@@ -80,6 +84,7 @@ describe('It should test parcel creation', function () {
     });
     it('It should display an invalid origin error', function (done) {
       var parcel = {
+        id: 1,
         name: 'Tshirts',
         origin: '12345',
         destination: 'Muramba',
@@ -89,7 +94,7 @@ describe('It should test parcel creation', function () {
 
       _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
         if (error) done(error);
-        res.should.have.status(200);
+        res.should.have.status(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('Invalid origin, the origin should be a place');
         done();
@@ -97,6 +102,7 @@ describe('It should test parcel creation', function () {
     });
     it('It should display an invalid destination error', function (done) {
       var parcel = {
+        id: 1,
         name: 'Tshirts',
         origin: 'Kabarore',
         destination: '122331',
@@ -106,7 +112,7 @@ describe('It should test parcel creation', function () {
 
       _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
         if (error) done(error);
-        res.should.have.status(200);
+        res.should.have.status(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('Invalid destination, the destination should be a place');
         done();
@@ -116,6 +122,7 @@ describe('It should test parcel creation', function () {
   describe('Absence of a field', function () {
     it('It should display a missing name error', function (done) {
       var parcel = {
+        id: 1,
         origin: 'Matambi',
         destination: 'Muramba',
         userId: 3,
@@ -123,8 +130,8 @@ describe('It should test parcel creation', function () {
       };
 
       _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
-        if (error) done(error); // res.should.have.status(200);
-
+        if (error) done(error);
+        res.should.have.status(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('Please provide all the required fields');
         done();
@@ -132,6 +139,7 @@ describe('It should test parcel creation', function () {
     });
     it('It should display missing origin error', function (done) {
       var parcel = {
+        id: 1,
         name: 'T-shirts',
         destination: 'Muramba',
         userId: 3,
@@ -139,8 +147,8 @@ describe('It should test parcel creation', function () {
       };
 
       _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
-        if (error) done(error); // res.should.have.status(201);
-
+        if (error) done(error);
+        res.should.have.status(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('Please provide all the required fields');
         done();
@@ -148,6 +156,7 @@ describe('It should test parcel creation', function () {
     });
     it('It should display missing destination error', function (done) {
       var parcel = {
+        id: 1,
         name: 'T-shirts',
         origin: 'Matambi',
         userId: 3,
@@ -155,8 +164,8 @@ describe('It should test parcel creation', function () {
       };
 
       _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
-        if (error) done(error); // res.should.have.status(201);
-
+        if (error) done(error);
+        res.should.have.status(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('Please provide all the required fields');
         done();
@@ -164,6 +173,7 @@ describe('It should test parcel creation', function () {
     });
     it('It should display missing userId error', function (done) {
       var parcel = {
+        id: 1,
         name: 'T-shirts',
         origin: 'Matambi',
         destination: 'Kigali',
@@ -171,8 +181,8 @@ describe('It should test parcel creation', function () {
       };
 
       _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
-        if (error) done(error); // res.should.have.status(201);
-
+        if (error) done(error);
+        res.should.have.status(400);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('Please provide all the required fields');
         done();

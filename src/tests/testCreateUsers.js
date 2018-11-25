@@ -7,12 +7,17 @@ import app from '../app';
 const should = chai.should();
 
 chai.use(chaiHttp);
-
+beforeEach('Clear data from database', (done) => {
+  chai.request(app).delete('/api/v1/users').end((error, res) => {
+    if (error) done(error);
+    done();
+  });
+});
 describe('It should test creating a user', () => {
   it('Created user successfully', (done) => {
-    let user = {
-      id:1,
-      name: 'Yves Iraguha',
+    const user = {
+      id: 1,
+      name: 'Yves',
       email: 'alfheaagd@gmail.com',
       password: 'afhasiujfsia',
     };
@@ -20,16 +25,16 @@ describe('It should test creating a user', () => {
       if (error) done(error);
       res.body.should.be.a('object');
       res.body.should.have.property('message').eql('user registered successfully');
-      res.body.user1.should.have.property('name').eql('Yves Iraguha');
-      res.body.user1.should.have.property('email').eql('alfheaagd@gmail.com');
-      res.body.user1.should.have.property('password').eql('afhasiujfsia');
+      res.body.response.should.have.property('name').eql('Yves');
+      res.body.response.should.have.property('email').eql('alfheaagd@gmail.com');
+      res.body.response.should.have.property('password').eql('afhasiujfsia');
       done();
     });
   });
   describe('Should test invalid fields', () => {
     it('An invalid name error', (done) => {
-      let user = {
-        id:1,
+      const user = {
+        id: 1,
         name: '121231231',
         email: 'afafhag@gmail.com',
         password: 'afafsafgafsdf',
@@ -41,8 +46,8 @@ describe('It should test creating a user', () => {
       });
     });
     it('An invalid email error', (done) => {
-      let user = {
-        id:1,
+      const user = {
+        id: 1,
         name: 'Yves Iraguha',
         email: '1221afhafhahf@gmail.com',
         password: 'afafsafgafsdf',
@@ -56,8 +61,8 @@ describe('It should test creating a user', () => {
   });
   describe('It should test missing fields errors', () => {
     it('A missing name error', (done) => {
-      let user = {
-        id:1,
+      const user = {
+        id: 1,
         email: 'afafafaf@gmail.com',
         password: 'afhafha',
       };
@@ -69,8 +74,8 @@ describe('It should test creating a user', () => {
       });
     });
     it('A missing email error', (done) => {
-      let user = {
-        id:1,
+      const user = {
+        id: 1,
         name: 'Yves Iraguha',
         password: 'afhafha',
       };
@@ -82,8 +87,8 @@ describe('It should test creating a user', () => {
       });
     });
     it('A missing password error', (done) => {
-     let user = {
-        id:1,
+      const user = {
+        id: 1,
         name: 'Yves Iraguha',
         email: 'afafafaf@gmail.com',
       };

@@ -14,7 +14,7 @@ app.use('/api/v1', parcelsRouter);
 app.use('/api/v1/users', usersRouter);
 
 // Set the port for listening on.
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 app.listen(port);
 
 // export the app for testing
