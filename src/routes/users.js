@@ -1,5 +1,7 @@
 import express from 'express';
 import userControllers from '../controlers/userControllers';
+import users from '../../dist/routes/users';
+import user from '../../dist/models/user';
 
 // instantiate users router
 const usersRouter = express.Router();
