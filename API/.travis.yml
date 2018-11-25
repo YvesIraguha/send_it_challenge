@@ -1,11 +1,15 @@
 language: node_js
 node_js:
   - "stable"
+services:
+  - postgresql
 cache:
   directories:
     - "node_modules"
 before_install:
   - npm i -g npm@6.4.1
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
 script: npm test
-# after_success:
-#   - npm run coveralls
+after_success:
+  - npm run coveralls

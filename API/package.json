@@ -4,9 +4,9 @@
   "description": "SENDIT is a courier service for sending parcels around different destinations, and the cost is calculated based on the weight of the order. ",
   "main": "app.js",
   "scripts": {
+    "pretest":"node ./dist/db/sqlQueries.js",
     "start": "nodemon ./dist/app.js",
     "test": "nyc mocha ./dist/tests/ --exit",
-    "cover": "nyc cover _mocha",
     "build": "babel src -d dist",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
