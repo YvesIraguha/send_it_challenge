@@ -7,27 +7,37 @@ exports.default = void 0;
 
 require("babel-polyfill");
 
-var sqlQueries = {}; //Create table for parcels 
+var _connection = _interopRequireDefault(require("./connection"));
 
-var createParcelsTable = "CREATE TABLE parcels (id SERIAL PRIMARY KEY,  name VARCHAR(20) NOT NULL,  origin VARCHAR(20) NOT NULL,  destination VARCHAR(20) NOT NULL,  weight INT NOT NULL,  price INT NOT NULL \n    )"; //Create users table 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var createusersTable = "CREATE TABLE users(id  SERIAL PRIMARY KEY,  name VARCHAR(20) NOT NULL,  email VARCHAR(20) NOT NULL,  password VARCHAR(20) NOT NULL \n    )"; //insert parcel into the database 
+var sqlQueries = {}; // Create table for parcels
 
-var insertIntoDatabase = "INSERT INTO parcels (id, name, origin, destination, weight, price) VALUES($1,$2,$3,$4,$5,$6)"; //Pull out a prcel from a database 
+var createParcelsTable = 'CREATE TABLE IF NOT EXISTS parcels (id SERIAL PRIMARY KEY,  name VARCHAR(20) NOT NULL,  origin VARCHAR(20) NOT NULL,  destination VARCHAR(20) NOT NULL,  weight INT NOT NULL,  price INT NOT NULL, presentLocation VARCHAR(20) NOT NULL, status VARCHAR(20), userId INT NOT NULL )'; // Create users table
 
-var getSpecificParcel = "SELECT * FROM parcels WHERE id =$1 "; //Update status of a parcel 
+var createusersTable = "CREATE TABLE IF NOT EXISTS users(id SERIAL PRIMARY KEY,  name VARCHAR(20) NOT NULL,  email VARCHAR(20) NOT NULL,  password VARCHAR(20) NOT NULL \n    )";
 
-var statusUpdate = "UPDATE parcels SET status = $1 WHERE id = $2"; //update destination of a parcel 
+if (require.main === module) {
+  (0, _connection.default)(createParcelsTable);
+  (0, _connection.default)(createusersTable);
+} // insert parcel into the database
 
-var destinationUpdate = "UPDATE parcels SET destination = $1 WHERE id = $2\n"; //update present location 
 
-var presentLocationUpdate = "UPDATE parcels SET presentLocation = $1 WHERE id =$2"; //register user 
+var insertIntoDatabase = 'INSERT INTO parcels (id, name, origin, destination, weight, price, presentLocation,userId) VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING * '; // Pull out a prcel from a database
 
-var registerUser = " INSERT INTO users (name, email, password) VALUES ($1,$2,$3)"; //Check if a user is logged 
+var getSpecificParcel = 'SELECT * FROM parcels WHERE id =$1 '; // Update status of a parcel
 
-var checkUSer = "SELECT * FROM users WHERE id = $id"; //SELECT orders that belongs to a particular user
+var statusUpdate = 'UPDATE parcels SET status = $1 WHERE id = $2 RETURNING * '; // update destination of a parcel
 
-var ordersForUser = "SELECT * FROM parcels JOIN users on players.userid = users.id WHERE players.usid =$1";
+var destinationUpdate = "UPDATE parcels SET destination = $1 WHERE id = $2 RETURNING *\n"; // update present location
+
+var presentLocationUpdate = 'UPDATE parcels SET presentLocation = $1 WHERE id =$2 RETURNING * '; // register user
+
+var registerUser = ' INSERT INTO users (id,name, email, password) VALUES ($1,$2,$3,$4) RETURNING *'; // Check if a user is logged in
+
+var checkUSer = 'SELECT * FROM users WHERE id = $id'; // SELECT orders that belongs to a particular user
+
+var ordersForUser = 'SELECT * FROM parcels WHERE userid=$1';
 sqlQueries.checkUSer = checkUSer;
 sqlQueries.createParcelsTable = createParcelsTable;
 sqlQueries.createusersTable = createusersTable;
