@@ -13,3 +13,9 @@ before_script:
 script: npm test
 after_success:
   - npm run coveralls
+env:
+  - DB_USER='postgres'
+  - DB_PASSWORD=''
+  - DB_NAME= travis_ci_test 
+  - DB_PORT=5433
+ 
