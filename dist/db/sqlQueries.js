@@ -15,7 +15,7 @@ var sqlQueries = {}; // Create table for parcels
 
 var createParcelsTable = 'CREATE TABLE IF NOT EXISTS parcels (id SERIAL PRIMARY KEY,  name VARCHAR(20) NOT NULL,  origin VARCHAR(20) NOT NULL,  destination VARCHAR(20) NOT NULL,  weight INT NOT NULL,  price INT NOT NULL, presentLocation VARCHAR(20) NOT NULL, status VARCHAR(20), userId INT NOT NULL )'; // Create users table
 
-var createusersTable = "CREATE TABLE IF NOT EXISTS users(id SERIAL PRIMARY KEY,  name VARCHAR(20) NOT NULL,  email VARCHAR(20) NOT NULL,  password VARCHAR(20) NOT NULL \n    )";
+var createusersTable = "CREATE TABLE IF NOT EXISTS users(id SERIAL PRIMARY KEY,  name VARCHAR(20) NOT NULL,  email VARCHAR(20) NOT NULL,  password VARCHAR(20) NOT NULL \n)";
 
 if (require.main === module) {
   (0, _connection.default)(createParcelsTable);

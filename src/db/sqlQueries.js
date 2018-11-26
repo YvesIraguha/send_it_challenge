@@ -8,7 +8,7 @@ const createParcelsTable = 'CREATE TABLE IF NOT EXISTS parcels (id SERIAL PRIMAR
 
 // Create users table
 const createusersTable = `CREATE TABLE IF NOT EXISTS users(id SERIAL PRIMARY KEY,  name VARCHAR(20) NOT NULL,  email VARCHAR(20) NOT NULL,  password VARCHAR(20) NOT NULL 
-    )`;
+)`;
 
 if (require.main === module) {
   execute(createParcelsTable);
