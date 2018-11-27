@@ -6,7 +6,7 @@
   "scripts": {
     "pretest": "node ./dist/db/sqlQueries.js",
     "prestart":"node ./dist/db/sqlQueries.js",
-    "start": "nodemon ./dist/app.js",
+    "start": "node ./dist/app.js",
     "test": "nyc mocha ./dist/tests/ --exit",
     "build": "babel src -d dist",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
