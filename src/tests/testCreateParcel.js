@@ -1,8 +1,8 @@
 
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import uuidv1 from 'uuid/v1';
 import app from '../app';
-
 
 const should = chai.should();
 
@@ -17,8 +17,9 @@ describe('It should test parcel creation', () => {
   });
   describe('Successful order creation', () => {
     it('It should acknowledge that parcel was created with created object', (done) => {
+      const id = uuidv1();
       const parcel = {
-        id: 1,
+        id,
         name: 'T-shirts',
         origin: 'Kabarore',
         destination: 'Muramba',
@@ -43,8 +44,9 @@ describe('It should test parcel creation', () => {
 
   describe('invalid input', () => {
     it('It should display an invalid weight error', (done) => {
+      const id = uuidv1();
       const parcel = {
-        id: 1,
+        id,
         name: 'Tshirts',
         origin: 'Matambi',
         destination: 'Muramba',
@@ -61,8 +63,9 @@ describe('It should test parcel creation', () => {
     });
 
     it('It should display an invalid name error', (done) => {
+      const id = uuidv1();
       const parcel = {
-        id: 1,
+        id,
         name: '123455',
         origin: 'Matambi',
         destination: 'Muramba',
@@ -79,8 +82,9 @@ describe('It should test parcel creation', () => {
     });
 
     it('It should display an invalid origin error', (done) => {
+      const id = uuidv1();
       const parcel = {
-        id: 1,
+        id,
         name: 'Tshirts',
         origin: '12345',
         destination: 'Muramba',
@@ -97,8 +101,9 @@ describe('It should test parcel creation', () => {
     });
 
     it('It should display an invalid destination error', (done) => {
+      const id = uuidv1();
       const parcel = {
-        id: 1,
+        id,
         name: 'Tshirts',
         origin: 'Kabarore',
         destination: '122331',
@@ -118,8 +123,9 @@ describe('It should test parcel creation', () => {
 
   describe('Absence of a field', () => {
     it('It should display a missing name error', (done) => {
+      const id = uuidv1();
       const parcel = {
-        id: 1,
+        id,
         origin: 'Matambi',
         destination: 'Muramba',
         userId: 3,
@@ -134,8 +140,9 @@ describe('It should test parcel creation', () => {
       });
     });
     it('It should display missing origin error', (done) => {
+      const id = uuidv1();
       const parcel = {
-        id: 1,
+        id,
         name: 'T-shirts',
         destination: 'Muramba',
         userId: 3,
@@ -150,8 +157,9 @@ describe('It should test parcel creation', () => {
       });
     });
     it('It should display missing destination error', (done) => {
+      const id = uuidv1();
       const parcel = {
-        id: 1,
+        id,
         name: 'T-shirts',
         origin: 'Matambi',
         userId: 3,
@@ -166,8 +174,9 @@ describe('It should test parcel creation', () => {
       });
     });
     it('It should display missing userId error', (done) => {
+      const id = uuidv1();
       const parcel = {
-        id: 1,
+        id,
         name: 'T-shirts',
         origin: 'Matambi',
         destination: 'Kigali',

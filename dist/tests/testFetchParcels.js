@@ -4,6 +4,8 @@ var _chai = _interopRequireDefault(require("chai"));
 
 var _chaiHttp = _interopRequireDefault(require("chai-http"));
 
+var _v = _interopRequireDefault(require("uuid/v1"));
+
 var _app = _interopRequireDefault(require("../app"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -12,7 +14,6 @@ var should = _chai.default.should();
 
 beforeEach('Create a data in memory', function (done) {
   var order = {
-    id: 1,
     name: 'Socks',
     origin: 'Kabarore',
     destination: 'Muramba',
@@ -32,9 +33,9 @@ afterEach('Remove orders ', function (done) {
   });
 });
 describe('It should test fetching parcels ', function () {
+  var id;
   before('Create a record', function (done) {
-    var parcel = {
-      id: 2,
+    var order = {
       name: 'T-shirts',
       origin: 'Kabarore',
       destination: 'Muramba',
@@ -42,14 +43,13 @@ describe('It should test fetching parcels ', function () {
       weight: 6
     };
 
-    _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
+    _chai.default.request(_app.default).post('/api/v1/parcels').send(order).end(function (error, res) {
+      id = res.body.response.id;
       if (error) done(error);
       done();
     });
   });
   it('it should return an order with a given id', function (done) {
-    var id = '1';
-
     _chai.default.request(_app.default).get("/api/v1/parcels/".concat(id)).end(function (error, res) {
       res.should.have.status(200);
       res.body.should.be.a('object');
@@ -69,7 +69,7 @@ describe('It should test fetching parcels ', function () {
     });
   });
   it('it should return orders by a user id', function (done) {
-    var id = '3';
+    id = '3';
 
     _chai.default.request(_app.default).get("/api/v1/users/".concat(id, "/parcels")).end(function (error, res) {
       if (error) done(error);

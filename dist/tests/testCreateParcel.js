@@ -4,6 +4,8 @@ var _chai = _interopRequireDefault(require("chai"));
 
 var _chaiHttp = _interopRequireDefault(require("chai-http"));
 
+var _v = _interopRequireDefault(require("uuid/v1"));
+
 var _app = _interopRequireDefault(require("../app"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -21,8 +23,9 @@ describe('It should test parcel creation', function () {
   });
   describe('Successful order creation', function () {
     it('It should acknowledge that parcel was created with created object', function (done) {
+      var id = (0, _v.default)();
       var parcel = {
-        id: 1,
+        id: id,
         name: 'T-shirts',
         origin: 'Kabarore',
         destination: 'Muramba',
@@ -47,8 +50,9 @@ describe('It should test parcel creation', function () {
   });
   describe('invalid input', function () {
     it('It should display an invalid weight error', function (done) {
+      var id = (0, _v.default)();
       var parcel = {
-        id: 1,
+        id: id,
         name: 'Tshirts',
         origin: 'Matambi',
         destination: 'Muramba',
@@ -65,8 +69,9 @@ describe('It should test parcel creation', function () {
       });
     });
     it('It should display an invalid name error', function (done) {
+      var id = (0, _v.default)();
       var parcel = {
-        id: 1,
+        id: id,
         name: '123455',
         origin: 'Matambi',
         destination: 'Muramba',
@@ -83,8 +88,9 @@ describe('It should test parcel creation', function () {
       });
     });
     it('It should display an invalid origin error', function (done) {
+      var id = (0, _v.default)();
       var parcel = {
-        id: 1,
+        id: id,
         name: 'Tshirts',
         origin: '12345',
         destination: 'Muramba',
@@ -101,8 +107,9 @@ describe('It should test parcel creation', function () {
       });
     });
     it('It should display an invalid destination error', function (done) {
+      var id = (0, _v.default)();
       var parcel = {
-        id: 1,
+        id: id,
         name: 'Tshirts',
         origin: 'Kabarore',
         destination: '122331',
@@ -121,8 +128,9 @@ describe('It should test parcel creation', function () {
   });
   describe('Absence of a field', function () {
     it('It should display a missing name error', function (done) {
+      var id = (0, _v.default)();
       var parcel = {
-        id: 1,
+        id: id,
         origin: 'Matambi',
         destination: 'Muramba',
         userId: 3,
@@ -138,8 +146,9 @@ describe('It should test parcel creation', function () {
       });
     });
     it('It should display missing origin error', function (done) {
+      var id = (0, _v.default)();
       var parcel = {
-        id: 1,
+        id: id,
         name: 'T-shirts',
         destination: 'Muramba',
         userId: 3,
@@ -155,8 +164,9 @@ describe('It should test parcel creation', function () {
       });
     });
     it('It should display missing destination error', function (done) {
+      var id = (0, _v.default)();
       var parcel = {
-        id: 1,
+        id: id,
         name: 'T-shirts',
         origin: 'Matambi',
         userId: 3,
@@ -172,8 +182,9 @@ describe('It should test parcel creation', function () {
       });
     });
     it('It should display missing userId error', function (done) {
+      var id = (0, _v.default)();
       var parcel = {
-        id: 1,
+        id: id,
         name: 'T-shirts',
         origin: 'Matambi',
         destination: 'Kigali',

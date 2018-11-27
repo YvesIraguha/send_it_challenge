@@ -4,12 +4,17 @@ import 'babel-polyfill';
 // Use dotenv to configure thhe environment variables
 // You need to put all environment variables in the .env file like passwords, PGDatabase.
 //
-let connectionString = 'postgres://mebsqfrejkelax:9c31ca2a2e151cb9484b1657e90dc3f3164e87a81523345b7449845a9bc28fcf@ec2-54-163-230-178.compute-1.amazonaws.com:5432/d2ch697rh862r8';
 
 dotenv.config();
 // instantiate the connection string
 // const connectionString
-const pool = new Pool({connectionString});
+const pool = new Pool({
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT,
+  password: process.env.DB_PASSWORD,
+});
 
 const connect = async () => pool.connect();
 

@@ -1,3 +1,4 @@
+import uuidv1 from 'uuid/v1';
 import Parcel from '../models/parcel';
 import queries from '../db/sqlQueries';
 import execute from '../db/connection';
@@ -9,7 +10,7 @@ const controllers = {};
 
 // fetch a parcel
 const fetchParcelById = (req, res) => {
-  const parcelId = parseInt(req.params.id);
+  const parcelId =req.params.id;
   // const parcel = orders.find(order => order.id === parcelId);
   const parcel = execute(queries.getSpecificParcel, [parcelId]);
   parcel.then((response) => {
@@ -26,7 +27,7 @@ const fetchParcelById = (req, res) => {
 // create parcel
 const createParcel = (req, res) => {
   const {
-    id, name, origin, destination, weight, userId,
+    name, origin, destination, weight, userId,
   } = req.body;
   // const existingOrder = orders.find(order => order.name === name);
   // if (existingOrder === undefined) {
@@ -43,6 +44,7 @@ const createParcel = (req, res) => {
   } else if (!fieldsValidation.test(destination)) {
     res.status(400).send({ message: 'Invalid destination, the destination should be a place' });
   } else {
+    const id = uuidv1();
     const order = new Parcel(id, name, origin, destination, weight, userId);
     const promise = execute(queries.insertIntoDatabase, [order.id, order.name, order.origin, order.destination, order.weight, order.price, order.origin, order.userId]);
     promise.then((response) => {
@@ -60,7 +62,7 @@ const createParcel = (req, res) => {
 
 // Fetch a delivery order by a user.
 const deliveryOrdersByUser = (req, res) => {
-  const userId = parseInt(req.params.id);
+  const userId = req.params.id;
   // find the order where the owner is equal to the email
   // const specificOrders = orders.filter(item => item.userId === userId);
   const specificOrders = execute(queries.ordersForUser, [userId]);
@@ -85,9 +87,9 @@ const fetchAllDeliveryOrders = (req, res) => {
 
 // cancel a delivery order
 const cancelDeliveryOrder = (req, res) => {
-  const parcelId = parseInt(req.params.id);
+  const parcelId =req.params.id;
   // let parcel = orders.find(order => order.id === parcelId);
-  if (Number(parcelId)) {
+  // if (parcelId.length >= 15) {
     const parcel = execute(queries.statusUpdate, ['Cancelled', parcelId]);
     parcel.then((response) => {
       if (response.length >= 1) {
@@ -98,9 +100,9 @@ const cancelDeliveryOrder = (req, res) => {
     }).catch((error) => {
       res.status(400).send({ error });
     });
-  } else {
-    res.status(400).send({ message: 'Invalid id' });
-  }
+  // } else {
+  //   res.status(400).send({ message: 'Invalid id' });
+  // }
   // if (parcel) {
   //   orders.splice(orders.indexOf(parcel), 1);
   //   parcel.status = 'Cancelled';
@@ -123,7 +125,7 @@ const deleteOrders = (req, res) => {
 
 // change the status of a parcel delivery order
 const updateStatus = (req, res) => {
-  const orderid = parseInt(req.params.id);
+  const orderid = req.params.id;
   const { status } = req.body;
   // const parcel = orders.find(item => item.id === orderid);
   const parcel = execute(queries.statusUpdate, [status, orderid]);
@@ -138,7 +140,7 @@ const updateStatus = (req, res) => {
 
 // change the location of a destination delivery order
 const changeDestination = (req, res) => {
-  const parcelId = parseInt(req.params.id);
+  const parcelId = req.params.id;
   const { destination } = req.body;
   const parcel = execute(queries.destinationUpdate, [destination, parcelId]);
   parcel.then((response) => {
@@ -152,7 +154,7 @@ const changeDestination = (req, res) => {
 
 // change the present location of a parcel delivery order
 const changePresentLocation = (req, res) => {
-  const id = parseInt(req.params.id);
+  const id = req.params.id;
   const { presentLocation } = req.body;
   const parcel = execute(queries.presentLocationUpdate, [presentLocation, id]);
   parcel.then((response) => {

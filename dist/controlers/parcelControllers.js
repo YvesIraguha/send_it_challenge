@@ -5,6 +5,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
+var _v = _interopRequireDefault(require("uuid/v1"));
+
 var _parcel = _interopRequireDefault(require("../models/parcel"));
 
 var _sqlQueries = _interopRequireDefault(require("../db/sqlQueries"));
@@ -20,7 +22,7 @@ var controllers = {}; // // declare the variable to store orders.
 // fetch a parcel
 
 var fetchParcelById = function fetchParcelById(req, res) {
-  var parcelId = parseInt(req.params.id); // const parcel = orders.find(order => order.id === parcelId);
+  var parcelId = req.params.id; // const parcel = orders.find(order => order.id === parcelId);
 
   var parcel = (0, _connection.default)(_sqlQueries.default.getSpecificParcel, [parcelId]);
   parcel.then(function (response) {
@@ -41,7 +43,6 @@ var fetchParcelById = function fetchParcelById(req, res) {
 
 var createParcel = function createParcel(req, res) {
   var _req$body = req.body,
-      id = _req$body.id,
       name = _req$body.name,
       origin = _req$body.origin,
       destination = _req$body.destination,
@@ -73,6 +74,7 @@ var createParcel = function createParcel(req, res) {
       message: 'Invalid destination, the destination should be a place'
     });
   } else {
+    var id = (0, _v.default)();
     var order = new _parcel.default(id, name, origin, destination, weight, userId);
     var promise = (0, _connection.default)(_sqlQueries.default.insertIntoDatabase, [order.id, order.name, order.origin, order.destination, order.weight, order.price, order.origin, order.userId]);
     promise.then(function (response) {
@@ -97,7 +99,7 @@ var createParcel = function createParcel(req, res) {
 
 
 var deliveryOrdersByUser = function deliveryOrdersByUser(req, res) {
-  var userId = parseInt(req.params.id); // find the order where the owner is equal to the email
+  var userId = req.params.id; // find the order where the owner is equal to the email
   // const specificOrders = orders.filter(item => item.userId === userId);
 
   var specificOrders = (0, _connection.default)(_sqlQueries.default.ordersForUser, [userId]);
@@ -126,31 +128,29 @@ var fetchAllDeliveryOrders = function fetchAllDeliveryOrders(req, res) {
 
 
 var cancelDeliveryOrder = function cancelDeliveryOrder(req, res) {
-  var parcelId = parseInt(req.params.id); // let parcel = orders.find(order => order.id === parcelId);
+  var parcelId = req.params.id; // let parcel = orders.find(order => order.id === parcelId);
+  // if (parcelId.length >= 15) {
 
-  if (Number(parcelId)) {
-    var parcel = (0, _connection.default)(_sqlQueries.default.statusUpdate, ['Cancelled', parcelId]);
-    parcel.then(function (response) {
-      if (response.length >= 1) {
-        res.status(200).send({
-          message: 'Order successfully cancelled',
-          response: response[0]
-        });
-      } else {
-        res.status(400).send({
-          message: 'There is no order with that id'
-        });
-      }
-    }).catch(function (error) {
-      res.status(400).send({
-        error: error
+  var parcel = (0, _connection.default)(_sqlQueries.default.statusUpdate, ['Cancelled', parcelId]);
+  parcel.then(function (response) {
+    if (response.length >= 1) {
+      res.status(200).send({
+        message: 'Order successfully cancelled',
+        response: response[0]
       });
-    });
-  } else {
+    } else {
+      res.status(400).send({
+        message: 'There is no order with that id'
+      });
+    }
+  }).catch(function (error) {
     res.status(400).send({
-      message: 'Invalid id'
+      error: error
     });
-  } // if (parcel) {
+  }); // } else {
+  //   res.status(400).send({ message: 'Invalid id' });
+  // }
+  // if (parcel) {
   //   orders.splice(orders.indexOf(parcel), 1);
   //   parcel.status = 'Cancelled';
   //   orders.push(parcel);
@@ -158,7 +158,6 @@ var cancelDeliveryOrder = function cancelDeliveryOrder(req, res) {
   // } else {
   //   res.status(400).send({ message: 'Invalid id' });
   // }
-
 }; // delete all delivery orders
 
 
@@ -179,7 +178,7 @@ var deleteOrders = function deleteOrders(req, res) {
 
 
 var updateStatus = function updateStatus(req, res) {
-  var orderid = parseInt(req.params.id);
+  var orderid = req.params.id;
   var status = req.body.status; // const parcel = orders.find(item => item.id === orderid);
 
   var parcel = (0, _connection.default)(_sqlQueries.default.statusUpdate, [status, orderid]);
@@ -201,7 +200,7 @@ var updateStatus = function updateStatus(req, res) {
 
 
 var changeDestination = function changeDestination(req, res) {
-  var parcelId = parseInt(req.params.id);
+  var parcelId = req.params.id;
   var destination = req.body.destination;
   var parcel = (0, _connection.default)(_sqlQueries.default.destinationUpdate, [destination, parcelId]);
   parcel.then(function (response) {
@@ -222,7 +221,7 @@ var changeDestination = function changeDestination(req, res) {
 
 
 var changePresentLocation = function changePresentLocation(req, res) {
-  var id = parseInt(req.params.id);
+  var id = req.params.id;
   var presentLocation = req.body.presentLocation;
   var parcel = (0, _connection.default)(_sqlQueries.default.presentLocationUpdate, [presentLocation, id]);
   parcel.then(function (response) {

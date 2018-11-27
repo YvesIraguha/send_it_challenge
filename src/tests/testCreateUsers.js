@@ -1,6 +1,7 @@
 
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import uuidv1 from 'uuid/v1';
 import app from '../app';
 
 
@@ -15,8 +16,9 @@ beforeEach('Clear data from database', (done) => {
 });
 describe('It should test creating a user', () => {
   it('Created user successfully', (done) => {
+    const id = uuidv1();
     const user = {
-      id: 1,
+      id,
       name: 'Yves',
       email: 'alfheaagd@gmail.com',
       password: 'afhasiujfsia',
@@ -27,14 +29,14 @@ describe('It should test creating a user', () => {
       res.body.should.have.property('message').eql('user registered successfully');
       res.body.response.should.have.property('name').eql('Yves');
       res.body.response.should.have.property('email').eql('alfheaagd@gmail.com');
-      res.body.response.should.have.property('password').eql('afhasiujfsia');
       done();
     });
   });
   describe('Should test invalid fields', () => {
     it('An invalid name error', (done) => {
+      const id = uuidv1();
       const user = {
-        id: 1,
+        id,
         name: '121231231',
         email: 'afafhag@gmail.com',
         password: 'afafsafgafsdf',
@@ -46,8 +48,9 @@ describe('It should test creating a user', () => {
       });
     });
     it('An invalid email error', (done) => {
+      const id = uuidv1();
       const user = {
-        id: 1,
+        id,
         name: 'Yves Iraguha',
         email: '1221afhafhahf@gmail.com',
         password: 'afafsafgafsdf',
@@ -61,8 +64,9 @@ describe('It should test creating a user', () => {
   });
   describe('It should test missing fields errors', () => {
     it('A missing name error', (done) => {
+      const id = uuidv1();
       const user = {
-        id: 1,
+        id,
         email: 'afafafaf@gmail.com',
         password: 'afhafha',
       };
@@ -74,8 +78,9 @@ describe('It should test creating a user', () => {
       });
     });
     it('A missing email error', (done) => {
+      const id = uuidv1();
       const user = {
-        id: 1,
+        id,
         name: 'Yves Iraguha',
         password: 'afhafha',
       };
@@ -87,8 +92,9 @@ describe('It should test creating a user', () => {
       });
     });
     it('A missing password error', (done) => {
+      const id = uuidv1();
       const user = {
-        id: 1,
+        id,
         name: 'Yves Iraguha',
         email: 'afafafaf@gmail.com',
       };

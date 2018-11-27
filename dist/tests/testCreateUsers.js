@@ -4,6 +4,8 @@ var _chai = _interopRequireDefault(require("chai"));
 
 var _chaiHttp = _interopRequireDefault(require("chai-http"));
 
+var _v = _interopRequireDefault(require("uuid/v1"));
+
 var _app = _interopRequireDefault(require("../app"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -20,8 +22,9 @@ beforeEach('Clear data from database', function (done) {
 });
 describe('It should test creating a user', function () {
   it('Created user successfully', function (done) {
+    var id = (0, _v.default)();
     var user = {
-      id: 1,
+      id: id,
       name: 'Yves',
       email: 'alfheaagd@gmail.com',
       password: 'afhasiujfsia'
@@ -33,14 +36,14 @@ describe('It should test creating a user', function () {
       res.body.should.have.property('message').eql('user registered successfully');
       res.body.response.should.have.property('name').eql('Yves');
       res.body.response.should.have.property('email').eql('alfheaagd@gmail.com');
-      res.body.response.should.have.property('password').eql('afhasiujfsia');
       done();
     });
   });
   describe('Should test invalid fields', function () {
     it('An invalid name error', function (done) {
+      var id = (0, _v.default)();
       var user = {
-        id: 1,
+        id: id,
         name: '121231231',
         email: 'afafhag@gmail.com',
         password: 'afafsafgafsdf'
@@ -53,8 +56,9 @@ describe('It should test creating a user', function () {
       });
     });
     it('An invalid email error', function (done) {
+      var id = (0, _v.default)();
       var user = {
-        id: 1,
+        id: id,
         name: 'Yves Iraguha',
         email: '1221afhafhahf@gmail.com',
         password: 'afafsafgafsdf'
@@ -69,8 +73,9 @@ describe('It should test creating a user', function () {
   });
   describe('It should test missing fields errors', function () {
     it('A missing name error', function (done) {
+      var id = (0, _v.default)();
       var user = {
-        id: 1,
+        id: id,
         email: 'afafafaf@gmail.com',
         password: 'afhafha'
       };
@@ -83,8 +88,9 @@ describe('It should test creating a user', function () {
       });
     });
     it('A missing email error', function (done) {
+      var id = (0, _v.default)();
       var user = {
-        id: 1,
+        id: id,
         name: 'Yves Iraguha',
         password: 'afhafha'
       };
@@ -97,8 +103,9 @@ describe('It should test creating a user', function () {
       });
     });
     it('A missing password error', function (done) {
+      var id = (0, _v.default)();
       var user = {
-        id: 1,
+        id: id,
         name: 'Yves Iraguha',
         email: 'afafafaf@gmail.com'
       };

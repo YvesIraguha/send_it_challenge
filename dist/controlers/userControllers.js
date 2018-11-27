@@ -13,6 +13,8 @@ var _connection = _interopRequireDefault(require("../db/connection"));
 
 require("babel-polyfill");
 
+var _v = _interopRequireDefault(require("uuid/v1"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // declare the variable to store users.
@@ -37,7 +39,6 @@ var fetchAllUsers = function fetchAllUsers(req, res) {
 
 var createUser = function createUser(req, res) {
   var _req$body = req.body,
-      id = _req$body.id,
       name = _req$body.name,
       email = _req$body.email,
       password = _req$body.password; // const specificUser = users.find(user => user.email === email);
@@ -63,7 +64,8 @@ var createUser = function createUser(req, res) {
         message: 'Invalid email, the email should start with letter'
       });
     } else {
-      // generate the id and pass to a user
+      // generate the id and pass it to a user
+      var id = (0, _v.default)();
       var user1 = new _user.default(id, name, email, password);
       var promise = (0, _connection.default)(_sqlQueries.default.registerUser, [user1.id, user1.name, user1.email, user1.password]);
       promise.then(function (response) {

@@ -2,6 +2,7 @@ import User from '../models/user';
 import queries from '../db/sqlQueries';
 import execute from '../db/connection';
 import 'babel-polyfill';
+import uuidv1 from 'uuid/v1';
 
 // declare the variable to store users.
 const users = [];
@@ -23,7 +24,7 @@ const fetchAllUsers = (req, res) => {
 // create a user
 const createUser = (req, res) => {
   const {
-    id, name, email, password,
+    name, email, password,
   } = req.body;
   // const specificUser = users.find(user => user.email === email);
   // // let specificUser = execute(queries.checkuser,[id])
@@ -40,7 +41,8 @@ const createUser = (req, res) => {
     } else if (!fieldsValidation.test(email)) {
       res.status(400).send({ message: 'Invalid email, the email should start with letter' });
     } else {
-      // generate the id and pass to a user
+      // generate the id and pass it to a user
+      const id = uuidv1();
       const user1 = new User(id, name, email, password);
       const promise = execute(queries.registerUser, [user1.id, user1.name, user1.email, user1.password]);
       promise.then((response) => {

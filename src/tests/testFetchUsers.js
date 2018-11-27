@@ -1,16 +1,17 @@
 
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import uuidv1 from 'uuid/v1';
 import app from '../app';
-
 
 const should = chai.should();
 
 chai.use(chaiHttp);
 
 before('Create data', (done) => {
+  const id = uuidv1();
   const user = {
-    id:1,
+    id,
     name: 'Yves',
     email: 'iraguhaivos@gmail.com',
     password: 'whafhafha',

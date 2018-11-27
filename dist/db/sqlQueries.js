@@ -13,9 +13,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var sqlQueries = {}; // Create table for parcels
 
-var createParcelsTable = 'CREATE TABLE IF NOT EXISTS parcels (id SERIAL PRIMARY KEY,  name VARCHAR(20) NOT NULL,  origin VARCHAR(20) NOT NULL,  destination VARCHAR(20) NOT NULL,  weight INT NOT NULL,  price INT NOT NULL, presentLocation VARCHAR(20) NOT NULL, status VARCHAR(20), userId INT NOT NULL )'; // Create users table
+var createParcelsTable = 'CREATE TABLE IF NOT EXISTS parcels (id VARCHAR(200) PRIMARY KEY,  name VARCHAR(20) NOT NULL,  origin VARCHAR(20) NOT NULL,  destination VARCHAR(20) NOT NULL,  weight INT NOT NULL,  price INT NOT NULL, presentLocation VARCHAR(20) NOT NULL, status VARCHAR(20), userId INT NOT NULL )'; // Create users table
 
-var createusersTable = "CREATE TABLE IF NOT EXISTS users(id SERIAL PRIMARY KEY,  name VARCHAR(20) NOT NULL,  email VARCHAR(20) NOT NULL,  password VARCHAR(20) NOT NULL \n)";
+var createusersTable = "CREATE TABLE IF NOT EXISTS users(id VARCHAR(200) PRIMARY KEY,  name VARCHAR(20) NOT NULL,  email VARCHAR(20) NOT NULL,  password VARCHAR(200) NOT NULL \n)";
 
 if (require.main === module) {
   (0, _connection.default)(createParcelsTable);
@@ -23,7 +23,7 @@ if (require.main === module) {
 } // insert parcel into the database
 
 
-var insertIntoDatabase = 'INSERT INTO parcels (id, name, origin, destination, weight, price, presentLocation,userId) VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING * '; // Pull out a prcel from a database
+var insertIntoDatabase = 'INSERT INTO parcels (id, name, origin, destination, weight, price, presentLocation,userId) VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING * '; // Pull out a parcel from a database
 
 var getSpecificParcel = 'SELECT * FROM parcels WHERE id =$1 '; // Update status of a parcel
 
@@ -37,7 +37,7 @@ var registerUser = ' INSERT INTO users (id,name, email, password) VALUES ($1,$2,
 
 var checkUSer = 'SELECT * FROM users WHERE id = $id'; // SELECT orders that belongs to a particular user
 
-var ordersForUser = 'SELECT * FROM parcels WHERE userid=$1';
+var ordersForUser = 'SELECT * FROM parcels WHERE userId=$1';
 sqlQueries.checkUSer = checkUSer;
 sqlQueries.createParcelsTable = createParcelsTable;
 sqlQueries.createusersTable = createusersTable;

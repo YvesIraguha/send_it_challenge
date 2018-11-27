@@ -4,6 +4,8 @@ var _chai = _interopRequireDefault(require("chai"));
 
 var _chaiHttp = _interopRequireDefault(require("chai-http"));
 
+var _v = _interopRequireDefault(require("uuid/v1"));
+
 var _app = _interopRequireDefault(require("../app"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -13,8 +15,9 @@ var should = _chai.default.should();
 _chai.default.use(_chaiHttp.default);
 
 before('Create data', function (done) {
+  var id = (0, _v.default)();
   var user = {
-    id: 1,
+    id: id,
     name: 'Yves',
     email: 'iraguhaivos@gmail.com',
     password: 'whafhafha'

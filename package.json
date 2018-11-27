@@ -4,8 +4,9 @@
   "description": "SENDIT is a courier service for sending parcels around different destinations, and the cost is calculated based on the weight of the order. ",
   "main": "app.js",
   "scripts": {
-    "pretest":"node ./dist/db/sqlQueries.js",
-    "start": "node ./dist/app.js",
+    "pretest": "node ./dist/db/sqlQueries.js",
+    "prestart":"node ./dist/db/sqlQueries.js",
+    "start": "nodemon ./dist/app.js",
     "test": "nyc mocha ./dist/tests/ --exit",
     "build": "babel src -d dist",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
@@ -26,7 +27,9 @@
     "chai-http": "^4.2.0",
     "dotenv": "^6.1.0",
     "express": "^4.16.4",
-    "pg": "^7.6.1"
+    "password-hash": "^1.2.2",
+    "pg": "^7.6.1",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.5",
