@@ -3,9 +3,9 @@ import queries from '../db/sqlQueries';
 import execute from '../db/connection';
 import 'babel-polyfill';
 import uuidv1 from 'uuid/v1';
+import authentication from '../helpers/authentication'
 
-// declare the variable to store users.
-const users = [];
+// declare the variable to store users
 
 const userControllers = {};
 
@@ -42,11 +42,12 @@ const createUser = (req, res) => {
       res.status(400).send({ message: 'Invalid email, the email should start with letter' });
     } else {
       // generate the id and pass it to a user
+      let token = authentication.encodeToken(req.body);
       const id = uuidv1();
       const user1 = new User(id, name, email, password);
       const promise = execute(queries.registerUser, [user1.id, user1.name, user1.email, user1.password]);
       promise.then((response) => {
-        res.status(200).send({ message: 'user registered successfully', response: response[0] });
+        res.status(200).send({ message: 'user registered successfully', response: response[0],token });
       }).catch((error) => {
         console.log(error);
       });
