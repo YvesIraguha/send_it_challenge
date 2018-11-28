@@ -27,13 +27,12 @@ const fetchParcelById = (req, res) => {
 // create parcel
 const createParcel = (req, res) => {
   const {
-    name, origin, destination, weight, userId,
+    name, origin, destination, weight,userId, 
   } = req.body;
-  // const existingOrder = orders.find(order => order.name === name);
-  // if (existingOrder === undefined) {
-    // const id = orders.length + 1;
-  const fieldsValidation = /[a-zA-Z]+/;
-  if (!origin || !name || !destination || !userId || !weight) {
+  
+  //Got the regex from Dan's Tools, Regex Testing.
+ let fieldsValidation = /[A-Z][a-zA-Z][^#&<>\"~;$^%{}?]{1,20}$/;
+  if (!origin || !name || !destination || !weight) {
     res.status(400).send({ message: 'Please provide all the required fields' });
   } else if (!Number(weight)) {
     res.status(400).send({ message: 'Invalid weight, the weight should be number' });
@@ -53,11 +52,8 @@ const createParcel = (req, res) => {
       } else {
         res.send({ message: 'Duplicate key error' });
       }
-    }).catch(error => res.send(error)); // orders.push(order);
+    }).catch(error => res.send(error)); 
   }
-//   } else {
-//     res.send({ message: 'Cannot create two orders with the same name' });
-//   }
 };
 
 // Fetch a delivery order by a user.

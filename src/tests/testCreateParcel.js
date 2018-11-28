@@ -34,7 +34,7 @@ describe('It should test parcel creation', () => {
   describe('Successful order creation', () => {
     it('It should acknowledge that parcel was created with created object', (done) => {
       const parcel = {
-        name: 'T-shirts',
+        name: 'Tshirts',
         origin: 'Kabarore',
         destination: 'Muramba',
         weight: 3,
@@ -46,7 +46,7 @@ describe('It should test parcel creation', () => {
           res.body.should.be.a('object');
           res.body.should.have.property('message').eql('The order was successfully created');
           res.body.should.have.property('response');
-          res.body.response.should.have.property('name').eql('T-shirts');
+          res.body.response.should.have.property('name').eql('Tshirts');
           res.body.response.should.have.property('origin').eql('Kabarore');
           res.body.response.should.have.property('destination').eql('Muramba');
           res.body.response.should.have.property('price').eql(300);

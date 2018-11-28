@@ -38,12 +38,12 @@ const presentLocationUpdate = 'UPDATE parcels SET presentLocation = $1 WHERE id 
 // register user
 const registerUser = ' INSERT INTO users (id,name, email, password,userType) VALUES ($1,$2,$3,$4,$5) RETURNING *';
 // Check if a user is logged in
-const checkUSer = 'SELECT * FROM users WHERE id = $id';
+const checkUser = 'SELECT * FROM users WHERE email = $1';
 
 // SELECT orders that belongs to a particular user
 const ordersForUser = 'SELECT * FROM parcels WHERE userId=$1';
 
-sqlQueries.checkUSer = checkUSer;
+sqlQueries.checkUser = checkUser;
 sqlQueries.createParcelsTable = createParcelsTable;
 sqlQueries.createusersTable = createusersTable;
 sqlQueries.destinationUpdate = destinationUpdate;

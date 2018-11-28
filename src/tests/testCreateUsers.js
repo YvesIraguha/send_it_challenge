@@ -47,13 +47,13 @@ describe('It should test creating a user', () => {
     it('An invalid email error', (done) => {
       let user = {
         name: 'Yves Iraguha',
-        email: '1221afhafhahf@gmail.com',
+        email: '122111121212',
         password: 'afafsafgafsdf',
         userType: 'User',
       };
       chai.request(app).post('/api/v1/users/signup').send(user).end((error, res) => {
         if (error) done(error);
-        res.body.should.have.property('message').eql('Invalid email, the email should start with letter');
+        res.body.should.have.property('message').eql('Invalid email, the email should start with a letter');
         done();
       });
     });

@@ -44,24 +44,24 @@ before('Create an admin who will update a parcel', (done) => {
 
 let id;
 
-before('Create order ', (done) => {
-  const order = {
-    name: 'T-shirts',
-    origin: 'Kabarore',
-    destination: 'Muramba',
-    weight: 3,
-  };
-  chai.request(app).post('/api/v1/parcels').send(order).set({ token: userToken })
-    .end((error, res) => {
-      id = res.body.response.id;
-      if (error) done(error);
-      console.log(`Object id ${ id }`)
-      done();
-    });
-});
 
 
-describe('It should test set the status to cancelled', () => {  
+describe('It should test set the status to cancelled', () => { 
+  before('Create order ', (done) => {
+    const order = {
+      name: 'Tshirts',
+      origin: 'Kabarore',
+      destination: 'Muramba',
+      weight: 3,
+    };
+    chai.request(app).post('/api/v1/parcels').send(order).set({ token: userToken })
+      .end((error, res) => {
+        id = res.body.response.id;
+        if (error) done(error);
+        done();
+      });
+  });
+   
   it('It should return the order canceled', (done) => {
     chai.request(app).put(`/api/v1/parcels/${id}/cancel`).set({ token: userToken }).end((error, res) => {
       if (error) done(error);
@@ -86,6 +86,21 @@ describe('It should test set the status to cancelled', () => {
 });
 
 describe('It should test updating the parcel', () => {
+  before('Create order ', (done) => {
+    const order = {
+      name: 'Tshirts',
+      origin: 'Kabarore',
+      destination: 'Muramba',
+      weight: 3,
+    };
+    chai.request(app).post('/api/v1/parcels').send(order).set({ token: userToken })
+      .end((error, res) => {
+        id = res.body.response.id;
+        if (error) done(error);
+        done();
+      });
+  });
+  
   it('It should test destination updated successfully', (done) => {
     const order = {
       destination: 'Rugerero',

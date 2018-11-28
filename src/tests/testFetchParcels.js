@@ -23,14 +23,14 @@ before('Create a user who will create a parcel', (done) => {
 
 beforeEach('Create a data in memory', (done) => {
   const order = {
-    name: 'T-shirts',
+    name: 'Tshirts',
     origin: 'Kabarore',
     destination: 'Muramba',
     weight: 3,
   };
   chai.request(app).post('/api/v1/parcels').send(order).set({ token })
     .end((error, res) => {
-      if (error) done(error);
+      if (error) done(error);      
       done();
     });
 });
@@ -45,7 +45,7 @@ describe('It should test fetching parcels ', () => {
   let id;
   before('Create a record', (done) => {
     const order = {
-      name: 'T-shirts',
+      name: 'Tshirts',
       origin: 'Kabarore',
       destination: 'Muramba',
       weight: 3,
