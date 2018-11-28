@@ -42,6 +42,7 @@ var fetchParcelById = function fetchParcelById(req, res) {
 
 
 var createParcel = function createParcel(req, res) {
+  console.log(req.body);
   var _req$body = req.body,
       name = _req$body.name,
       origin = _req$body.origin,
@@ -128,10 +129,9 @@ var fetchAllDeliveryOrders = function fetchAllDeliveryOrders(req, res) {
 
 
 var cancelDeliveryOrder = function cancelDeliveryOrder(req, res) {
-  var parcelId = req.params.id; // let parcel = orders.find(order => order.id === parcelId);
-  // if (parcelId.length >= 15) {
-
-  var parcel = (0, _connection.default)(_sqlQueries.default.statusUpdate, ['Cancelled', parcelId]);
+  var parcelId = req.params.id;
+  var userId = req.body.userId;
+  var parcel = (0, _connection.default)(_sqlQueries.default.cancelOrder, ['Cancelled', parcelId, userId]);
   parcel.then(function (response) {
     if (response.length >= 1) {
       res.status(200).send({
@@ -147,17 +147,7 @@ var cancelDeliveryOrder = function cancelDeliveryOrder(req, res) {
     res.status(400).send({
       error: error
     });
-  }); // } else {
-  //   res.status(400).send({ message: 'Invalid id' });
-  // }
-  // if (parcel) {
-  //   orders.splice(orders.indexOf(parcel), 1);
-  //   parcel.status = 'Cancelled';
-  //   orders.push(parcel);
-  //   res.status(200).send({ message: 'Order successfully cancelled', parcel });
-  // } else {
-  //   res.status(400).send({ message: 'Invalid id' });
-  // }
+  });
 }; // delete all delivery orders
 
 

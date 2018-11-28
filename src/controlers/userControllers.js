@@ -26,12 +26,6 @@ const createUser = (req, res) => {
   const {
     name, email, password,
   } = req.body;
-  // const specificUser = users.find(user => user.email === email);
-  // // let specificUser = execute(queries.checkuser,[id])
-  // if (specificUser) {
-    // XXX include the link to sign in with a message;
-  //   res.send({ message: 'The email is already in use' });
-  // } else
   if (!name || !email || !password) {
     res.send({ message: 'Please complete the required fields' });
   } else {
@@ -42,17 +36,15 @@ const createUser = (req, res) => {
       res.status(400).send({ message: 'Invalid email, the email should start with letter' });
     } else {
       // generate the id and pass it to a user
-      let token = authentication.encodeToken(req.body);
-      const id = uuidv1();
+      let id = uuidv1();
+      let token = authentication.encodeToken({ name, email, password, userId:id});      
       const user1 = new User(id, name, email, password);
       const promise = execute(queries.registerUser, [user1.id, user1.name, user1.email, user1.password]);
       promise.then((response) => {
-        res.status(200).send({ message: 'user registered successfully', response: response[0],token });
+        res.status(200).send({ message: 'User registered successfully', response:{ name, email },token });
       }).catch((error) => {
         console.log(error);
       });
-      // users.push(user1);
-      // res.send({ message: 'user registered successfully', user1 });
     }
   }
 };

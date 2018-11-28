@@ -26,6 +26,7 @@ const fetchParcelById = (req, res) => {
 
 // create parcel
 const createParcel = (req, res) => {
+  console.log(req.body);
   const {
     name, origin, destination, weight, userId,
   } = req.body;
@@ -88,9 +89,8 @@ const fetchAllDeliveryOrders = (req, res) => {
 // cancel a delivery order
 const cancelDeliveryOrder = (req, res) => {
   const parcelId =req.params.id;
-  // let parcel = orders.find(order => order.id === parcelId);
-  // if (parcelId.length >= 15) {
-    const parcel = execute(queries.statusUpdate, ['Cancelled', parcelId]);
+  let userId = req.body.userId; 
+    const parcel = execute(queries.cancelOrder, ['Cancelled', parcelId,userId]);
     parcel.then((response) => {
       if (response.length >= 1) {
         res.status(200).send({ message: 'Order successfully cancelled', response: response[0] });
@@ -100,17 +100,6 @@ const cancelDeliveryOrder = (req, res) => {
     }).catch((error) => {
       res.status(400).send({ error });
     });
-  // } else {
-  //   res.status(400).send({ message: 'Invalid id' });
-  // }
-  // if (parcel) {
-  //   orders.splice(orders.indexOf(parcel), 1);
-  //   parcel.status = 'Cancelled';
-  //   orders.push(parcel);
-  //   res.status(200).send({ message: 'Order successfully cancelled', parcel });
-  // } else {
-  //   res.status(400).send({ message: 'Invalid id' });
-  // }
 };
 // delete all delivery orders
 const deleteOrders = (req, res) => {

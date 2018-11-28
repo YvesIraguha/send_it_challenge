@@ -1,8 +1,5 @@
 import jwt from 'jwt-simple';
 
-// let payload = { foo: 'bar'};
-// let secret = 'xxx';
-
 const encodeToken = (payload) => {
   let token = jwt.encode(payload,"secret");
   return token;
@@ -16,7 +13,7 @@ const decodedToken = (token) =>{
 const accessTokenRequired = (req, res, next) => {
   const { token } = req.headers;
   if (token) {
-    decodedToken(token);
+    req.body.userId = decodedToken(token).userId;
     next();
   } else {
     res.status(400).send({ message: 'Not authorized to this page' });

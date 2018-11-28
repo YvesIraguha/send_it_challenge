@@ -4,10 +4,10 @@ import execute from './connection';
 
 const sqlQueries = {};
 // Create table for parcels
-const createParcelsTable = 'CREATE TABLE IF NOT EXISTS parcels (id VARCHAR(200) PRIMARY KEY,  name VARCHAR(20) NOT NULL,  origin VARCHAR(20) NOT NULL,  destination VARCHAR(20) NOT NULL,  weight INT NOT NULL,  price INT NOT NULL, presentLocation VARCHAR(20) NOT NULL, status VARCHAR(20), userId INT NOT NULL )';
+const createParcelsTable = 'CREATE TABLE IF NOT EXISTS parcels (id VARCHAR(200) PRIMARY KEY,  name VARCHAR(20) NOT NULL,  origin VARCHAR(20) NOT NULL,  destination VARCHAR(20) NOT NULL,  weight INT NOT NULL,  price INT NOT NULL, presentLocation VARCHAR(20) NOT NULL, status VARCHAR(20), userId VARCHAR(200) NOT NULL )';
 
 // Create users table
-const createusersTable = `CREATE TABLE IF NOT EXISTS users(id VARCHAR(200) PRIMARY KEY,  name VARCHAR(20) NOT NULL,  email VARCHAR(20) NOT NULL,  password VARCHAR(200) NOT NULL 
+const createusersTable = `CREATE TABLE IF NOT EXISTS users(id VARCHAR(200) PRIMARY KEY,  name VARCHAR(20) NOT NULL,  email VARCHAR(40) NOT NULL,  password VARCHAR(200) NOT NULL 
 )`;
 
 if (require.main === module) {
@@ -23,6 +23,9 @@ const getSpecificParcel = 'SELECT * FROM parcels WHERE id =$1 ';
 
 // Update status of a parcel
 const statusUpdate = 'UPDATE parcels SET status = $1 WHERE id = $2 RETURNING * ';
+
+//cancel order 
+const cancelOrder = 'UPDATE parcels SET status = $1 WHERE id = $2 AND userId = $3 RETURNING * '
 
 // update destination of a parcel
 const destinationUpdate = `UPDATE parcels SET destination = $1 WHERE id = $2 RETURNING *
@@ -50,5 +53,6 @@ sqlQueries.registerUser = registerUser;
 sqlQueries.ordersForUser = ordersForUser;
 sqlQueries.presentLocationUpdate = presentLocationUpdate;
 sqlQueries.statusUpdate = statusUpdate;
+sqlQueries.cancelOrder = cancelOrder; 
 
 export default sqlQueries;
