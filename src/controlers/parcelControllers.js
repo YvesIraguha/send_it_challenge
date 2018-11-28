@@ -2,7 +2,6 @@ import uuidv1 from 'uuid/v1';
 import Parcel from '../models/parcel';
 import queries from '../db/sqlQueries';
 import execute from '../db/connection';
-import 'babel-polyfill';
 
 const controllers = {};
 // // declare the variable to store orders.

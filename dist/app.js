@@ -26,7 +26,7 @@ app.use(_express.default.urlencoded({
 })); // set the router to use.
 
 app.use('/api/v1', _parcels.default);
-app.use('/api/v1/users', _users.default);
+app.use('/api/v1/auth', _users.default);
 app.get('/', function (req, res) {
   res.redirect('/api/v1/parcels');
 }); // Set the port for listening on.

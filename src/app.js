@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // set the router to use.
 app.use('/api/v1', parcelsRouter);
-app.use('/api/v1/users', usersRouter);
+app.use('/api/v1/auth', usersRouter);
 app.get('/', (req, res) => {
   res.redirect('/api/v1/parcels');
 });

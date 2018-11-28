@@ -1,5 +1,4 @@
 
-import 'babel-polyfill';
 import execute from './connection';
 
 const sqlQueries = {};

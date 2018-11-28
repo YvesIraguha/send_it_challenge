@@ -25,7 +25,7 @@ parcelsRouter.get('/parcels', controllers.fetchAllDeliveryOrders);
 parcelsRouter.delete('/parcels', controllers.deleteOrders);
 
 // cancel a delivery order with put method
-parcelsRouter.put('/parcels/:id/cancel', controllers.cancelDeliveryOrder);
+parcelsRouter.put('/parcels/:id/cancel',controllers.cancelDeliveryOrder);
 
 // change the status of the parcel delivery order
 parcelsRouter.put('/parcels/:id/status', controllers.updateStatus);

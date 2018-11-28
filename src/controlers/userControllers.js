@@ -1,11 +1,9 @@
 import User from '../models/user';
 import queries from '../db/sqlQueries';
 import execute from '../db/connection';
-import 'babel-polyfill';
 import uuidv1 from 'uuid/v1';
 
 // declare the variable to store users.
-const users = [];
 
 const userControllers = {};
 
