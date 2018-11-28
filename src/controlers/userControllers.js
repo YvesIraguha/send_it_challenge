@@ -3,7 +3,7 @@ import queries from '../db/sqlQueries';
 import execute from '../db/connection';
 import 'babel-polyfill';
 import uuidv1 from 'uuid/v1';
-import authentication from '../helpers/authentication'
+import authentication from '../helpers/authentication';
 
 // declare the variable to store users
 
@@ -24,9 +24,9 @@ const fetchAllUsers = (req, res) => {
 // create a user
 const createUser = (req, res) => {
   const {
-    name, email, password,
+    name, email, password, userType,
   } = req.body;
-  if (!name || !email || !password) {
+  if (!name || !email || !password || !userType) {
     res.send({ message: 'Please complete the required fields' });
   } else {
     const fieldsValidation = /^[a-zA-Z]+/;
@@ -36,12 +36,15 @@ const createUser = (req, res) => {
       res.status(400).send({ message: 'Invalid email, the email should start with letter' });
     } else {
       // generate the id and pass it to a user
-      let id = uuidv1();
-      let token = authentication.encodeToken({ name, email, password, userId:id});      
-      const user1 = new User(id, name, email, password);
-      const promise = execute(queries.registerUser, [user1.id, user1.name, user1.email, user1.password]);
+      const id = uuidv1();
+      const token = authentication.encodeToken({
+        name, email, password, userId: id, userType,
+      });
+      const user1 = new User(id, name, email, password, userType);
+      const promise = execute(queries.registerUser, [user1.id, user1.name, user1.email, user1.password, user1.userType]);
       promise.then((response) => {
-        res.status(200).send({ message: 'User registered successfully', response:{ name, email },token });
+        const { name, email, userType } = response[0];
+        res.status(200).send({ message: 'user registered successfully', response: { name, email, userType }, token });
       }).catch((error) => {
         console.log(error);
       });

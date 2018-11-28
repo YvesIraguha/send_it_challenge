@@ -10,7 +10,7 @@ const controllers = {};
 
 // fetch a parcel
 const fetchParcelById = (req, res) => {
-  const parcelId =req.params.id;
+  const parcelId = req.params.id;
   // const parcel = orders.find(order => order.id === parcelId);
   const parcel = execute(queries.getSpecificParcel, [parcelId]);
   parcel.then((response) => {
@@ -26,7 +26,6 @@ const fetchParcelById = (req, res) => {
 
 // create parcel
 const createParcel = (req, res) => {
-  console.log(req.body);
   const {
     name, origin, destination, weight, userId,
   } = req.body;
@@ -88,18 +87,18 @@ const fetchAllDeliveryOrders = (req, res) => {
 
 // cancel a delivery order
 const cancelDeliveryOrder = (req, res) => {
-  const parcelId =req.params.id;
-  let userId = req.body.userId; 
-    const parcel = execute(queries.cancelOrder, ['Cancelled', parcelId,userId]);
-    parcel.then((response) => {
-      if (response.length >= 1) {
-        res.status(200).send({ message: 'Order successfully cancelled', response: response[0] });
-      } else {
-        res.status(400).send({ message: 'There is no order with that id' });
-      }
-    }).catch((error) => {
-      res.status(400).send({ error });
-    });
+  const parcelId = req.params.id;
+  const userId = req.body.userId;
+  const parcel = execute(queries.cancelOrder, ['Cancelled', parcelId, userId]);
+  parcel.then((response) => {
+    if (response.length >= 1) {
+      res.status(200).send({ message: 'Order successfully cancelled', response: response[0] });
+    } else {
+      res.status(400).send({ message: 'There is no order with that id' });
+    }
+  }).catch((error) => {
+    res.status(400).send({ error });
+  });
 };
 // delete all delivery orders
 const deleteOrders = (req, res) => {
@@ -143,11 +142,11 @@ const changeDestination = (req, res) => {
 
 // change the present location of a parcel delivery order
 const changePresentLocation = (req, res) => {
-  const id = req.params.id;
+  let id = req.params.id;
   const { presentLocation } = req.body;
   const parcel = execute(queries.presentLocationUpdate, [presentLocation, id]);
   parcel.then((response) => {
-    if (response.length >= 1) {
+    if (response) {
       res.status(200).send({ message: 'The parcel was updated successfully', response: response[0] });
     } else {
       res.status(400).send({ message: 'No order with that id' });

@@ -4,10 +4,10 @@ import execute from './connection';
 
 const sqlQueries = {};
 // Create table for parcels
-const createParcelsTable = 'CREATE TABLE IF NOT EXISTS parcels (id VARCHAR(200) PRIMARY KEY,  name VARCHAR(20) NOT NULL,  origin VARCHAR(20) NOT NULL,  destination VARCHAR(20) NOT NULL,  weight INT NOT NULL,  price INT NOT NULL, presentLocation VARCHAR(20) NOT NULL, status VARCHAR(20), userId VARCHAR(200) NOT NULL )';
+const createParcelsTable = 'CREATE TABLE IF NOT EXISTS parcels (id VARCHAR(200) PRIMARY KEY,  name VARCHAR(20) NOT NULL,  origin VARCHAR(20) NOT NULL,  destination VARCHAR(200) NOT NULL,  weight INT NOT NULL,  price INT NOT NULL, presentLocation VARCHAR(200) NOT NULL, status VARCHAR(200), userId VARCHAR(200) NOT NULL )';
 
 // Create users table
-const createusersTable = `CREATE TABLE IF NOT EXISTS users(id VARCHAR(200) PRIMARY KEY,  name VARCHAR(20) NOT NULL,  email VARCHAR(40) NOT NULL,  password VARCHAR(200) NOT NULL 
+const createusersTable = `CREATE TABLE IF NOT EXISTS users(id VARCHAR(200) PRIMARY KEY,  name VARCHAR(20) NOT NULL,  email VARCHAR(40) NOT NULL,  password VARCHAR(200) NOT NULL, userType VARCHAR(200) NOT NULL
 )`;
 
 if (require.main === module) {
@@ -36,7 +36,7 @@ const presentLocationUpdate = 'UPDATE parcels SET presentLocation = $1 WHERE id 
 
 
 // register user
-const registerUser = ' INSERT INTO users (id,name, email, password) VALUES ($1,$2,$3,$4) RETURNING *';
+const registerUser = ' INSERT INTO users (id,name, email, password,userType) VALUES ($1,$2,$3,$4,$5) RETURNING *';
 // Check if a user is logged in
 const checkUSer = 'SELECT * FROM users WHERE id = $id';
 
