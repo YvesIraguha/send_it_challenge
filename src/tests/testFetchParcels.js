@@ -1,22 +1,38 @@
-
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import uuidv1 from 'uuid/v1';
+import jwt from 'jwt-simple';
 import app from '../app';
 
+chai.use(chaiHttp);
 const should = chai.should();
-beforeEach('Create a data in memory', (done) => {  
-  const order = {   
-    name: 'Socks',
-    origin: 'Kabarore',
-    destination: 'Muramba',
-    userId: 3,
-    weight: 4,
+let token;
+
+before('Create a user who will create a parcel', (done) => {
+  const user = {
+    name: 'Yves',
+    email: 'iraguhaivos@gmail.com',
+    password: 'ahfahdafd',
+    userType: 'User',
   };
-  chai.request(app).post('/api/v1/parcels').send(order).end((error, res) => {
+  chai.request(app).post('/api/v1/users/signup').send(user).end((error, res) => {
     if (error) done(error);
+    token = res.body.token;
     done();
   });
+});
+
+beforeEach('Create a data in memory', (done) => {
+  const order = {
+    name: 'Tshirts',
+    origin: 'Kabarore',
+    destination: 'Muramba',
+    weight: 3,
+  };
+  chai.request(app).post('/api/v1/parcels').send(order).set({ token })
+    .end((error, res) => {
+      if (error) done(error);      
+      done();
+    });
 });
 
 afterEach('Remove orders ', (done) => {
@@ -26,28 +42,29 @@ afterEach('Remove orders ', (done) => {
   });
 });
 describe('It should test fetching parcels ', () => {
-  let id ;
+  let id;
   before('Create a record', (done) => {
-    const order = {  
-      name: 'T-shirts',
+    const order = {
+      name: 'Tshirts',
       origin: 'Kabarore',
       destination: 'Muramba',
-      userId: 3,
-      weight: 6,
+      weight: 3,
     };
-    chai.request(app).post('/api/v1/parcels').send(order).end((error, res) => {
-      id = res.body.response.id; 
-      if (error) done(error);
-      done();
-    });
+    chai.request(app).post('/api/v1/parcels').send(order).set({ token })
+      .end((error, res) => {
+        id = res.body.response.id;
+        if (error) done(error);
+        done();
+      });
   });
   it('it should return an order with a given id', (done) => {
     chai.request(app).get(`/api/v1/parcels/${id}`).end((error, res) => {
+      if (error) done(error);
       res.should.have.status(200);
       res.body.should.be.a('object');
       res.body.should.have.property('origin').eql('Kabarore');
       res.body.should.have.property('destination').eql('Muramba');
-      res.body.should.have.property('userid').eql(3);
+      
       done();
     });
   });
@@ -61,9 +78,9 @@ describe('It should test fetching parcels ', () => {
     });
   });
 
-  it('it should return orders by a user id', (done) => {
-    id = '3';
-    chai.request(app).get(`/api/v1/users/${id}/parcels`).end((error, res) => {
+  it('it should return orders by a user id', (done) => {    
+    let decoded = jwt.decode(token,"secret");
+    chai.request(app).get(`/api/v1/users/${decoded.userId}/parcels`).end((error, res) => {
       if (error) done(error);
       res.should.have.status(200);
       res.body.should.be.a('array');

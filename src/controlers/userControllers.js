@@ -1,11 +1,12 @@
-import User from '../models/user';
+import passwordHash from 'password-hash';
 import queries from '../db/sqlQueries';
 import execute from '../db/connection';
 import 'babel-polyfill';
 import uuidv1 from 'uuid/v1';
+import authentication from '../helpers/authentication';
+import User from '../models/user';
 
-// declare the variable to store users.
-const users = [];
+// declare the variable to store users
 
 const userControllers = {};
 
@@ -23,35 +24,33 @@ const fetchAllUsers = (req, res) => {
 
 // create a user
 const createUser = (req, res) => {
-  const {
-    name, email, password,
+  let {
+    name, email, password, userType,
   } = req.body;
-  // const specificUser = users.find(user => user.email === email);
-  // // let specificUser = execute(queries.checkuser,[id])
-  // if (specificUser) {
-    // XXX include the link to sign in with a message;
-  //   res.send({ message: 'The email is already in use' });
-  // } else
-  if (!name || !email || !password) {
+  //Got the regex from Dan's Tools, Regex Testing. 
+  let emailValidation = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i; 
+  let fieldsValidation = /[A-Z][a-zA-Z][^#&<>\"~;$^%{}?]{1,30}$/g;
+  if (!name || !email || !password || !userType) {
     res.send({ message: 'Please complete the required fields' });
-  } else {
-    const fieldsValidation = /^[a-zA-Z]+/;
+  } else {    
     if (!fieldsValidation.test(name)) {
       res.status(400).send({ message: 'Invalid name, the name should start with letter' });
-    } else if (!fieldsValidation.test(email)) {
-      res.status(400).send({ message: 'Invalid email, the email should start with letter' });
+    } else if (!emailValidation.test(email)) {
+      res.status(400).send({ message: 'Invalid email, the email should start with a letter' });
     } else {
       // generate the id and pass it to a user
       const id = uuidv1();
-      const user1 = new User(id, name, email, password);
-      const promise = execute(queries.registerUser, [user1.id, user1.name, user1.email, user1.password]);
+      const token = authentication.encodeToken({
+        name, email, password, userId: id, userType,
+      });
+      const user1 = new User(id, name, email, password, userType);
+      const promise = execute(queries.registerUser, [user1.id, user1.name, user1.email, user1.password, user1.userType]);
       promise.then((response) => {
-        res.status(200).send({ message: 'user registered successfully', response: response[0] });
+        const { name, email, userType } = response[0];
+        res.status(200).send({ message: 'user registered successfully', response: { name, email, userType }, token });
       }).catch((error) => {
         console.log(error);
       });
-      // users.push(user1);
-      // res.send({ message: 'user registered successfully', user1 });
     }
   }
 };
@@ -77,20 +76,19 @@ const getUser = (req, res) => {
 
 // Login data processing
 const login = (req, res) => {
-  const specificUser = users.find((user) => {
-    // let specificUser = execute(queries.checkUser,[id])
-    // replace the password given with the hashed password
-    if (user.email === req.body.email && user.password === req.body) {
-      return user;
-    }
-  });
-  if (specificUser) {
-    req.session.user = specificUser;
-    // redirect the user to the next page.
-    res.status(200).send({ message: 'User logged in successfully' });
-  }
+  let { email, password } = req.body;
 
-  res.send('Invalid login');
+  let specificUser = execute(queries.checkUser,[email]);
+  specificUser.then((response) => {
+    if (passwordHash.verify(password,response[0].password)){
+      let token = authentication.encodeToken(response[0]);
+        res.status(200).send({message:"Logged in successfully",token})
+    }else{
+      res.status(400).send({message:"Password not matching"})
+    };
+  }).catch((error) => {
+    console.log(error);
+  });
 };
 
 // login verification;
@@ -114,8 +112,7 @@ const signOut = (req, res) => {
 };
 
 const deleteUsers = (req, res) => {
-  const parcels = execute('DELETE FROM users ');
-  // orders = [];
+  let parcels = execute('DELETE FROM users ');
   parcels.then((response) => {
     res.status(200).send({ message: 'Orders deleted successfully', response });
   }).catch((error) => {

@@ -10,7 +10,7 @@ const controllers = {};
 
 // fetch a parcel
 const fetchParcelById = (req, res) => {
-  const parcelId =req.params.id;
+  const parcelId = req.params.id;
   // const parcel = orders.find(order => order.id === parcelId);
   const parcel = execute(queries.getSpecificParcel, [parcelId]);
   parcel.then((response) => {
@@ -27,13 +27,12 @@ const fetchParcelById = (req, res) => {
 // create parcel
 const createParcel = (req, res) => {
   const {
-    name, origin, destination, weight, userId,
+    name, origin, destination, weight,userId, 
   } = req.body;
-  // const existingOrder = orders.find(order => order.name === name);
-  // if (existingOrder === undefined) {
-    // const id = orders.length + 1;
-  const fieldsValidation = /[a-zA-Z]+/;
-  if (!origin || !name || !destination || !userId || !weight) {
+  
+  //Got the regex from Dan's Tools, Regex Testing.
+ let fieldsValidation = /[A-Z][a-zA-Z][^#&<>\"~;$^%{}?]{1,20}$/;
+  if (!origin || !name || !destination || !weight) {
     res.status(400).send({ message: 'Please provide all the required fields' });
   } else if (!Number(weight)) {
     res.status(400).send({ message: 'Invalid weight, the weight should be number' });
@@ -53,11 +52,8 @@ const createParcel = (req, res) => {
       } else {
         res.send({ message: 'Duplicate key error' });
       }
-    }).catch(error => res.send(error)); // orders.push(order);
+    }).catch(error => res.send(error)); 
   }
-//   } else {
-//     res.send({ message: 'Cannot create two orders with the same name' });
-//   }
 };
 
 // Fetch a delivery order by a user.
@@ -87,30 +83,18 @@ const fetchAllDeliveryOrders = (req, res) => {
 
 // cancel a delivery order
 const cancelDeliveryOrder = (req, res) => {
-  const parcelId =req.params.id;
-  // let parcel = orders.find(order => order.id === parcelId);
-  // if (parcelId.length >= 15) {
-    const parcel = execute(queries.statusUpdate, ['Cancelled', parcelId]);
-    parcel.then((response) => {
-      if (response.length >= 1) {
-        res.status(200).send({ message: 'Order successfully cancelled', response: response[0] });
-      } else {
-        res.status(400).send({ message: 'There is no order with that id' });
-      }
-    }).catch((error) => {
-      res.status(400).send({ error });
-    });
-  // } else {
-  //   res.status(400).send({ message: 'Invalid id' });
-  // }
-  // if (parcel) {
-  //   orders.splice(orders.indexOf(parcel), 1);
-  //   parcel.status = 'Cancelled';
-  //   orders.push(parcel);
-  //   res.status(200).send({ message: 'Order successfully cancelled', parcel });
-  // } else {
-  //   res.status(400).send({ message: 'Invalid id' });
-  // }
+  const parcelId = req.params.id;
+  const userId = req.body.userId;
+  const parcel = execute(queries.cancelOrder, ['Cancelled', parcelId, userId]);
+  parcel.then((response) => {
+    if (response.length >= 1) {
+      res.status(200).send({ message: 'Order successfully cancelled', response: response[0] });
+    } else {
+      res.status(400).send({ message: 'There is no order with that id' });
+    }
+  }).catch((error) => {
+    res.status(400).send({ error });
+  });
 };
 // delete all delivery orders
 const deleteOrders = (req, res) => {
@@ -154,11 +138,11 @@ const changeDestination = (req, res) => {
 
 // change the present location of a parcel delivery order
 const changePresentLocation = (req, res) => {
-  const id = req.params.id;
+  let id = req.params.id;
   const { presentLocation } = req.body;
   const parcel = execute(queries.presentLocationUpdate, [presentLocation, id]);
   parcel.then((response) => {
-    if (response.length >= 1) {
+    if (response) {
       res.status(200).send({ message: 'The parcel was updated successfully', response: response[0] });
     } else {
       res.status(400).send({ message: 'No order with that id' });

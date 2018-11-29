@@ -1,7 +1,6 @@
 
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import uuidv1 from 'uuid/v1';
 import app from '../app';
 
 
@@ -16,12 +15,11 @@ beforeEach('Clear data from database', (done) => {
 });
 describe('It should test creating a user', () => {
   it('Created user successfully', (done) => {
-    const id = uuidv1();
     const user = {
-      id,
       name: 'Yves',
       email: 'alfheaagd@gmail.com',
       password: 'afhasiujfsia',
+      userType: 'User',
     };
     chai.request(app).post('/api/v1/users/signup').send(user).end((error, res) => {
       if (error) done(error);
@@ -34,12 +32,11 @@ describe('It should test creating a user', () => {
   });
   describe('Should test invalid fields', () => {
     it('An invalid name error', (done) => {
-      const id = uuidv1();
       const user = {
-        id,
         name: '121231231',
         email: 'afafhag@gmail.com',
         password: 'afafsafgafsdf',
+        userType: 'User',
       };
       chai.request(app).post('/api/v1/users/signup').send(user).end((error, res) => {
         if (error) done(error);
@@ -48,27 +45,25 @@ describe('It should test creating a user', () => {
       });
     });
     it('An invalid email error', (done) => {
-      const id = uuidv1();
-      const user = {
-        id,
+      let user = {
         name: 'Yves Iraguha',
-        email: '1221afhafhahf@gmail.com',
+        email: '122111121212',
         password: 'afafsafgafsdf',
+        userType: 'User',
       };
       chai.request(app).post('/api/v1/users/signup').send(user).end((error, res) => {
         if (error) done(error);
-        res.body.should.have.property('message').eql('Invalid email, the email should start with letter');
+        res.body.should.have.property('message').eql('Invalid email, the email should start with a letter');
         done();
       });
     });
   });
   describe('It should test missing fields errors', () => {
     it('A missing name error', (done) => {
-      const id = uuidv1();
       const user = {
-        id,
         email: 'afafafaf@gmail.com',
         password: 'afhafha',
+        userType: 'User',
       };
       chai.request(app).post('/api/v1/users/signup').send(user).end((error, res) => {
         if (error) done(error);
@@ -78,11 +73,10 @@ describe('It should test creating a user', () => {
       });
     });
     it('A missing email error', (done) => {
-      const id = uuidv1();
-      const user = {
-        id,
+      let user = {
         name: 'Yves Iraguha',
         password: 'afhafha',
+        userType: 'User',
       };
       chai.request(app).post('/api/v1/users/signup').send(user).end((error, res) => {
         if (error) done(error);
@@ -92,11 +86,10 @@ describe('It should test creating a user', () => {
       });
     });
     it('A missing password error', (done) => {
-      const id = uuidv1();
-      const user = {
-        id,
+      let user = {
         name: 'Yves Iraguha',
         email: 'afafafaf@gmail.com',
+        userType: 'User',
       };
       chai.request(app).post('/api/v1/users/signup').send(user).end((error, res) => {
         if (error) done(error);

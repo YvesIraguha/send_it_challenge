@@ -22,7 +22,7 @@ parcelsRouter.get('/', function (req, res) {
 
 parcelsRouter.get('/parcels/:id', _parcelControllers.default.fetchParcelById); // Route for accepting data from the parcel creation.
 
-parcelsRouter.post('/parcels', _parcelControllers.default.createParcel); // fetch all delivery orders made by a specific user
+parcelsRouter.post('/parcels', _authentication.default.accessTokenRequired, _parcelControllers.default.createParcel); // fetch all delivery orders made by a specific user
 
 parcelsRouter.get('/users/:id/parcels', _parcelControllers.default.deliveryOrdersByUser); // Fetch all orders made.
 
@@ -30,12 +30,12 @@ parcelsRouter.get('/parcels', _parcelControllers.default.fetchAllDeliveryOrders)
 
 parcelsRouter.delete('/parcels', _parcelControllers.default.deleteOrders); // cancel a delivery order with put method
 
-parcelsRouter.put('/parcels/:id/cancel', _parcelControllers.default.cancelDeliveryOrder); // change the status of the parcel delivery order
+parcelsRouter.put('/parcels/:id/cancel', _authentication.default.accessTokenRequired, _parcelControllers.default.cancelDeliveryOrder); // change the status of the parcel delivery order
 
-parcelsRouter.put('/parcels/:id/status', _parcelControllers.default.updateStatus); // change the destination of a parcel delivery order
+parcelsRouter.put('/parcels/:id/status', _authentication.default.accessTokenRequired, _parcelControllers.default.updateStatus); // change the destination of a parcel delivery order
 
-parcelsRouter.put('/parcels/:id/destination', _parcelControllers.default.changeDestination); // change the present location of the parcel
+parcelsRouter.put('/parcels/:id/destination', _authentication.default.accessTokenRequired, _parcelControllers.default.changeDestination); // change the present location of the parcel
 
-parcelsRouter.put('/parcels/:id/presentLocation', _parcelControllers.default.changePresentLocation);
+parcelsRouter.put('/parcels/:id/presentLocation', _authentication.default.accessTokenRequired, _parcelControllers.default.changePresentLocation);
 var _default = parcelsRouter;
 exports.default = _default;

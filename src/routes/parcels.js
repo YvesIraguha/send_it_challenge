@@ -13,7 +13,7 @@ parcelsRouter.get('/', (req, res) => {
 parcelsRouter.get('/parcels/:id', controllers.fetchParcelById);
 
 // Route for accepting data from the parcel creation.
-parcelsRouter.post('/parcels', controllers.createParcel);
+parcelsRouter.post('/parcels',authentication.accessTokenRequired, controllers.createParcel);
 
 // fetch all delivery orders made by a specific user
 parcelsRouter.get('/users/:id/parcels', controllers.deliveryOrdersByUser);
@@ -24,16 +24,16 @@ parcelsRouter.get('/parcels', controllers.fetchAllDeliveryOrders);
 // delete all delivey orders.
 parcelsRouter.delete('/parcels', controllers.deleteOrders);
 
-// cancel a delivery order with put method
-parcelsRouter.put('/parcels/:id/cancel', controllers.cancelDeliveryOrder);
+// cancel a delivery order 
+parcelsRouter.put('/parcels/:id/cancel',authentication.accessTokenRequired, controllers.cancelDeliveryOrder);
 
 // change the status of the parcel delivery order
-parcelsRouter.put('/parcels/:id/status', controllers.updateStatus);
+parcelsRouter.put('/parcels/:id/status',authentication.adminTokenRequired, controllers.updateStatus);
 
 // change the destination of a parcel delivery order
-parcelsRouter.put('/parcels/:id/destination', controllers.changeDestination);
+parcelsRouter.put('/parcels/:id/destination',authentication.accessTokenRequired,  controllers.changeDestination);
 
 // change the present location of the parcel
-parcelsRouter.put('/parcels/:id/presentLocation', controllers.changePresentLocation);
+parcelsRouter.put('/parcels/:id/presentLocation',authentication.adminTokenRequired, controllers.changePresentLocation);
 
 export default parcelsRouter;

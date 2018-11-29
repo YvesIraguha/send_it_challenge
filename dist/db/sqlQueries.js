@@ -13,9 +13,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var sqlQueries = {}; // Create table for parcels
 
-var createParcelsTable = 'CREATE TABLE IF NOT EXISTS parcels (id VARCHAR(200) PRIMARY KEY,  name VARCHAR(20) NOT NULL,  origin VARCHAR(20) NOT NULL,  destination VARCHAR(20) NOT NULL,  weight INT NOT NULL,  price INT NOT NULL, presentLocation VARCHAR(20) NOT NULL, status VARCHAR(20), userId INT NOT NULL )'; // Create users table
+var createParcelsTable = 'CREATE TABLE IF NOT EXISTS parcels (id VARCHAR(200) PRIMARY KEY,  name VARCHAR(20) NOT NULL,  origin VARCHAR(20) NOT NULL,  destination VARCHAR(20) NOT NULL,  weight INT NOT NULL,  price INT NOT NULL, presentLocation VARCHAR(20) NOT NULL, status VARCHAR(20), userId VARCHAR(200) NOT NULL )'; // Create users table
 
-var createusersTable = "CREATE TABLE IF NOT EXISTS users(id VARCHAR(200) PRIMARY KEY,  name VARCHAR(20) NOT NULL,  email VARCHAR(20) NOT NULL,  password VARCHAR(200) NOT NULL \n)";
+var createusersTable = "CREATE TABLE IF NOT EXISTS users(id VARCHAR(200) PRIMARY KEY,  name VARCHAR(20) NOT NULL,  email VARCHAR(40) NOT NULL,  password VARCHAR(200) NOT NULL \n)";
 
 if (require.main === module) {
   (0, _connection.default)(createParcelsTable);
@@ -27,7 +27,9 @@ var insertIntoDatabase = 'INSERT INTO parcels (id, name, origin, destination, we
 
 var getSpecificParcel = 'SELECT * FROM parcels WHERE id =$1 '; // Update status of a parcel
 
-var statusUpdate = 'UPDATE parcels SET status = $1 WHERE id = $2 RETURNING * '; // update destination of a parcel
+var statusUpdate = 'UPDATE parcels SET status = $1 WHERE id = $2 RETURNING * '; //cancel order 
+
+var cancelOrder = 'UPDATE parcels SET status = $1 WHERE id = $2 AND userId = $3 RETURNING * '; // update destination of a parcel
 
 var destinationUpdate = "UPDATE parcels SET destination = $1 WHERE id = $2 RETURNING *\n"; // update present location
 
@@ -48,5 +50,6 @@ sqlQueries.registerUser = registerUser;
 sqlQueries.ordersForUser = ordersForUser;
 sqlQueries.presentLocationUpdate = presentLocationUpdate;
 sqlQueries.statusUpdate = statusUpdate;
+sqlQueries.cancelOrder = cancelOrder;
 var _default = sqlQueries;
 exports.default = _default;

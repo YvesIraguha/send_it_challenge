@@ -15,10 +15,11 @@ require("babel-polyfill");
 
 var _v = _interopRequireDefault(require("uuid/v1"));
 
+var _authentication = _interopRequireDefault(require("../helpers/authentication"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// declare the variable to store users.
-var users = [];
+// declare the variable to store users
 var userControllers = {}; // fetch all users.
 
 var fetchAllUsers = function fetchAllUsers(req, res) {
@@ -41,12 +42,7 @@ var createUser = function createUser(req, res) {
   var _req$body = req.body,
       name = _req$body.name,
       email = _req$body.email,
-      password = _req$body.password; // const specificUser = users.find(user => user.email === email);
-  // // let specificUser = execute(queries.checkuser,[id])
-  // if (specificUser) {
-  // XXX include the link to sign in with a message;
-  //   res.send({ message: 'The email is already in use' });
-  // } else
+      password = _req$body.password;
 
   if (!name || !email || !password) {
     res.send({
@@ -66,17 +62,28 @@ var createUser = function createUser(req, res) {
     } else {
       // generate the id and pass it to a user
       var id = (0, _v.default)();
+
+      var token = _authentication.default.encodeToken({
+        name: name,
+        email: email,
+        password: password,
+        userId: id
+      });
+
       var user1 = new _user.default(id, name, email, password);
       var promise = (0, _connection.default)(_sqlQueries.default.registerUser, [user1.id, user1.name, user1.email, user1.password]);
       promise.then(function (response) {
         res.status(200).send({
-          message: 'user registered successfully',
-          response: response[0]
+          message: 'User registered successfully',
+          response: {
+            name: name,
+            email: email
+          },
+          token: token
         });
       }).catch(function (error) {
         console.log(error);
-      }); // users.push(user1);
-      // res.send({ message: 'user registered successfully', user1 });
+      });
     }
   }
 }; // send sign up page.
