@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 });
 
 // Set the port for listening on.
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 app.listen(port);
 
 // export the app for testing

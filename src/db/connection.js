@@ -22,7 +22,7 @@ const execute = async (sql, data = []) => {
   const connection = await connect();
   try {
     // wait for the query using await
-    const result = await connection.query(sql, data);
+    const result = await connection.query(sql, data);    
     return result.rows;
   } catch (error) {
     // Error handling
