@@ -80,32 +80,6 @@ table.innerHTML =`
 
 //Display the informations about orders made in userProfile div. 
 
-var userProfile = document.getElementById("userProfile");
-userProfile.innerHTML = `<table>
-							<caption>Summary</caption>
-							<tr>
-								<td>Status</td>
-								<td>Total</td>
-							</tr>
-							<tr>
-								<td>Total orders made</td>
-								<td>${inTransit + delivered + notDelivered}</td>
-							</tr>
-							<tr>
-								<td>Orders in Transit</td>
-								<td>${inTransit}</td>
-							</tr>
-							<tr>
-								<td>Orders not delivered</td>
-								<td>${notDelivered}</td>
-							</tr>
-							<tr>
-								<td>Orders delivered</td>
-								<td>${delivered}</td>
-							</tr>
-						</table>`;
-
-
 //cancel the delivery order if it is not being procsses.
 var buttons =document.querySelectorAll('.cancel');
 var error = document.querySelector(".error");
