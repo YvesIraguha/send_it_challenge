@@ -7,12 +7,6 @@ import app from '../app';
 const should = chai.should();
 
 chai.use(chaiHttp);
-beforeEach('Clear data from database', (done) => {
-  chai.request(app).delete('/api/v1/users').end((error, res) => {
-    if (error) done(error);
-    done();
-  });
-});
 describe('It should test creating a user', () => {
   it('Created user successfully', (done) => {
     const user = {

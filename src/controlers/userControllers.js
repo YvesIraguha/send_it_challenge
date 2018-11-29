@@ -12,10 +12,10 @@ const userControllers = {};
 
 // fetch all users.
 const fetchAllUsers = (req, res) => {
-  const users = execute('SELECT * FROM users');
+  let users = execute('SELECT * FROM users');
   users.then((response) => {
-    if (response.length > 0) {
-      res.send(response);
+    if (response) {
+      res.send({ response });
     } else {
       res.send({ message: 'There is no user at the moment.' });
     }
@@ -47,7 +47,7 @@ const createUser = (req, res) => {
       const promise = execute(queries.registerUser, [user1.id, user1.name, user1.email, user1.password, user1.userType]);
       promise.then((response) => {
         const { name, email, userType } = response[0];
-        res.status(200).send({ message: 'user registered successfully', response: { name, email, userType }, token });
+        res.status(200).send({ message: 'user registered successfully', response: {id,name, email, userType }, token });
       }).catch((error) => {
         console.log(error);
       });
@@ -62,9 +62,9 @@ const createUser = (req, res) => {
 
 // get a user
 const getUser = (req, res) => {
-  const id = parseInt(req.params.id);
+  let id = req.params.id;
   // const specificUser = users.find(item => item.id === id);
-  const specificUser = execute('SELECT * FROM users WHERE id =$1', [id]);
+  let specificUser = execute('SELECT * FROM users WHERE id =$1', [id]);
   specificUser.then((response) => {
     if (response) {
       res.status(200).send(response[0]);
@@ -80,25 +80,22 @@ const login = (req, res) => {
 
   let specificUser = execute(queries.checkUser,[email]);
   specificUser.then((response) => {
+    if (response.length >0 ){
     if (passwordHash.verify(password,response[0].password)){
-      let token = authentication.encodeToken(response[0]);
+      let { name, password, userType, id } = response[0];
+      let token = authentication.encodeToken({ name, email, password, userId:id,userType});
         res.status(200).send({message:"Logged in successfully",token})
     }else{
       res.status(400).send({message:"Password not matching"})
     };
+  }else {
+    res.status(400).send({message:'No user with that email'});
+  };
   }).catch((error) => {
     console.log(error);
   });
 };
 
-// login verification;
-const loginRequired = (req, res) => {
-  if (req.session.user) {
-    next();
-  } else {
-    res.end('Not looged in');
-  }
-};
 
 // sign out
 const signOut = (req, res) => {
@@ -111,10 +108,11 @@ const signOut = (req, res) => {
   res.end('Invalid login');
 };
 
+//Delete all users from users table.
 const deleteUsers = (req, res) => {
   let parcels = execute('DELETE FROM users ');
   parcels.then((response) => {
-    res.status(200).send({ message: 'Orders deleted successfully', response });
+    res.status(200).send({ message: 'Users deleted successfully', response });
   }).catch((error) => {
     res.status(400).send({ error });
   });
@@ -123,7 +121,6 @@ const deleteUsers = (req, res) => {
 userControllers.fetchAllUsers = fetchAllUsers;
 userControllers.getUser = getUser;
 userControllers.createUser = createUser;
-userControllers.loginRequired = loginRequired;
 userControllers.login = login;
 userControllers.signOut = signOut;
 userControllers.deleteUsers = deleteUsers;
