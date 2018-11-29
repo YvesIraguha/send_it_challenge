@@ -5,8 +5,6 @@ import execute from '../db/connection';
 import 'babel-polyfill';
 
 const controllers = {};
-// // declare the variable to store orders.
-// let orders = [];
 
 // fetch a parcel
 const fetchParcelById = (req, res) => {
@@ -122,10 +120,13 @@ const updateStatus = (req, res) => {
   }).catch(error => console.log(error));
 };
 
-// change the location of a destination delivery order
+// change the destination delivery order
 const changeDestination = (req, res) => {
   const parcelId = req.params.id;
-  const { destination } = req.body;
+  let { destination } = req.body;
+  if ( destination === undefined){
+    res.status(400).send({message:"Please provide a new destination in order to update the destination"})
+  }else{
   const parcel = execute(queries.destinationUpdate, [destination, parcelId]);
   parcel.then((response) => {
     if (response) {
@@ -134,12 +135,16 @@ const changeDestination = (req, res) => {
       res.status(400).send({ message: 'No order with that id' });
     }
   }).catch(error => console.log(error));
+}
 };
 
 // change the present location of a parcel delivery order
 const changePresentLocation = (req, res) => {
   let id = req.params.id;
-  const { presentLocation } = req.body;
+  let { presentLocation } = req.body;
+  if (presentLocation === undefined){
+    res.status(200).send({message:"Please provide present location or keep the current"})
+  }else {
   const parcel = execute(queries.presentLocationUpdate, [presentLocation, id]);
   parcel.then((response) => {
     if (response) {
@@ -148,6 +153,7 @@ const changePresentLocation = (req, res) => {
       res.status(400).send({ message: 'No order with that id' });
     }
   }).catch(error => console.log(error));
+}
 };
 
 controllers.fetchParcelById = fetchParcelById;

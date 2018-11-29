@@ -29,7 +29,7 @@ const adminTokenRequired = (req, res, next) => {
   if ( req.body.userType === 'Admin') {    
     next();
   } else {
-    res.status(400).send({ message: 'Not authorized to this page' });
+    res.status(403).send({ message: 'Not authorized to this page' });
   }
 };
 export default { accessTokenRequired, encodeToken, adminTokenRequired };
