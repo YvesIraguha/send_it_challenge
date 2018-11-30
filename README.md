@@ -31,7 +31,7 @@ The template for sign in page: [Sign in](https://yvesiraguha.github.io/send_it_c
 
 `PUT /parcels/<parcelID>/status`: Change the status of the parcel delivery order.
 
-`PUT /parcels/<parcelID>/presentLocation`:Change the presentLocation of a parcle delivery order. 
+`PUT /parcels/<parcelID>/presentLocation`:Change the presentLocation of a parcel delivery order. 
 
 `POST /users/signup`: Register a user .
 
