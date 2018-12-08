@@ -1,19 +1,18 @@
 import express from 'express';
+import authentication from '../helpers/authentication';
 import userControllers from '../controlers/userControllers';
-import users from '../../dist/routes/users';
-import user from '../../dist/models/user';
 
 // instantiate users router
 const usersRouter = express.Router();
 
 // get the list of all users.
-usersRouter.get('/', userControllers.fetchAllUsers);
+usersRouter.get('/', authentication.adminTokenRequired, userControllers.fetchAllUsers);
 
 // The route for signing up link
 // usersRouter.get('/signup', userControllers.signUpPage);
 
 // get a specific user by id
-usersRouter.get('/:id', userControllers.getUser);
+usersRouter.get('/:id',authentication.accessTokenRequired, userControllers.getUser);
 
 // accept the data from users signing up
 usersRouter.post('/signup', userControllers.createUser);
@@ -28,6 +27,6 @@ usersRouter.post('/signin', userControllers.login);
 usersRouter.get('/signout', userControllers.signOut);
 
 // delete users for testing
-usersRouter.delete('/', userControllers.deleteUsers);
+usersRouter.delete('/', authentication.adminTokenRequired, userControllers.deleteUsers);
 
 export default usersRouter;

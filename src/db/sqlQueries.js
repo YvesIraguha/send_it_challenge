@@ -7,7 +7,7 @@ const sqlQueries = {};
 const createParcelsTable = 'CREATE TABLE IF NOT EXISTS parcels (id VARCHAR(200) PRIMARY KEY,  name VARCHAR(20) NOT NULL,  origin VARCHAR(20) NOT NULL,  destination VARCHAR(200) NOT NULL,  weight INT NOT NULL,  price INT NOT NULL, presentLocation VARCHAR(200) NOT NULL, status VARCHAR(200), userId VARCHAR(200) NOT NULL )';
 
 // Create users table
-const createusersTable = `CREATE TABLE IF NOT EXISTS users(id VARCHAR(200) PRIMARY KEY,  name VARCHAR(20) NOT NULL,  email VARCHAR(40) NOT NULL,  password VARCHAR(200) NOT NULL, userType VARCHAR(200) NOT NULL
+const createusersTable = `CREATE TABLE IF NOT EXISTS users(id VARCHAR(200) PRIMARY KEY,  name VARCHAR(20) NOT NULL,  email VARCHAR(40) NOT NULL UNIQUE,  password VARCHAR(200) NOT NULL, userType VARCHAR(200) NOT NULL
 )`;
 
 if (require.main === module) {
