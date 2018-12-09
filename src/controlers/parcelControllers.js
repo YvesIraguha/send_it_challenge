@@ -1,5 +1,4 @@
 import joi from 'joi';
-import 'babel-polyfill';
 import uuidv1 from 'uuid/v1';
 import Parcel from '../models/parcel';
 import queries from '../db/sqlQueries';

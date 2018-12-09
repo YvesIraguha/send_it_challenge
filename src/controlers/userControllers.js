@@ -1,5 +1,4 @@
 import passwordHash from 'password-hash';
-import 'babel-polyfill';
 import joi from 'joi';
 import uuidv1 from 'uuid/v1';
 import queries from '../db/sqlQueries';

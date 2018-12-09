@@ -1,5 +1,5 @@
 import joi from 'joi';
-import { join } from 'path';
+
 
 const userSchema = joi.object().keys({
     name: joi.string().alphanum().min(3).max(30).required(),
