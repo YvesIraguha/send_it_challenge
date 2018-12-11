@@ -6,13 +6,13 @@ import userControllers from '../controlers/userControllers';
 const usersRouter = express.Router();
 
 // get the list of all users.
-usersRouter.get('/', authentication.adminTokenRequired, userControllers.fetchAllUsers);
+usersRouter.get('/', userControllers.fetchAllUsers);
 
 // The route for signing up link
 // usersRouter.get('/signup', userControllers.signUpPage);
 
 // get a specific user by id
-usersRouter.get('/:id',authentication.accessTokenRequired, userControllers.getUser);
+usersRouter.get('/:id', userControllers.getUser);
 
 // accept the data from users signing up
 usersRouter.post('/signup', userControllers.createUser);

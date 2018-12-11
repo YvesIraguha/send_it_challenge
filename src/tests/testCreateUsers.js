@@ -27,27 +27,27 @@ describe('It should test creating a user', () => {
   describe('Should test invalid fields', () => {
     it('An invalid name error', (done) => {
       const user = {
-        name: '121231231',
+        name: '12',
         email: 'afafhag@gmail.com',
         password: 'afafsafgafsdf',
         userType: 'User',
       };
       chai.request(app).post('/api/v1/users/signup').send(user).end((error, res) => {
         if (error) done(error);
-        res.body.should.have.property('message').eql('Invalid name, the name should start with letter');
+        res.body.should.have.property('error');
         done();
       });
     });
     it('An invalid email error', (done) => {
       let user = {
         name: 'Yves Iraguha',
-        email: '122111121212',
+        email: '12',
         password: 'afafsafgafsdf',
         userType: 'User',
       };
       chai.request(app).post('/api/v1/users/signup').send(user).end((error, res) => {
         if (error) done(error);
-        res.body.should.have.property('message').eql('Invalid email, the email should start with a letter');
+        res.body.should.have.property('error');
         done();
       });
     });
@@ -62,7 +62,7 @@ describe('It should test creating a user', () => {
       chai.request(app).post('/api/v1/users/signup').send(user).end((error, res) => {
         if (error) done(error);
         res.body.should.be.a('object');
-        res.body.should.have.property('message').eql('Please complete the required fields');
+        res.body.should.have.property('error');
         done();
       });
     });
@@ -75,7 +75,7 @@ describe('It should test creating a user', () => {
       chai.request(app).post('/api/v1/users/signup').send(user).end((error, res) => {
         if (error) done(error);
         res.body.should.be.a('object');
-        res.body.should.have.property('message').eql('Please complete the required fields');
+        res.body.should.have.property('error');
         done();
       });
     });
@@ -88,7 +88,7 @@ describe('It should test creating a user', () => {
       chai.request(app).post('/api/v1/users/signup').send(user).end((error, res) => {
         if (error) done(error);
         res.body.should.be.a('object');
-        res.body.should.have.property('message').eql('Please complete the required fields');
+        res.body.should.have.property('error');
         done();
       });
     });

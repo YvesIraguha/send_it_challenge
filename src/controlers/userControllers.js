@@ -30,7 +30,7 @@ const createUser = (req, res) => {
   } = req.body;
   let { error, value } = joi.validate({ name, email, password, userType}, Schema.userSchema);
   if (error){
-    res.status(400).send({ message: error.details[0].message });
+    res.status(400).send({ error: error.details[0].message });
   }else{
       // generate the id and pass it to a user
       const id = uuidv1();
@@ -79,10 +79,10 @@ const login = (req, res) => {
       let token = authentication.encodeToken({ name, email, password, userId:id,userType});
         res.status(200).send({message:"Logged in successfully",token})
     }else{
-      res.status(400).send({message:"Password not matching"})
+      res.status(400).send({error:"Password not matching"})
     };
   }else {
-    res.status(400).send({message:'No user with that email'});
+    res.status(400).send({error:'No user with that email'});
   };
   }).catch((error) => {
     console.log(error);

@@ -1,48 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" type="text/css" href="../css/style.css">
-  <title>SendIT</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/stylesheet.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <title>SENDIT</title>
 </head>
 <body>
-    <header>       
-        <ul>           
-             <li><a href="./signup">Sign Up</a></li>
-             <li><a href="./signin">Sign In</a></li>
-             <li><a href="./user">User</a></li>
-             <li><a href="#order">Create Order</a></l>
-             <li><a href="./admin">Admin</a></li>
-        </ul>
-   </header>
-   <div id="homePage">
-    <article>
-      <h1>SendIT</h1>
-      <p><strong>SendIt</strong> is a service for you to send a parcel from one destination <br> 
-        to another with just cost calculated based on the weight of what you want to <br>
-        transfer. The cost per unit is 100RWf.</p>
-        <p>This is the opportunity for you to send parcels with us.</p>
-        <p><a href=" ./signup">Sign up</a> to send with us or <a href=" ./signin">Sign in</a> if you already have an account.</p>
-    </article>     
-    <div id="order">
-      <form action="./index.html" method="#"> 
-        <caption><b>Create an order</b></caption>             
-     </form>                         
+    <div class="container">
+        <header>
+            <div class="heading-logo">
+                <img src="../images/alternative.PNG" alt="SENDIT">
+            </div>
+            <div class="heading-nav">
+                <ul>
+                    <li>About us</li>
+                    <li>Contacts</li>
+                    <li>Login</li>
+                </ul>            
+            </div>
+        </header>
+        <div class="home-container">
+            <p>SendIt is a service for you to send a parcel delivery orders</p>
+            <p>It is cheap, and affordable. The unit cost is 100RWf</p>
+            <button class="btn signup"><a href="./pages/signup">Sign up</a></button>
+        </div>
     </div>
-      
-    <!-- If a user tries to add an order and the first one is not filled, show an error  -->
-    <div class="error"></div>
-    <!-- If a user inserted the correct weight display the total quotes to be paid. -->
-    <div id="totalQuotes"></div>   
-    <!-- button for adding field for another order  -->      
-    <button id='addOrder'>Add</button> 
-    <!-- button for calculating the quotes              -->    
-    <button id ='quotes'>Get Quotes</button>
-  </div>
- <!-- link to the javascript file for creating order  --> 
- <script type="text/javascript" src="../js/index.js"></script>  
+    <div class="items-container">
+        <h1>What you can send</h1>
+        <div class="items">
+            <img src="../images/background.jpg" alt="Letters">
+            <h2>Letters</h2>
+        </div>
+        <div class="items">
+            <img src="../images/money.jpg" alt="Money">
+            <h2>Cash</h2>
+        </div>
+        <div class="items">
+            <img src="../images/luggages.jpg" alt="Luggages">
+            <h2>Luggages</h2>
+        </div>
+        <div class="items">
+            <img src="../images/pharamaceticuales.jpg" alt="Pharmaceticals">
+            <h2>Pharmaceuticals</h2>
+        </div>
+    </div>
+    <div class="end-part">
+        <p>Ready to send with us ?</p>
+        <p>Start by creating an order</p>
+        <p><i class="fa fa-angle-double-down"></i></p>
+        <!-- insert an icon for creating an order  -->
+        <button class="btn create">create</button>
+    </div>
+    
+    <footer>
+        <!-- icons for contacts, copy rights, and leave a message  -->
+    </footer>  
 </body>
 </html>
-

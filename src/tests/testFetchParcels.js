@@ -73,14 +73,13 @@ describe('It should test fetching parcels ', () => {
       if (error) done(error);
       res.should.have.status(200);
       res.body.should.be.a('array');
-      // res.body.should.have.length(2);
       done();
     });
   });
 
   it('it should return orders by a user id', (done) => {    
     let decoded = jwt.decode(token,"secret");
-    chai.request(app).get(`/api/v1/users/${decoded.userId}/parcels`).end((error, res) => {
+    chai.request(app).get(`/api/v1/users/${decoded.sub.userId}/parcels`).end((error, res) => {      
       if (error) done(error);
       res.should.have.status(200);
       res.body.should.be.a('array');

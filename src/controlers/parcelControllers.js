@@ -30,7 +30,7 @@ const createParcel = (req, res) => {
   } = req.body;
   let { error, value } = joi.validate({name,origin,destination,weight,userId},Schema.parcelSchema);
   if (error !== null) {
-    res.status(400).send({message:error.details[0].message});
+    res.status(400).send({error:error.details[0].message});
   }else {
     const id = uuidv1();
     const order = new Parcel(id, name, origin, destination, weight, userId);
@@ -106,7 +106,7 @@ const updateStatus = (req, res) => {
   });
   let { error, value } = joi.validate({ status },statusSchema);
   if (error){
-    res.status(400).send({message:error.details[0].message});
+    res.status(400).send({error:error.details[0].message});
   }else{  
       const parcel = execute(queries.statusUpdate, [status, orderid]);
       parcel.then((response) => {
@@ -128,7 +128,7 @@ const changeDestination = (req, res) => {
   });
   let { error, value } = joi.validate({ destination },destinationSchema);
   if ( error ){
-    res.status(400).send({ message:error.detials[0].message });
+    res.status(400).send({error:error.detials[0].message });
   }else{
   const parcel = execute(queries.destinationUpdate, [destination, parcelId]);
   parcel.then((response) => {
@@ -137,7 +137,7 @@ const changeDestination = (req, res) => {
     } else {
       res.status(400).send({ message: 'No order with that id' });
     }
-  }).catch(error => console.log(error));
+  }).catch(error => res.send({error}));
 }
 };
 
@@ -150,7 +150,7 @@ const changePresentLocation = (req, res) => {
   });
   let { error , value} = joi.validate({presentLocation},presentLocationSchema);
   if (error){
-    res.status(200).send({message:error.details[0].message})
+    res.status(200).send({error:error.details[0].message})
   }else {
   const parcel = execute(queries.presentLocationUpdate, [presentLocation, id]);
   parcel.then((response) => {

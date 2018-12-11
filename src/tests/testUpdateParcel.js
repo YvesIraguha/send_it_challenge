@@ -26,7 +26,6 @@ before('Create a user who will create a parcel', (done) => {
 
 
 // Create an admin who will update the parcel
-
 before('Create an admin who will update a parcel', (done) => {
   const user = {
     name: 'Admin',
@@ -123,7 +122,6 @@ describe('It should test updating the parcel', () => {
         if (error) done(error);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('The parcel was updated successfully');
-        // res.body.response.should.have.property('status').eql('Delivered');
         done();
       });
   });
@@ -137,6 +135,6 @@ describe('It should test updating the parcel', () => {
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('The parcel was updated successfully');
         done();
-      });
+      });      
   });
 });
