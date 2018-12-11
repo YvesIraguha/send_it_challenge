@@ -1,10 +1,11 @@
 import passwordHash from 'password-hash';
+import joi from 'joi';
+import uuidv1 from 'uuid/v1';
 import queries from '../db/sqlQueries';
 import execute from '../db/connection';
-import 'babel-polyfill';
-import uuidv1 from 'uuid/v1';
 import authentication from '../helpers/authentication';
 import User from '../models/user';
+import Schema from '../helpers/inputFieldsValidation';
 
 // declare the variable to store users
 
@@ -27,17 +28,10 @@ const createUser = (req, res) => {
   let {
     name, email, password, userType,
   } = req.body;
-  //Got the regex from Dan's Tools, Regex Testing. 
-  let emailValidation = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i; 
-  let fieldsValidation = /[A-Z][a-zA-Z][^#&<>\"~;$^%{}?]{1,30}$/g;
-  if (!name || !email || !password || !userType) {
-    res.send({ message: 'Please complete the required fields' });
-  } else {    
-    if (!fieldsValidation.test(name)) {
-      res.status(400).send({ message: 'Invalid name, the name should start with letter' });
-    } else if (!emailValidation.test(email)) {
-      res.status(400).send({ message: 'Invalid email, the email should start with a letter' });
-    } else {
+  let { error, value } = joi.validate({ name, email, password, userType}, Schema.userSchema);
+  if (error){
+    res.status(400).send({ error: error.details[0].message });
+  }else{
       // generate the id and pass it to a user
       const id = uuidv1();
       const token = authentication.encodeToken({
@@ -51,8 +45,7 @@ const createUser = (req, res) => {
       }).catch((error) => {
         console.log(error);
       });
-    }
-  }
+  };
 };
 
 // send sign up page.
@@ -86,10 +79,10 @@ const login = (req, res) => {
       let token = authentication.encodeToken({ name, email, password, userId:id,userType});
         res.status(200).send({message:"Logged in successfully",token})
     }else{
-      res.status(400).send({message:"Password not matching"})
+      res.status(400).send({error:"Password not matching"})
     };
   }else {
-    res.status(400).send({message:'No user with that email'});
+    res.status(400).send({error:'No user with that email'});
   };
   }).catch((error) => {
     console.log(error);

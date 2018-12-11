@@ -1,66 +1,82 @@
-"use strict";
+'use strict';
 
-var _chai = _interopRequireDefault(require("chai"));
+var _chai = require('chai');
 
-var _chaiHttp = _interopRequireDefault(require("chai-http"));
+var _chai2 = _interopRequireDefault(_chai);
 
-var _v = _interopRequireDefault(require("uuid/v1"));
+var _chaiHttp = require('chai-http');
 
-var _app = _interopRequireDefault(require("../app"));
+var _chaiHttp2 = _interopRequireDefault(_chaiHttp);
+
+var _v = require('uuid/v1');
+
+var _v2 = _interopRequireDefault(_v);
+
+var _app = require('../app');
+
+var _app2 = _interopRequireDefault(_app);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var should = _chai.default.should();
+var should = _chai2.default.should();
 
-_chai.default.use(_chaiHttp.default);
+_chai2.default.use(_chaiHttp2.default);
+// Create a user who will create a parcel
+var token = void 0;
+
+before('Create a user who will create a parcel', function (done) {
+  var user = {
+    name: 'Yves',
+    email: 'iraguhaivos@gmail.com',
+    password: 'ahfahdafd',
+    userType: 'User'
+  };
+  _chai2.default.request(_app2.default).post('/api/v1/users/signup').send(user).end(function (error, res) {
+    if (error) done(error);
+    token = res.body.token;
+    done();
+  });
+});
 
 describe('It should test parcel creation', function () {
   beforeEach('Clear data from database', function (done) {
-    _chai.default.request(_app.default).delete('/api/v1/parcels').end(function (error, res) {
+    _chai2.default.request(_app2.default).delete('/api/v1/parcels').end(function (error, res) {
       if (error) done(error);
       done();
     });
   });
   describe('Successful order creation', function () {
     it('It should acknowledge that parcel was created with created object', function (done) {
-      var id = (0, _v.default)();
       var parcel = {
-        id: id,
-        name: 'T-shirts',
+        name: 'Tshirts',
         origin: 'Kabarore',
         destination: 'Muramba',
-        userId: 3,
         weight: 3
       };
-
-      _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
+      _chai2.default.request(_app2.default).post('/api/v1/parcels').send(parcel).set({ token: token }).end(function (error, res) {
         if (error) done(error);
         res.should.have.status(201);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('The order was successfully created');
         res.body.should.have.property('response');
-        res.body.response.should.have.property('name').eql('T-shirts');
+        res.body.response.should.have.property('name').eql('Tshirts');
         res.body.response.should.have.property('origin').eql('Kabarore');
         res.body.response.should.have.property('destination').eql('Muramba');
-        res.body.response.should.have.property('userid').eql(3);
         res.body.response.should.have.property('price').eql(300);
         done();
       });
     });
   });
+
   describe('invalid input', function () {
     it('It should display an invalid weight error', function (done) {
-      var id = (0, _v.default)();
       var parcel = {
-        id: id,
         name: 'Tshirts',
         origin: 'Matambi',
         destination: 'Muramba',
-        userId: 3,
         weight: 'aaaa'
       };
-
-      _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
+      _chai2.default.request(_app2.default).post('/api/v1/parcels').send(parcel).set({ token: token }).end(function (error, res) {
         if (error) done(error);
         res.should.have.status(400);
         res.body.should.be.a('object');
@@ -68,18 +84,15 @@ describe('It should test parcel creation', function () {
         done();
       });
     });
+
     it('It should display an invalid name error', function (done) {
-      var id = (0, _v.default)();
       var parcel = {
-        id: id,
         name: '123455',
         origin: 'Matambi',
         destination: 'Muramba',
-        userId: 3,
         weight: 11223
       };
-
-      _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
+      _chai2.default.request(_app2.default).post('/api/v1/parcels').send(parcel).set({ token: token }).end(function (error, res) {
         if (error) done(error);
         res.should.have.status(400);
         res.body.should.be.a('object');
@@ -87,18 +100,15 @@ describe('It should test parcel creation', function () {
         done();
       });
     });
+
     it('It should display an invalid origin error', function (done) {
-      var id = (0, _v.default)();
       var parcel = {
-        id: id,
         name: 'Tshirts',
         origin: '12345',
         destination: 'Muramba',
-        userId: 3,
-        weight: 0.3
+        weight: 3
       };
-
-      _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
+      _chai2.default.request(_app2.default).post('/api/v1/parcels').send(parcel).set({ token: token }).end(function (error, res) {
         if (error) done(error);
         res.should.have.status(400);
         res.body.should.be.a('object');
@@ -106,18 +116,15 @@ describe('It should test parcel creation', function () {
         done();
       });
     });
+
     it('It should display an invalid destination error', function (done) {
-      var id = (0, _v.default)();
       var parcel = {
-        id: id,
         name: 'Tshirts',
         origin: 'Kabarore',
         destination: '122331',
-        userId: 3,
-        weight: 0.3
+        weight: 3
       };
-
-      _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
+      _chai2.default.request(_app2.default).post('/api/v1/parcels').send(parcel).set({ token: token }).end(function (error, res) {
         if (error) done(error);
         res.should.have.status(400);
         res.body.should.be.a('object');
@@ -126,18 +133,15 @@ describe('It should test parcel creation', function () {
       });
     });
   });
+
   describe('Absence of a field', function () {
     it('It should display a missing name error', function (done) {
-      var id = (0, _v.default)();
       var parcel = {
-        id: id,
         origin: 'Matambi',
         destination: 'Muramba',
-        userId: 3,
         weight: 1
       };
-
-      _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
+      _chai2.default.request(_app2.default).post('/api/v1/parcels').send(parcel).set({ token: token }).end(function (error, res) {
         if (error) done(error);
         res.should.have.status(400);
         res.body.should.be.a('object');
@@ -146,16 +150,12 @@ describe('It should test parcel creation', function () {
       });
     });
     it('It should display missing origin error', function (done) {
-      var id = (0, _v.default)();
       var parcel = {
-        id: id,
         name: 'T-shirts',
         destination: 'Muramba',
-        userId: 3,
         weight: 1
       };
-
-      _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
+      _chai2.default.request(_app2.default).post('/api/v1/parcels').send(parcel).set({ token: token }).end(function (error, res) {
         if (error) done(error);
         res.should.have.status(400);
         res.body.should.be.a('object');
@@ -164,34 +164,12 @@ describe('It should test parcel creation', function () {
       });
     });
     it('It should display missing destination error', function (done) {
-      var id = (0, _v.default)();
       var parcel = {
-        id: id,
         name: 'T-shirts',
         origin: 'Matambi',
-        userId: 3,
         weight: 3
       };
-
-      _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
-        if (error) done(error);
-        res.should.have.status(400);
-        res.body.should.be.a('object');
-        res.body.should.have.property('message').eql('Please provide all the required fields');
-        done();
-      });
-    });
-    it('It should display missing userId error', function (done) {
-      var id = (0, _v.default)();
-      var parcel = {
-        id: id,
-        name: 'T-shirts',
-        origin: 'Matambi',
-        destination: 'Kigali',
-        weight: 1
-      };
-
-      _chai.default.request(_app.default).post('/api/v1/parcels').send(parcel).end(function (error, res) {
+      _chai2.default.request(_app2.default).post('/api/v1/parcels').send(parcel).set({ token: token }).end(function (error, res) {
         if (error) done(error);
         res.should.have.status(400);
         res.body.should.be.a('object');

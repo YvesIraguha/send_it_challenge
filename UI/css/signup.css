@@ -1,0 +1,191 @@
+.container {
+    position: relative;
+    width: 1160px;
+    height: 600px;
+    background: #FFFFFF;
+    }
+
+.asideimage{
+    position: absolute;
+    width: 557px;
+    height: 600px;
+    background: url(../images/693.jpg);
+    background-size:557px 600px;
+    }
+
+.home-container {    
+    position: absolute;
+    width: 608px;
+    height: 600px;
+    left: 552px;
+    top: 0px;
+    background: #FFFFFF;
+}
+
+.heading1 {
+    position: absolute;
+width: 220px;
+height: 28px;
+left: 81px;
+top: 72px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: 300;
+line-height: normal;
+font-size: 18px;
+
+color: #000000
+}
+
+.heading-text {
+    
+position: absolute;
+width: 425px;
+height: 36px;
+left: 81px;
+top: 105px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: 300;
+line-height: normal;
+font-size: 14px;
+
+color: #000000;
+}
+
+.signin-link{
+    position: absolute;
+width: 211px;
+height: 24px;
+left: 81px;
+top: 150px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: 300;
+line-height: normal;
+font-size: 14px;
+
+color: #000000;
+}
+
+.labels {
+    position: absolute;
+width: 160px;
+height: 30px;
+font-family: Roboto;
+font-style: normal;
+font-weight: 300;
+line-height: normal;
+font-size: 14px;
+
+color: #000000;
+}
+.firstname {
+    left: 81px;
+    top: 183px;
+}
+
+.lastname {
+    left: 275px;
+    top: 183px;
+    }
+
+.phone {
+    left: 81px;
+    top: 260px;
+}
+
+.email {
+    left: 275px;
+    top: 260px
+}
+
+.password {
+    left: 81px;
+    top: 337px;
+}
+
+.cfpassword {
+    left: 275px;
+    top: 337px;
+}
+
+.input {
+    position: absolute;
+width: 160px;
+height: 30px;
+font-size:14px;
+border-radius: 10px;
+}
+
+.input-firstname {
+    left: 81px;
+top: 218px;
+}
+
+.input-lastname {
+    left: 275px;
+    top: 218px;
+}
+.input-phone{
+    left: 81px;
+    top: 295px;
+    
+}
+
+.input-email {
+    left: 275px;
+    top: 295px;
+}
+
+.input-password{
+    left:81px;
+    top: 372px;
+}
+
+.input-cfpassword {
+    left: 275px;
+    top: 372px;
+}
+.checkbox {    
+    position: absolute;
+    width: 21px;
+    height: 16px;
+    left: 81px;
+    top: 433px;
+    
+    background: #C4C4C4;
+    border-radius: 5px;
+}
+
+.btn {    
+    position: absolute;
+width: 100px;
+height: 30px;
+left: 81px;
+top: 485px;
+
+background: #4834D4;
+border-radius: 10px;
+color:white;
+font-size:14px;
+}
+
+.terms-policy {
+    position: absolute;
+    width: 287px;
+    height: 27px;
+    left: 117px;
+    top: 435px;
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    font-size: 14px;
+
+    color: #000000;
+    }

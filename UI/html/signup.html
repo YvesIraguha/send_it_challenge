@@ -1,56 +1,50 @@
-<!DOCTYPE html> 
-<html>
-  <head>
-    <title>Sign Up</title>
-    <link rel="stylesheet" type="text/css" href="../css/style.css">   
-  </head>
-  <body>  
-    <div id="signup">
-      <h1>Sign up</h1>
-      <form action="./index.html" method='#'>
-        <table>        
-          <tr>
-            <td>
-              <label for="fullname">Full name</label>
-            </td>
-            <td>
-              <input type="text" id="fullname" name="fullname" placeholder="ex:Joe Doe">
-            </td>          
-         </tr>
-          <tr>
-            <td>
-               <label for="email">Your Email</label>
-            </td>
-            <td>
-              <input type="text" id="email" name="email" placeholder="ex: all@gmail.com" required>
-            </td>          
-         </tr>
-          <tr>
-            <td>
-              <label for="password">Password:</label>
-            </td>
-            <td>
-              <input type="password" id="password" name="password" required>
-            </td>          
-         </tr>
-          <tr>
-            <td>
-              <label for="password">Confirm password:</label>
-            </td>
-            <td>
-              <input type="password" id="password" name="password" required>
-            </td>         
-         </tr>
-          <tr>
-             <td>
-              <input type="submit" value="Sign up">            
-            </td>
-          </tr>
-        </table>
-      </form>
-    </div>
-   <footer>
-        <p><em> Copy rights and contacts</em></p>
-   </footer>  
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/signup.css">
+    <title>SENDIT</title>
+</head>
+<body>
+    <!-- image  Created by Iconicbestiary - Freepik.com -->
+    <!-- <a href="https://www.freepik.com/free-vector/professional-programmer-engineer-writing-code_1311615.htm">Designed by Iconicbestiary</a> -->
+    <div class="container">
+        <div class="asideimage">
+        </div>        
+        <div class="home-container">
+            <div class="heading1">
+                <p>Welcome to SENDIT</p>
+            </div>
+            <div class="heading-text">
+                <p>Let’s get you all setup so that you can start to send parcel delivery orders </p>
+            </div>
+            <div class="signin-link">
+                <p>Already have an account?<a href="/pages/login">Log in</a></p>
+            </div>  
+            <div>
+                <!-- <form action="#" > -->
+                    <label for="firstname" class="labels firstname">First name</label>
+                    <input type="text" name="firstname" class="input input-firstname">
+                    <label for="lastname" class="labels lastname">last name</label>
+                    <input type="text" name="lastname"  class="input input-lastname">
+                    <label for="phone" class="labels phone">phone</label>
+                    <input type="text" name="phone" class="input input-phone">
+                    <label for="email" class="labels email">Email</label>
+                    <input type="text" name="email" class="input input-email">
+                    <label for="password" class="labels password">Password</label>
+                    <input type="password" name="password" class="input input-password">
+                    <label for="cfpassword" class="labels cfpassword">Confirm password</label>
+                    <input type="password" name="cfpassword" class="input input-cfpassword">
+                    <input type="checkbox" class="checkbox"><span class="terms-policy">I agree to the Terms, Privacy Policy and Fees.</span> 
+                     <br>                    
+                    <input type="submit" value="Sign up" class="btn signup"> 
+                <!-- </form>                 -->
+            </div>  
+            <div class="error"></div>            
+        </div>            
+    </div> 
+    <script src="../js/signup.js"></script>   
+</body>
 </html>

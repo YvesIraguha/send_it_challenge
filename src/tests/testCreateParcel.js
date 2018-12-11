@@ -1,7 +1,6 @@
 
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import uuidv1 from 'uuid/v1';
 import app from '../app';
 
 const should = chai.should();
@@ -68,14 +67,14 @@ describe('It should test parcel creation', () => {
           if (error) done(error);
           res.should.have.status(400);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Invalid weight, the weight should be number');
+          res.body.should.have.property('error');
           done();
         });
     });
 
     it('It should display an invalid name error', (done) => {
       const parcel = {
-        name: '123455',
+        name: '12',
         origin: 'Matambi',
         destination: 'Muramba',
         weight: 11223,
@@ -85,7 +84,7 @@ describe('It should test parcel creation', () => {
           if (error) done(error);
           res.should.have.status(400);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Invalid name, the name should start with a letter');
+          res.body.should.have.property('error');
           done();
         });
     });
@@ -93,7 +92,7 @@ describe('It should test parcel creation', () => {
     it('It should display an invalid origin error', (done) => {
       const parcel = {
         name: 'Tshirts',
-        origin: '12345',
+        origin: '12',
         destination: 'Muramba',
         weight: 3,
       };
@@ -102,7 +101,7 @@ describe('It should test parcel creation', () => {
           if (error) done(error);
           res.should.have.status(400);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Invalid origin, the origin should be a place');
+          res.body.should.have.property('error');
           done();
         });
     });
@@ -111,7 +110,7 @@ describe('It should test parcel creation', () => {
       const parcel = {
         name: 'Tshirts',
         origin: 'Kabarore',
-        destination: '122331',
+        destination: '12',
         weight: 3,
       };
       chai.request(app).post('/api/v1/parcels').send(parcel).set({ token })
@@ -119,7 +118,7 @@ describe('It should test parcel creation', () => {
           if (error) done(error);
           res.should.have.status(400);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Invalid destination, the destination should be a place');
+          res.body.should.have.property('error');
           done();
         });
     });
@@ -138,7 +137,7 @@ describe('It should test parcel creation', () => {
           if (error) done(error);
           res.should.have.status(400);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Please provide all the required fields');
+          res.body.should.have.property('error');
           done();
         });
     });
@@ -153,7 +152,7 @@ describe('It should test parcel creation', () => {
           if (error) done(error);
           res.should.have.status(400);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Please provide all the required fields');
+          res.body.should.have.property('error');
           done();
         });
     });
@@ -168,7 +167,7 @@ describe('It should test parcel creation', () => {
           if (error) done(error);
           res.should.have.status(400);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Please provide all the required fields');
+          res.body.should.have.property('error');
           done();
         });
     });

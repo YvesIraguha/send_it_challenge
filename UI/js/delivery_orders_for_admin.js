@@ -1,5 +1,6 @@
 // creat the array of objects for demonstration. 
 
+
 var deliveryOrder =[{
 	from:"kigali",
 	to:"Gisenyi",	
@@ -61,37 +62,40 @@ var deliveryOrder =[{
 	owner:"Uwineza"
 }]; 
 
+async function fetchParcels() {
+	fetch('/api/v1/parcels')
+		.then(function(response) {
+			return response.json();
+		})
+		.then(function(myJson) {			
+				// //Display the orders made to Admin
+				var adminDeliveries = document.getElementById("adminDelivary");
+				for (let i =0; i<myJson.length;i++){
+				const table = document.createElement("tr"); 
+				table.innerHTML = `							
+									<tr>
+										<td>${myJson[i].userid}</td>
+										<td>${myJson[i].origin}</td>
+										<td>${myJson[i].destination}</td>		
+										<td>${myJson[i].weight}</td>
+										<td>${myJson[i].price}</td>
+										<td>${myJson[i].presentlocation}</td>
+										<td>${myJson[i].status}</td>									
+									</tr>
+								`;
 
-// //Display the orders made to Admin
-var adminDeliveries = document.getElementById("adminDelivary");
-for (let i =0; i<deliveryOrder.length;i++){
-const table = document.createElement("tr"); 
-table.innerHTML = `							
-					<tr>
-						<td>${deliveryOrder[i].owner}</td>
-						<td>${deliveryOrder[i].from}</td>
-						<td>${deliveryOrder[i].to}</td>		
-						<td>${deliveryOrder[i].weight}</td>
-						<td>${deliveryOrder[i].price}</td>
-						<td>
-							<select name="origin" class="origin">
-				              <option value="Rwanda">Rwanda</option>
-				              <option value="Burundi">Burundi</option>
-				              <option value="Uganda">Uganda</option>
-				              <option value="DRC">DRC</option>
-				              <option value="South Africa">South African</option>
-				              <option value="Nigeria">Negeria</option>
-				            </select>
-                		</td>					
-						<td>
-							<select name="status" class="status">
-								<option value="Not delivered">Not delivered</option>
-								<option value="In transit">In transit</option>
-								<option value="Delivered">Delivered</option>
-							</select> 
-						</td>			
-					</tr>
-				`;
+				adminDeliveries.appendChild(table);
+				}; 	
+			return;
+		})
+		.catch(function(error){
+			console.log(error);
+			return;
+		});
+};
 
-adminDeliveries.appendChild(table);
-}; 
+
+
+
+
+window.onload = fetchParcels();

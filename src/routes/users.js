@@ -1,7 +1,6 @@
 import express from 'express';
+import authentication from '../helpers/authentication';
 import userControllers from '../controlers/userControllers';
-import users from '../../dist/routes/users';
-import user from '../../dist/models/user';
 
 // instantiate users router
 const usersRouter = express.Router();
@@ -28,6 +27,6 @@ usersRouter.post('/signin', userControllers.login);
 usersRouter.get('/signout', userControllers.signOut);
 
 // delete users for testing
-usersRouter.delete('/', userControllers.deleteUsers);
+usersRouter.delete('/', authentication.adminTokenRequired, userControllers.deleteUsers);
 
 export default usersRouter;

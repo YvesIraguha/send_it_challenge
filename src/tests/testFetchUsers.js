@@ -26,7 +26,7 @@ before('Create a user in a database', (done) => {
 
 describe('It should test fetching all users', () => {
   it('It should return the list of all user', (done) => {
-    chai.request(app).get('/api/v1/users').end((error, res) => {
+    chai.request(app).get('/api/v1/users').end((error, res) => {        
       if (error) done(error);
       res.should.have.status(200);
       res.body.should.have.property('response');
@@ -34,7 +34,7 @@ describe('It should test fetching all users', () => {
     });
   });
   it('It should return a particular user', (done) => {
-    chai.request(app).get(`/api/v1/users/${id}`).end((error, res) => {
+    chai.request(app).get(`/api/v1/users/${id}`).end((error, res) => {       
       if (error) done(error);
       res.should.have.status(200);
       res.body.should.be.a('object');
@@ -48,7 +48,7 @@ describe('Test a user logged in successfully',() => {
         before('Create a user in a database', (done) => {
             const user = {
             name: 'Yves',
-            email: 'iraguhaivos@gmail.com',
+            email: 'marcelresist@gmail.com',
             password: 'ahfahdafd',
             userType: 'User',
             };
@@ -61,7 +61,7 @@ describe('Test a user logged in successfully',() => {
     
     it('It should test a successful log in', (done) => {
         let user = {
-            email:'iraguhaivos@gmail.com',
+            email:'marcelresist@gmail.com',
             password:'ahfahdafd',
         }
         chai.request(app).post('/api/v1/users/signin').send(user).end((error,res) => {
@@ -80,7 +80,7 @@ describe('Test a user logged in successfully',() => {
         chai.request(app).post('/api/v1/users/signin').send(user).end((error,res) => {
             if (error) done(error);
             res.should.have.status(400);
-            res.body.should.have.property('message').eql('Password not matching');
+            res.body.should.have.property('error');
             done();
         })
     })
@@ -92,8 +92,8 @@ describe('Test a user logged in successfully',() => {
         chai.request(app).post('/api/v1/users/signin').send(user).end((error,res) => {
             if (error) done(error);
             res.should.have.status(400);
-            res.body.should.have.property('message').eql('No user with that email');
+            res.body.should.have.property('error');
             done();
-        })
-    })
-})
+        });
+    });
+});

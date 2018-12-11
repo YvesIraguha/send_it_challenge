@@ -16,13 +16,13 @@ parcelsRouter.get('/parcels/:id', controllers.fetchParcelById);
 parcelsRouter.post('/parcels',authentication.accessTokenRequired, controllers.createParcel);
 
 // fetch all delivery orders made by a specific user
-parcelsRouter.get('/users/:id/parcels', controllers.deliveryOrdersByUser);
+parcelsRouter.get('/users/:id/parcels',controllers.deliveryOrdersByUser);
 
 // Fetch all orders made.
 parcelsRouter.get('/parcels', controllers.fetchAllDeliveryOrders);
 
 // delete all delivey orders.
-parcelsRouter.delete('/parcels', controllers.deleteOrders);
+parcelsRouter.delete('/parcels',authentication.adminTokenRequired, controllers.deleteOrders);
 
 // cancel a delivery order 
 parcelsRouter.put('/parcels/:id/cancel',authentication.accessTokenRequired, controllers.cancelDeliveryOrder);
