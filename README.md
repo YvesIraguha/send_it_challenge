@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/YvesIraguha/send_it_challenge.svg?branch=develop)](https://travis-ci.com/YvesIraguha/send_it_challenge) [![Coverage Status](https://coveralls.io/repos/github/YvesIraguha/send_it_challenge/badge.svg?branch=ch-setup-database-162110606)](https://coveralls.io/github/YvesIraguha/send_it_challenge?branch=ch-setup-database-162110606)
+[![Build Status](https://travis-ci.com/YvesIraguha/send_it_challenge.svg?branch=develop)](https://travis-ci.com/YvesIraguha/send_it_challenge) [![Maintainability](https://api.codeclimate.com/v1/badges/73c17d419a88554c7278/maintainability)](https://codeclimate.com/github/YvesIraguha/send_it_challenge/maintainability) [![Coverage Status](https://coveralls.io/repos/github/YvesIraguha/send_it_challenge/badge.svg?branch=ch-setup-database-162110606)](https://coveralls.io/github/YvesIraguha/send_it_challenge?branch=ch-setup-database-162110606)
 # send_it_challenge
 SendIT is a courier service that helps users deliver parcels to different destinations. SendIt provides courier quotes on weight categories. 
 
@@ -30,17 +30,21 @@ The template for sign in page: [Sign in](https://yvesiraguha.github.io/send_it_c
 `PUT /parcels/<parcelID>/destination`: Change the destination of the parcel delivery order.
 
 `PUT /parcels/<parcelID>/status`: Change the status of the parcel delivery order.
+ 
+`PUT /parcels/<parcelID>/presentLocation`:Change the presentLocation of a parcel delivery order. 
 
-`PUT /parcels/<parcelID>/presentLocation`:Change the presentLocation of a parcle delivery order. 
+`POST /users/signup`: Register a user .
 
-`POST /auth/signup`: Register a user .
-
-`POST /auth/signin`: Log in.
+`POST /users/signin`: Log in.
 
 `DELETE /parcels`: Delete all the parcels.
 
-`DELETE /auth`:  Delete all users. 
+`DELETE /users`:  Delete all users. 
 
-`GET /auth/<userid>`: Fetch a user by user id. 
+`GET /users/<userid>`: Fetch a user by user id. 
 
-`GET /auth`: Fetch all users. 
+`GET /users`: Fetch all users. 
+
+# POSTMAN documentation 
+[API Documentation](https://documenter.getpostman.com/view/6026755/RzfdpVau)
+
