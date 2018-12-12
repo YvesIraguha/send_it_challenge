@@ -73,15 +73,14 @@ color: #000000;
 
 .labels {
     position: absolute;
-width: 160px;
-height: 30px;
-font-family: Roboto;
-font-style: normal;
-font-weight: 300;
-line-height: normal;
-font-size: 14px;
-
-color: #000000;
+    width: 160px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    font-size: 14px;
+    color: #000000;
 }
 .firstname {
     left: 81px;
@@ -115,16 +114,16 @@ color: #000000;
 
 .input {
     position: absolute;
-width: 160px;
-height: 30px;
-font-size:14px;
-border-radius: 10px;
-}
+    width: 160px;
+    height: 30px;
+    font-size:14px;
+    border-radius: 10px;
+    }
 
 .input-firstname {
     left: 81px;
-top: 218px;
-}
+    top: 218px;
+    }
 
 .input-lastname {
     left: 275px;

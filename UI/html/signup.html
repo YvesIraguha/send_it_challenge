@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../css/signup.css">
+    <link rel="stylesheet" href="../css/login-modal.css">
     <title>SENDIT</title>
 </head>
 <body>
@@ -21,8 +22,20 @@
                 <p>Let’s get you all setup so that you can start to send parcel delivery orders </p>
             </div>
             <div class="signin-link">
-                <p>Already have an account?<a href="/pages/login">Log in</a></p>
-            </div>  
+                <p>Already have an account?<span id="open-login">Log in</span></p>
+            </div> 
+            <div id="login-modal" class="modal">
+                <div class="modal-content">
+                    <span id="closebtn">&times;</span>
+                    <div>
+                        <label for="email" class="label">Your email</label>
+                        <input type="text" name="email" class="input-email-login">
+                        <label for="password" class="label">Your Password</label>
+                        <input type="password" name="password" class="input-password-login">
+                        <button class="btn-login">Submit</button>
+                    </div>
+                </div>
+            </div> 
             <div>
                 <!-- <form action="#" > -->
                     <label for="firstname" class="labels firstname">First name</label>
@@ -45,6 +58,7 @@
             <div class="error"></div>            
         </div>            
     </div> 
-    <script src="../js/signup.js"></script>   
+    <script src="../js/signup.js"></script>  
+    <script src="../js/login.js"></script> 
 </body>
 </html>

@@ -48,10 +48,6 @@ const createUser = (req, res) => {
   };
 };
 
-// send sign up page.
-// const singUpPage = (req, res) => {
-//   res.send('signup');
-// };
 
 // get a user
 const getUser = (req, res) => {
@@ -77,7 +73,7 @@ const login = (req, res) => {
     if (passwordHash.verify(password,response[0].password)){
       let { name, password, userType, id } = response[0];
       let token = authentication.encodeToken({ name, email, password, userId:id,userType});
-        res.status(200).send({message:"Logged in successfully",token})
+        res.status(200).send({message:"Logged in successfully",token,id,name})
     }else{
       res.status(400).send({error:"Password not matching"})
     };

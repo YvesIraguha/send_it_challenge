@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../css/userProfile.css">
+    <link rel="stylesheet" href="../css/parcel-model.css">
     <title>SENDIT</title>
 </head>
 <body>
@@ -12,8 +13,8 @@
         <div class="profile-section">
             <div class="profile-picture"></div>
             <div class="welcome-message">
-                <h2>Welcome Yves</h2>
-                <p>Signed in as a user</p>
+                <h2>Welcome <span class="user-name">Yves</span></h2>
+                <p>Signed in as a <span class="user-type">user</span></p>
             </div>
             <div class="icons icon1">
                 <img src="../images/icons/select-all.png" alt="All">
@@ -41,31 +42,52 @@
                     <img src="../images/background.jpg" alt="BG">
                 </div>
                 <div class="summary-text text1">
-                    <p><strong>All deliveries</strong><br>345</p>
+                    <p><strong>All deliveries</strong><br><span id="total-deliveries">345</span></p>
                 
                 </div>
                 <div class="icon-picture delivered">
                     <img src="../images/railsway.jpg" alt="delivered">                    
                 </div>
                 <div class="summary-text text2">
-                    <p><strong>Delivered</strong><br>35</p>
+                    <p><strong>Delivered</strong><br><span id="total-delivered">0</span></p>
                 </div>
                 <div class="icon-picture in-transit">
                     <img src="../images/money.jpg" alt="money">
                 </div>
                 <div class="summary-text text3">
-                    <p><strong>In transit</strong><br>56</p>
+                    <p><strong>In transit</strong></br><span id="total-in-transit">0</span></p>
                 </div>
                 <div class="icon-picture not-delivered">
                     <img src="../images/luggages.jpg" alt="Not delivered">
                 </div>
                 <div class="summary-text text4">
-                    <p><strong>Not delivered</strong><br>67</p>
+                    <p><strong>Not delivered</strong><br><span id="total-not-delivered">0</span></p>
                 </div>
             </div>
             <div class="all-icon">
                 <img src="../images/icons/select-all.png" alt="All">
                 <h3 class="all-text">All information</h3>
+            </div> 
+            <div id="parcel-modal" class="modal">
+                <div class="modal-content">
+                    <span id="closebtn">&times;</span>
+                    <div>
+                        <label for="name" id="orderid" class="labels">ID</label>
+                        <input type="text" class="input input-id">
+                        <label for="name" id="name" class="labels">Name</label>
+                        <input type="text" class="input input-name">
+                        <label for="origin" id="origin" class="labels">Origin</label>
+                        <input type="text" class="input input-origin">
+                        <label for="destination" id="destination" class="labels">Destination</label>
+                        <input type="text" class="input input-destination">
+                        <label for="weight" id="weight" class="labels">Weight</label>
+                        <input type="text" class="input input-weight">
+                        <label for="Price" class="labels" id="price">price</label>
+                        <input type="text" class="input input-price">
+                        <button class="btn btn-update">Update</button>
+                        <button class="btn btn-cancel">cancel</button>
+                    </div>
+                </div>
             </div>    
             <div class="parcels-display">
                 <table>
@@ -80,10 +102,11 @@
                             <th>Present location</th>
                             <th>Status</th>
                             <th>edit</th>
-                       </tr>                                 
+                       </tr>                        
                     </tbody>                        
                 </table>
             </div>
+
             <div class="show-more">
                 <p>Show more</p>
             </div>
@@ -99,5 +122,6 @@
         </div>
     </div>   
     <script src="../js/userProfile.js"></script>
+    <script src="../js/editorder.js"></script>
 </body>
 </html>

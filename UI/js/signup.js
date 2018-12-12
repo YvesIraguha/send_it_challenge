@@ -1,3 +1,4 @@
+//Insert the data into the database
 let button = document.querySelector('.signup');      
 button.onclick = function() {
     let firstname = document.querySelector('.input-firstname').value;
@@ -26,6 +27,8 @@ button.onclick = function() {
             }else{                
                 error.innerHTML = "";
                 localStorage.setItem("token",myJson.token);
+                localStorage.setItem("userid",myJson.response.id);
+                localStorage.setItem("username",myJson.response.name);
                 window.location = "/pages/";
             }	                
 		})
