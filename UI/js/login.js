@@ -23,13 +23,14 @@ window.onclick = function(event){
 //consume the api for log in the database
 let btnlogin = document.querySelector('.btn-login');      
 btnlogin.onclick = function() {
-    let email = document.querySelector('.input-email').value;
-    let password=document.querySelector('.input-password').value;   
+    let email = document.querySelector('.input-email-login').value;
+    let password=document.querySelector('.input-password-login').value;   
     let error = document.querySelector('.error');
     let data = {        
         email,
         password,
     };
+    console.log(data);
 
     fetch('/api/v1/users/signin',{
         method:'POST',   

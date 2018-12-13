@@ -6,7 +6,7 @@ import app from '../app';
 chai.use(chaiHttp);
 const should = chai.should();
 let token;
-
+let adminToken;
 before('Create a user who will create a parcel', (done) => {
   const user = {
     name: 'Yves',
@@ -14,9 +14,19 @@ before('Create a user who will create a parcel', (done) => {
     password: 'ahfahdafd',
     userType: 'User',
   };
+  const admin = {
+    name: 'Yves',
+    email: 'iraguhaivos@gmail.com',
+    password: 'ahfahdafd',
+    userType: 'Admin',
+  };
   chai.request(app).post('/api/v1/users/signup').send(user).end((error, res) => {
     if (error) done(error);
     token = res.body.token;
+  });
+  chai.request(app).post('/api/v1/users/signup').send(admin).end((error, res) => {
+    if (error) done(error);
+    adminToken = res.body.token;
     done();
   });
 });
@@ -69,7 +79,7 @@ describe('It should test fetching parcels ', () => {
     });
   });
   it('it should return all orders created ', (done) => {
-    chai.request(app).get('/api/v1/parcels').end((error, res) => {
+    chai.request(app).get('/api/v1/parcels').set({ token:adminToken }).end((error, res) => {
       if (error) done(error);
       res.should.have.status(200);
       res.body.should.be.a('array');

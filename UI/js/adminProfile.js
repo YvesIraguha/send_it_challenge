@@ -1,25 +1,24 @@
 window.onload = () => {
     //includes the codes for connecting to the server to consume API
     let displayParcel = document.querySelector('.parcels-display');
-    let table = displayParcel.firstElementChild.firstElementChild;    
+    let table = displayParcel.firstElementChild.firstElementChild;  
+    let token = localStorage.getItem('token');
+    // console.log(token);
     let url; 
     let username = localStorage.getItem('username');
-    if (username !== undefined ){
+    if (username != undefined ){
         //Set the name of the user on the profile. 
         let usernamefield = document.querySelector('.user-name');
         usernamefield.innerHTML = username;
-    }   
-    let id = localStorage.getItem('userid');      
-    if (id != undefined){
-        url = `/api/v1/users/${id}/parcels`;
-    }else{
-        window.location ='/pages/signup';
-    }
+    } 
+
+    if ( token != undefined){    
+    url = `/api/v1/parcels`;   
     fetch(url,{
         method:'GET',   
         headers : new Headers({
             "Content-Type":"application/json",
-            'token': localStorage.getItem('token')
+            token,
         }),
     })
 		.then(function(response) {
@@ -27,9 +26,10 @@ window.onload = () => {
 		})
 		.then(function(myJson) {
             if (myJson.error){                
-                error.innerHTML = myJson.error;
+                document.write( myJson.error);
+                return; 
             }else{ 
-                let totalParcels = 0;                
+                let totalParcels = 0;
                 let delivered = 0;
                 let inTransit = 0;
                 let notDelivered =0;                
@@ -54,30 +54,31 @@ window.onload = () => {
                     
             for (let btn of btns ){
                 totalParcels++;
-                if (btn.parentElement.parentNode.children[7].innerHTML === "Cancelled"){
-                    notDelivered ++;
-                }else if (btn.parentElement.parentNode.children[7].innerHTML === "null"){
+                if (btn.parentElement.parentNode.children[7].innerHTML === "Intransit"){
+                    inTransit++;
+                }else if (btn.parentElement.parentNode.children[7].innerHTML === "Delivered"){
                     delivered++;
                 }else{
-                    inTransit ++; 
+                    notDelivered ++; 
                 }
                 //display the modal onclick 
                 btn.onclick = function(){
                     let name = document.querySelector('.input-name');
                     let origin = document.querySelector('.input-origin');
                     let destination = document.querySelector('.input-destination');        
-                    let weight = document.querySelector('.input-weight');    
+                    let weight = document.querySelector('.input-weight'); 
+                    let presentlocation = document.querySelector('.input-present-location');  
                     let id =document.querySelector('.input-id');
                     id.value = btn.parentElement.parentNode.children[0].innerHTML;
                     name.value = btn.parentElement.parentNode.children[1].innerHTML;
                     origin.value = btn.parentElement.parentNode.children[2].innerHTML;
                     destination.value = btn.parentElement.parentNode.children[3].innerHTML;
                     weight.value = btn.parentElement.parentNode.children[4].innerHTML;
+                    presentlocation.value = btn.parentElement.parentNode.children[6].innerHTML;
                     modal.style.display="block";
                    
                 }
             }
-          
             let totalDelivered = document.getElementById('total-delivered');
             totalDelivered.innerHTML = delivered;
             let totalinTransit = document.getElementById('total-in-transit');
@@ -85,7 +86,7 @@ window.onload = () => {
             let totalnotDelivered = document.getElementById('total-not-delivered');
             totalnotDelivered.innerHTML = notDelivered;   
             let totalDeliveries = document.getElementById('total-deliveries');
-            totalDeliveries.innerHTML = totalParcels;   
+            totalDeliveries.innerHTML = totalParcels;        
     
 			return;
             }
@@ -95,5 +96,8 @@ window.onload = () => {
 			return;
         });
         
+}else{
+    document.write("Not authorized to the next page")
 };
+}
 

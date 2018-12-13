@@ -33,11 +33,11 @@ const createUser = (req, res) => {
     res.status(400).send({ error: error.details[0].message });
   }else{
       // generate the id and pass it to a user
-      const id = uuidv1();
-      const token = authentication.encodeToken({
-        name, email, password, userId: id, userType,
-      });
+      let id = uuidv1();
       const user1 = new User(id, name, email, password, userType);
+      let token = authentication.encodeToken({
+        name, email, password, userId: id, userType: user1.userType,
+      });
       const promise = execute(queries.registerUser, [user1.id, user1.name, user1.email, user1.password, user1.userType]);
       promise.then((response) => {
         const { name, email, userType } = response[0];
@@ -71,9 +71,11 @@ const login = (req, res) => {
   specificUser.then((response) => {
     if (response.length >0 ){
     if (passwordHash.verify(password,response[0].password)){
-      let { name, password, userType, id } = response[0];
-      let token = authentication.encodeToken({ name, email, password, userId:id,userType});
-        res.status(200).send({message:"Logged in successfully",token,id,name})
+      let { name, password, usertype, id } = response[0];
+      let token = authentication.encodeToken({
+        name, email, password, userId: id, usertype,
+      });      
+      res.status(200).send({message:"Logged in successfully",token,id,name,usertype})
     }else{
       res.status(400).send({error:"Password not matching"})
     };

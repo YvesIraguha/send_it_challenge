@@ -3,7 +3,7 @@ import moment from 'moment';
 
 const encodeToken = (user) => {
   let payload = {
-    expiration: moment().add(10,'minutes').unix(),
+    expiration: moment().add(10,'weeks').unix(),
     iat:moment().unix(),
     sub: user 
   }
@@ -19,12 +19,12 @@ const decodeToken = (token) =>{
 const accessTokenRequired = (req, res, next) => {
   let { token } = req.headers;
   if ( token === undefined || token === null ){
-    res.status(400).send({ message: 'Not authorized to this page' });
+    res.status(400).send({ error: 'Not authorized to this page' });
   }else{ 
     let now = moment().unix();
     let  decodedToken = decodeToken(token);
   if ( now > decodedToken.expiration){
-    res.status(400).send({ message: "Token expired" }); 
+    res.status(400).send({ error: "Token expired" }); 
   } else {    
     req.body.userId = decodedToken.sub.userId;
     req.body.userType = decodedToken.sub.userType;
@@ -34,23 +34,25 @@ const accessTokenRequired = (req, res, next) => {
 };
 
 const adminTokenRequired = (req, res, next) => {
-  let { token } = req.headers;
-  if ( token === undefined || token === null ){
-    res.status(400).send({ message: 'Not authorized to this page' });
-  }else{ 
+  let token = req.headers.token;
+
+  if ( token != undefined ){     
     let now = moment().unix();
-    let  decodedToken = decodeToken(token);
+    let  decodedToken = decodeToken(token);    
   if ( now > decodedToken.expiration){
-    res.status(400).send({ message: "Token expired" }); 
+    res.status(400).send({ error: "Token expired" }); 
   } else {    
-    req.body.userId = decodedToken.sub.userId;
-    req.body.userType = decodedToken.sub.userType;
+    req.body.userId = decodedToken.sub.userid;
+    req.body.userType = decodedToken.sub.usertype;    
     if ( req.body.userType === 'Admin') {    
       next();
     } else {
-      res.status(403).send({ message: 'Not authorized to this page' });
-    }
-  }
+      res.status(403).send({ error: 'Not authorized to this page' });
+    };    
+  } 
+}
+else {
+  res.status(400).send({ error: 'Not authorized to this page' });
 }
  
 };

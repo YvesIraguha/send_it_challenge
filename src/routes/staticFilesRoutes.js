@@ -30,7 +30,7 @@ staticPages.get('/summary',(req,res) => {
         return;
 }); 
 staticPages.get('/admin',(req,res) => {
-        res.sendFile(path.join(__dirname,'/../../UI/html/delivery_orders_for_admin.html'));
+        res.sendFile(path.join(__dirname,'/../../UI/html/adminProfile.html'));
         return;
 }); 
 

@@ -1,26 +1,6 @@
 
 let modal = document.getElementById('parcel-modal');
-// let btns = document.getElementsByClassName('btn-edit');
 let closebtn = document.getElementById('closebtn');
-// console.log(btns.length);
-        
-// for (let btn of btns ){
-//     //display the modal onclick 
-//     btn.onclick = function(){
-//         let name = document.querySelector('.input-name');
-//         let origin = document.querySelector('.input-origin');
-//         let destination = document.querySelector('.input-destination');        
-//         let weight = document.querySelector('.input-weight');    
-//         let id =document.querySelector('.input-id');
-//         id.value = btn.parentElement.parentNode.children[0].innerHTML;
-//         name.value = btn.parentElement.parentNode.children[1].innerHTML;
-//         origin.value = btn.parentElement.parentNode.children[2].innerHTML;
-//         destination.value = btn.parentElement.parentNode.children[3].innerHTML;
-//         weight.value = btn.parentElement.parentNode.children[4].innerHTML;
-//         modal.style.display="block";
-//     }
-// }
-
 
 // When a user clicks on closebtn, close the modal 
 closebtn.onclick = function(){
@@ -28,7 +8,6 @@ closebtn.onclick = function(){
 }
 
 //When a user clicks anywhere outside of the modal, close it. 
-
 window.onclick = function(event){
     if(event.target == modal){
         modal.style.display ="none";
@@ -39,8 +18,8 @@ window.onclick = function(event){
 let btnUpdate = document.querySelector('.btn-update');
 btnUpdate.onclick = function(){
     let id =document.querySelector('.input-id').value;
+    let error = document.querySelector('.update-error');
     let destination = document.querySelector('.input-destination').value;
-    weight = document.querySelector('.input-weight').value;
     let data = {
         destination
     }   
@@ -74,6 +53,7 @@ btnUpdate.onclick = function(){
 let btnCancel = document.querySelector('.btn-cancel');
 btnCancel.onclick = function(){
     let id =document.querySelector('.input-id').value;
+    let error = document.querySelector('.update-error');
     //Update the destination of the parcel in the database
     fetch(`/api/v1/parcels/${id}/cancel`,{
         method:'PUT',   
@@ -98,6 +78,5 @@ btnCancel.onclick = function(){
 			return;
 		});
 };
-// };
 
-// console.log(document.readyState);
+

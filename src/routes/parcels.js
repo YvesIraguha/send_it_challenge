@@ -19,7 +19,7 @@ parcelsRouter.post('/parcels',authentication.accessTokenRequired, controllers.cr
 parcelsRouter.get('/users/:id/parcels',controllers.deliveryOrdersByUser);
 
 // Fetch all orders made.
-parcelsRouter.get('/parcels', controllers.fetchAllDeliveryOrders);
+parcelsRouter.get('/parcels',authentication.adminTokenRequired,controllers.fetchAllDeliveryOrders);
 
 // delete all delivey orders.
 parcelsRouter.delete('/parcels',authentication.adminTokenRequired, controllers.deleteOrders);

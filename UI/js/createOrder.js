@@ -15,7 +15,9 @@ form.onsubmit = () => {
     let origin = document.querySelector('.input-origin').value;
     let destination = document.querySelector('.input-destination').value;
     weight = document.querySelector('.input-weight').value;
-    let data = {
+    let token = localStorage.getItem('token');
+    if (token != undefined){
+        let data = {
         name,origin,destination,weight,
     }   
     //includes the codes for connecting to the server to consume API
@@ -35,11 +37,17 @@ form.onsubmit = () => {
                 error.innerHTML = myJson.error;
             }else{                
                 error.innerHTML = "";
-                window.location = "/pages/";
+                return true;
             }	                
 		})
 		.catch(function(error){
 			console.log(error);
 			return;
 		});
+
+    }else{
+        document.write("Can't create an order without a token");
+        return false;
+    }
+    
 }
