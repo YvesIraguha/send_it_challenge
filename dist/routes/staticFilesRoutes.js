@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-        value: true
+  value: true
 });
 
 var _express = require('express');
@@ -19,34 +19,27 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var staticPages = _express2.default.Router();
 
 staticPages.get('/', function (req, res) {
-        res.sendFile(path.join(__dirname, '/../../UI/html/index.html'));
-        return;
+  res.sendFile(path.join(__dirname, '/../../UI/html/index.html'));
 });
 staticPages.get('/signin', function (req, res) {
-        res.sendFile(path.join(__dirname, '/../../UI/html/signin.html'));
-        return;
+  res.sendFile(path.join(__dirname, '/../../UI/html/signin.html'));
 });
 staticPages.get('/create', function (req, res) {
-        res.sendFile(path.join(__dirname, '/../../UI/html/createOrder.html'));
-        return;
+  res.sendFile(path.join(__dirname, '/../../UI/html/createOrder.html'));
 });
 
 staticPages.get('/signup', function (req, res) {
-        res.sendFile(path.join(__dirname, '/../../UI/html/signup.html'));
-        return;
+  res.sendFile(path.join(__dirname, '/../../UI/html/signup.html'));
 });
 
 staticPages.get('/user', function (req, res) {
-        res.sendFile(path.join(__dirname, '/../../UI/html/userProfile.html'));
-        return;
+  res.sendFile(path.join(__dirname, '/../../UI/html/userProfile.html'));
 });
 staticPages.get('/summary', function (req, res) {
-        res.sendFile(path.join(__dirname, '/../../UI/html/summaryOrders.html'));
-        return;
+  res.sendFile(path.join(__dirname, '/../../UI/html/summaryOrders.html'));
 });
 staticPages.get('/admin', function (req, res) {
-        res.sendFile(path.join(__dirname, '/../../UI/html/adminProfile.html'));
-        return;
+  res.sendFile(path.join(__dirname, '/../../UI/html/adminProfile.html'));
 });
 
 exports.default = staticPages;

@@ -105,7 +105,7 @@ describe('It should test fetching parcels ', function () {
   });
 
   it('it should return orders by a user id', function (done) {
-    var decoded = _jwtSimple2.default.decode(token, "secret");
+    var decoded = _jwtSimple2.default.decode(token, 'secret');
     _chai2.default.request(_app2.default).get('/api/v1/users/' + decoded.sub.userId + '/parcels').end(function (error, res) {
       if (error) done(error);
       res.should.have.status(200);

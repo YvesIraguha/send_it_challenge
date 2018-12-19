@@ -12,6 +12,10 @@ var _dotenv = require('dotenv');
 
 var _dotenv2 = _interopRequireDefault(_dotenv);
 
+var _path = require('path');
+
+var _path2 = _interopRequireDefault(_path);
+
 var _parcels = require('./routes/parcels');
 
 var _parcels2 = _interopRequireDefault(_parcels);
@@ -24,10 +28,6 @@ var _staticFilesRoutes = require('./routes/staticFilesRoutes');
 
 var _staticFilesRoutes2 = _interopRequireDefault(_staticFilesRoutes);
 
-var _path = require('path');
-
-var _path2 = _interopRequireDefault(_path);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _dotenv2.default.config();
@@ -35,10 +35,10 @@ _dotenv2.default.config();
 var app = (0, _express2.default)();
 // set the middle ware to use for body parsing
 
-//Set the static directory to use 
-app.use(_express2.default.static(_path2.default.join(__dirname, "../UI")));
+// Set the static directory to use
+app.use(_express2.default.static(_path2.default.join(__dirname, '../UI')));
 
-//set the middlewares 
+// set the middlewares
 app.use(_express2.default.json());
 app.use(_express2.default.urlencoded({ extended: true }));
 // set the router to use.
@@ -49,7 +49,7 @@ app.get('/', function (req, res) {
   res.redirect('https://documenter.getpostman.com/view/6026755/RzfdpVau');
 });
 app.get('*', function (req, res) {
-  res.status(404).send({ message: "Page requested not found" });
+  res.status(404).send({ message: 'Page requested not found' });
 });
 // Set the port for listening on.
 var port = process.env.PORT || 3000;

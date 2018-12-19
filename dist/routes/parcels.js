@@ -40,7 +40,7 @@ parcelsRouter.get('/parcels', _authentication2.default.adminTokenRequired, _parc
 // delete all delivey orders.
 parcelsRouter.delete('/parcels', _authentication2.default.adminTokenRequired, _parcelControllers2.default.deleteOrders);
 
-// cancel a delivery order 
+// cancel a delivery order
 parcelsRouter.put('/parcels/:id/cancel', _authentication2.default.accessTokenRequired, _parcelControllers2.default.cancelDeliveryOrder);
 
 // change the status of the parcel delivery order

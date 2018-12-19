@@ -59,7 +59,9 @@ var createParcel = function createParcel(req, res) {
       weight = _req$body.weight,
       userId = _req$body.userId;
 
-  var _joi$validate = _joi2.default.validate({ name: name, origin: origin, destination: destination, weight: weight, userId: userId }, _inputFieldsValidation2.default.parcelSchema),
+  var _joi$validate = _joi2.default.validate({
+    name: name, origin: origin, destination: destination, weight: weight, userId: userId
+  }, _inputFieldsValidation2.default.parcelSchema),
       error = _joi$validate.error,
       value = _joi$validate.value;
 
@@ -78,7 +80,7 @@ var createParcel = function createParcel(req, res) {
     }).catch(function (error) {
       return res.status(400).send(error);
     });
-  };
+  }
 };
 
 // Fetch a delivery order by a user.
@@ -103,11 +105,11 @@ var fetchAllDeliveryOrders = function fetchAllDeliveryOrders(req, res) {
   var status = req.query.status;
 
   var query = void 0;
-  if (status === "Intransit") {
+  if (status === 'Intransit') {
     query = 'SELECT * FROM parcels WHERE status = intransit ORDER BY created_at DESC';
-  } else if (status === "delivered") {
+  } else if (status === 'delivered') {
     query = 'SELECT * FROM parcels WHERE status = delivered ORDER BY created_at DESC';
-  } else if (status === "notdelivered") {
+  } else if (status === 'notdelivered') {
     query = 'SELECT * FROM parcels WHERE status = notdelivered ORDER BY created_at DESC';
   } else {
     query = 'SELECT * FROM parcels ORDER BY created_at DESC';

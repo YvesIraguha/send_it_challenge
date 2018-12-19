@@ -31,7 +31,7 @@ var getSpecificParcel = 'SELECT * FROM parcels WHERE id =$1 ';
 // Update status of a parcel
 var statusUpdate = 'UPDATE parcels SET status = $1 WHERE id = $2 RETURNING * ';
 
-//cancel order 
+// cancel order
 var cancelOrder = 'UPDATE parcels SET status = $1 WHERE id = $2 AND userId = $3 RETURNING * ';
 
 // update destination of a parcel
