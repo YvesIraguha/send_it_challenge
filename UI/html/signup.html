@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../css/signup.css">
+    <link rel="stylesheet" href="../css/login-modal.css">
     <title>SENDIT</title>
 </head>
 <body>
@@ -21,30 +22,44 @@
                 <p>Let’s get you all setup so that you can start to send parcel delivery orders </p>
             </div>
             <div class="signin-link">
-                <p>Already have an account?<a href="/pages/login">Log in</a></p>
-            </div>  
+                <p>Already have an account?<span id="open-login">Log in</span></p>
+            </div> 
+            <div id="login-modal" class="modal">
+                <div class="modal-content">
+                    <span id="closebtn">&times;</span>
+                    <div>
+                        <label for="email" class="label">Your email</label>
+                        <input type="text" name="email" class="input-email-login">
+                        <label for="password" class="label">Your Password</label>
+                        <input type="password" name="password" class="input-password-login"> <br>
+                        <button class="btn-login">Submit</button>
+                    </div>
+                    <div class="login-error"></div>
+                </div>
+            </div> 
             <div>
-                <!-- <form action="#" > -->
+                <form action="/pages/user" id="form-signup">
                     <label for="firstname" class="labels firstname">First name</label>
-                    <input type="text" name="firstname" class="input input-firstname">
+                    <input type="text" name="firstname" class="input input-firstname" required>
                     <label for="lastname" class="labels lastname">last name</label>
-                    <input type="text" name="lastname"  class="input input-lastname">
+                    <input type="text" name="lastname"  class="input input-lastname" required>
                     <label for="phone" class="labels phone">phone</label>
-                    <input type="text" name="phone" class="input input-phone">
+                    <input type="text" name="phone" class="input input-phone" required>
                     <label for="email" class="labels email">Email</label>
-                    <input type="text" name="email" class="input input-email">
+                    <input type="text" name="email" class="input input-email" required>
                     <label for="password" class="labels password">Password</label>
-                    <input type="password" name="password" class="input input-password">
+                    <input type="password" name="password" class="input input-password" required>
                     <label for="cfpassword" class="labels cfpassword">Confirm password</label>
-                    <input type="password" name="cfpassword" class="input input-cfpassword">
+                    <input type="password" name="cfpassword" class="input input-cfpassword" required>
                     <input type="checkbox" class="checkbox"><span class="terms-policy">I agree to the Terms, Privacy Policy and Fees.</span> 
                      <br>                    
                     <input type="submit" value="Sign up" class="btn signup"> 
-                <!-- </form>                 -->
+                </form>                
             </div>  
             <div class="error"></div>            
         </div>            
     </div> 
-    <script src="../js/signup.js"></script>   
+    <script src="../js/signup.js"></script>  
+    <script src="../js/login.js"></script> 
 </body>
 </html>

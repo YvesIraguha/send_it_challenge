@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/userProfile.css">
+    <link rel="stylesheet" href="../css/parcel-model.css">
+    <title>SENDIT</title>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-section">
+            <div class="profile-picture"></div>
+            <div class="welcome-message">
+                <h2>Welcome <span class="user-name">Admin</span></h2>
+                <p>Signed in as a <span class="user-type">Admin</span></p>
+            </div>
+            <div class="icons icon1">
+                <img src="../images/icons/select-all.png" alt="All">
+                <p>All orders</p>
+            </div>
+            <div class="icons icon2">
+                <img src="../images/icons/intransit.png" alt="In">
+                <p>In transit</p>
+            </div>            
+            <div class="icons icon3">
+                <img src="../images/icons/delivered.png" alt="D">
+                <p>Delivered</p>
+            </div>
+            <div class="icons icon4">
+                <img src="../images/icons/not delivered.png" alt="Not">
+                <p>Not delivered</p>
+            </div>
+        </div>
+        <div class="parcels-section">
+            <div class="parcels-title">
+                <h1>Parcels</h1>
+            </div>
+            <div class="summary">
+                <div class="icon-picture all-deliveries">
+                    <img src="../images/background.jpg" alt="BG">
+                </div>
+                <div class="summary-text text1">
+                    <p><strong>All deliveries</strong><br><span id="total-deliveries">0</span></p>
+                
+                </div>
+                <div class="icon-picture delivered">
+                    <img src="../images/railsway.jpg" alt="delivered">                    
+                </div>
+                <div class="summary-text text2">
+                    <p><strong>Delivered</strong><br><span id="total-delivered">0</span></p>
+                </div>
+                <div class="icon-picture in-transit">
+                    <img src="../images/money.jpg" alt="money">
+                </div>
+                <div class="summary-text text3">
+                    <p><strong>In transit</strong></br><span id="total-in-transit">0</span></p>
+                </div>
+                <div class="icon-picture not-delivered">
+                    <img src="../images/luggages.jpg" alt="Not delivered">
+                </div>
+                <div class="summary-text text4">
+                    <p><strong>Not delivered</strong><br><span id="total-not-delivered">0</span></p>
+                </div>
+            </div>
+            <div class="all-icon">
+                <img src="../images/icons/select-all.png" alt="All">
+                <h3 class="all-text">All information</h3>
+            </div> 
+            <div id="parcel-modal" class="modal">
+                <div class="modal-content">
+                    <span id="closebtn">&times;</span>
+                    <div class="update-error"></div>
+                    <div>
+                        <label for="name" id="orderid" class="labels">ID</label>
+                        <input type="text" class="input input-id">
+                        <label for="name" id="name" class="labels">Name</label>
+                        <input type="text" class="input input-name">
+                        <label for="origin" id="origin" class="labels">Origin</label>
+                        <input type="text" class="input input-origin">
+                        <label for="destination" id="destination" class="labels">Destination</label>
+                        <input type="text" class="input input-destination">
+                        <label for="weight" id="weight" class="labels">Weight</label>
+                        <input type="text" class="input input-weight">
+                        <label for="Price" class="labels" id="present-location">Present location</label>
+                        <input type="text" class="input input-present-location">
+                        <button class="btn admin-btn-update">Update</button>                        
+                    </div>
+                </div>
+            </div>    
+            <div class="parcels-display">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Created at</th>
+                            <th>Name</th>
+                            <th>Origin</th>
+                            <th>Destination</th>
+                            <th>Weight</th>
+                            <th>Price</th>
+                            <th>Present location</th>
+                            <th>Status</th>
+                            <th>edit</th>
+                       </tr>                        
+                    </tbody>                        
+                </table>
+            </div>
+
+            <div class="show-more">
+                <p>Show more</p>
+            </div>
+            <div class="copy-rights">
+                <p>@2018 Yves Iraguha</p>
+            </div>
+            <div class="terms-ofuse">
+                <p>Terms of use</p>
+            </div>
+            <div class="privacy-policy">
+                <p>Privacy policy</p>
+            </div>
+        </div>
+    </div>   
+    <script src="../js/adminProfile.js"></script>
+    <script src="../js/admineditorder.js"></script>
+</body>
+</html>

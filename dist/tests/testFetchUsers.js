@@ -25,8 +25,10 @@ var id = void 0;
 
 before('Create a user in a database', function (done) {
     var user = {
-        name: 'Yves',
-        email: 'iraguhaivos@gmail.com',
+        firstname: 'Janvier',
+        lastname: 'habineza',
+        phone: '25071231231231',
+        email: 'habinezajanvier@gmail.com',
         password: 'ahfahdafd',
         userType: 'User'
     };
@@ -60,8 +62,10 @@ describe('Test a user logged in successfully', function () {
     var id = void 0;
     before('Create a user in a database', function (done) {
         var user = {
-            name: 'Yves',
-            email: 'iraguhaivos@gmail.com',
+            firstname: 'Marcel',
+            lastname: 'Uwumukiza',
+            phone: '25071231231231',
+            email: 'marcelresist@gmail.com',
             password: 'ahfahdafd',
             userType: 'User'
         };
@@ -74,7 +78,7 @@ describe('Test a user logged in successfully', function () {
 
     it('It should test a successful log in', function (done) {
         var user = {
-            email: 'iraguhaivos@gmail.com',
+            email: 'marcelresist@gmail.com',
             password: 'ahfahdafd'
         };
         _chai2.default.request(_app2.default).post('/api/v1/users/signin').send(user).end(function (error, res) {
@@ -93,7 +97,7 @@ describe('Test a user logged in successfully', function () {
         _chai2.default.request(_app2.default).post('/api/v1/users/signin').send(user).end(function (error, res) {
             if (error) done(error);
             res.should.have.status(400);
-            res.body.should.have.property('message').eql('Password not matching');
+            res.body.should.have.property('error');
             done();
         });
     });
@@ -105,7 +109,7 @@ describe('Test a user logged in successfully', function () {
         _chai2.default.request(_app2.default).post('/api/v1/users/signin').send(user).end(function (error, res) {
             if (error) done(error);
             res.should.have.status(400);
-            res.body.should.have.property('message').eql('No user with that email');
+            res.body.should.have.property('error');
             done();
         });
     });

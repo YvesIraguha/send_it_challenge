@@ -35,10 +35,10 @@ parcelsRouter.post('/parcels', _authentication2.default.accessTokenRequired, _pa
 parcelsRouter.get('/users/:id/parcels', _parcelControllers2.default.deliveryOrdersByUser);
 
 // Fetch all orders made.
-parcelsRouter.get('/parcels', _parcelControllers2.default.fetchAllDeliveryOrders);
+parcelsRouter.get('/parcels', _authentication2.default.adminTokenRequired, _parcelControllers2.default.fetchAllDeliveryOrders);
 
 // delete all delivey orders.
-parcelsRouter.delete('/parcels', _parcelControllers2.default.deleteOrders);
+parcelsRouter.delete('/parcels', _authentication2.default.adminTokenRequired, _parcelControllers2.default.deleteOrders);
 
 // cancel a delivery order 
 parcelsRouter.put('/parcels/:id/cancel', _authentication2.default.accessTokenRequired, _parcelControllers2.default.cancelDeliveryOrder);
