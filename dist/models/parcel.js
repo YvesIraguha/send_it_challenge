@@ -20,6 +20,7 @@ var Parcel = function () {
     this.weight = weight;
     this.userId = userId;
     this.setPrice();
+    this.setCreationDate();
   }
 
   _createClass(Parcel, [{
@@ -29,6 +30,16 @@ var Parcel = function () {
         return this.price = parseFloat(this.weight) * 100;
       }
       return this.price = 0;
+    }
+  }, {
+    key: "setCreationDate",
+    value: function setCreationDate() {
+      var currentDate = new Date();
+      var date = currentDate.getDate();
+      var month = currentDate.getMonth();
+      var year = currentDate.getFullYear();
+      var dateString = year + "-" + (month + 1) + "-" + date;
+      return this.created_at = dateString;
     }
   }]);
 

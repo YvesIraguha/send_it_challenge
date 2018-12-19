@@ -162,16 +162,16 @@ color: #000000;
 
 .btn {    
     position: absolute;
-width: 100px;
-height: 30px;
-left: 81px;
-top: 485px;
+    width: 100px;
+    height: 30px;
+    left: 81px;
+    top: 485px;
 
-background: #4834D4;
-border-radius: 10px;
-color:white;
-font-size:14px;
-}
+    background: #4834D4;
+    border-radius: 10px;
+    color:white;
+    font-size:14px;
+    }
 
 .terms-policy {
     position: absolute;

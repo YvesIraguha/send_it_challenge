@@ -21,17 +21,31 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _chai2.default.use(_chaiHttp2.default);
 var should = _chai2.default.should();
 var token = void 0;
-
+var adminToken = void 0;
 before('Create a user who will create a parcel', function (done) {
   var user = {
-    name: 'Yves',
-    email: 'iraguhaivos@gmail.com',
+    firstname: 'Yves',
+    lastname: 'iraguha',
+    phone: '25071231231231',
+    email: 'alfhdwteyd@gmail.com',
     password: 'ahfahdafd',
     userType: 'User'
+  };
+  var admin = {
+    firstname: 'Yves',
+    lastname: 'iraguha',
+    phone: '25071231231231',
+    email: 'aetahswadad@gmail.com',
+    password: 'ahfahdafd',
+    userType: 'Admin'
   };
   _chai2.default.request(_app2.default).post('/api/v1/users/signup').send(user).end(function (error, res) {
     if (error) done(error);
     token = res.body.token;
+  });
+  _chai2.default.request(_app2.default).post('/api/v1/users/signup').send(admin).end(function (error, res) {
+    if (error) done(error);
+    adminToken = res.body.token;
     done();
   });
 });
@@ -82,18 +96,17 @@ describe('It should test fetching parcels ', function () {
     });
   });
   it('it should return all orders created ', function (done) {
-    _chai2.default.request(_app2.default).get('/api/v1/parcels').end(function (error, res) {
+    _chai2.default.request(_app2.default).get('/api/v1/parcels').set({ token: adminToken }).end(function (error, res) {
       if (error) done(error);
       res.should.have.status(200);
       res.body.should.be.a('array');
-      // res.body.should.have.length(2);
       done();
     });
   });
 
   it('it should return orders by a user id', function (done) {
     var decoded = _jwtSimple2.default.decode(token, "secret");
-    _chai2.default.request(_app2.default).get('/api/v1/users/' + decoded.userId + '/parcels').end(function (error, res) {
+    _chai2.default.request(_app2.default).get('/api/v1/users/' + decoded.sub.userId + '/parcels').end(function (error, res) {
       if (error) done(error);
       res.should.have.status(200);
       res.body.should.be.a('array');

@@ -8,6 +8,14 @@ var _passwordHash = require('password-hash');
 
 var _passwordHash2 = _interopRequireDefault(_passwordHash);
 
+var _joi = require('joi');
+
+var _joi2 = _interopRequireDefault(_joi);
+
+var _v = require('uuid/v1');
+
+var _v2 = _interopRequireDefault(_v);
+
 var _sqlQueries = require('../db/sqlQueries');
 
 var _sqlQueries2 = _interopRequireDefault(_sqlQueries);
@@ -16,12 +24,6 @@ var _connection = require('../db/connection');
 
 var _connection2 = _interopRequireDefault(_connection);
 
-require('babel-polyfill');
-
-var _v = require('uuid/v1');
-
-var _v2 = _interopRequireDefault(_v);
-
 var _authentication = require('../helpers/authentication');
 
 var _authentication2 = _interopRequireDefault(_authentication);
@@ -29,6 +31,10 @@ var _authentication2 = _interopRequireDefault(_authentication);
 var _user = require('../models/user');
 
 var _user2 = _interopRequireDefault(_user);
+
+var _inputFieldsValidation = require('../helpers/inputFieldsValidation');
+
+var _inputFieldsValidation2 = _interopRequireDefault(_inputFieldsValidation);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -53,47 +59,40 @@ var fetchAllUsers = function fetchAllUsers(req, res) {
 // create a user
 var createUser = function createUser(req, res) {
   var _req$body = req.body,
-      name = _req$body.name,
+      firstname = _req$body.firstname,
+      lastname = _req$body.lastname,
+      phone = _req$body.phone,
       email = _req$body.email,
       password = _req$body.password,
       userType = _req$body.userType;
-  //Got the regex from Dan's Tools, Regex Testing. 
 
-  var emailValidation = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i;
-  var fieldsValidation = /[A-Z][a-zA-Z][^#&<>\"~;$^%{}?]{1,30}$/g;
-  if (!name || !email || !password || !userType) {
-    res.send({ message: 'Please complete the required fields' });
+  var _joi$validate = _joi2.default.validate({ firstname: firstname, lastname: lastname, email: email, password: password, userType: userType }, _inputFieldsValidation2.default.userSchema),
+      error = _joi$validate.error,
+      value = _joi$validate.value;
+
+  if (error) {
+    res.status(400).send({ error: error.details[0].message });
   } else {
-    if (!fieldsValidation.test(name)) {
-      res.status(400).send({ message: 'Invalid name, the name should start with letter' });
-    } else if (!emailValidation.test(email)) {
-      res.status(400).send({ message: 'Invalid email, the email should start with a letter' });
-    } else {
-      // generate the id and pass it to a user
-      var id = (0, _v2.default)();
-      var token = _authentication2.default.encodeToken({
-        name: name, email: email, password: password, userId: id, userType: userType
-      });
-      var user1 = new _user2.default(id, name, email, password, userType);
-      var promise = (0, _connection2.default)(_sqlQueries2.default.registerUser, [user1.id, user1.name, user1.email, user1.password, user1.userType]);
-      promise.then(function (response) {
-        var _response$ = response[0],
-            name = _response$.name,
-            email = _response$.email,
-            userType = _response$.userType;
+    // generate the id and pass it to a user
+    var id = (0, _v2.default)();
+    var user1 = new _user2.default(id, firstname, lastname, phone, email, password, userType);
+    var token = _authentication2.default.encodeToken({
+      firstname: firstname, lastname: lastname, phone: phone, email: email, password: password, userId: id, userType: user1.userType
+    });
+    var promise = (0, _connection2.default)(_sqlQueries2.default.registerUser, [user1.id, user1.firstname, user1.lastname, user1.phone, user1.email, user1.password, user1.userType]);
+    promise.then(function (response) {
+      var _response$ = response[0],
+          firstname = _response$.firstname,
+          lastname = _response$.lastname,
+          email = _response$.email,
+          userType = _response$.userType;
 
-        res.status(200).send({ message: 'user registered successfully', response: { id: id, name: name, email: email, userType: userType }, token: token });
-      }).catch(function (error) {
-        console.log(error);
-      });
-    }
-  }
+      res.status(200).send({ message: 'user registered successfully', response: { id: id, firstname: firstname, lastname: lastname, email: email, userType: userType }, token: token });
+    }).catch(function (error) {
+      res.status(400).send({ error: error });
+    });
+  };
 };
-
-// send sign up page.
-// const singUpPage = (req, res) => {
-//   res.send('signup');
-// };
 
 // get a user
 var getUser = function getUser(req, res) {
@@ -107,7 +106,7 @@ var getUser = function getUser(req, res) {
       res.send({ message: 'There is no user with that id' });
     }
   }).catch(function (error) {
-    return console.log(error);
+    return res.status(400).send({ error: error });
   });
 };
 
@@ -125,33 +124,22 @@ var login = function login(req, res) {
         var _response$2 = response[0],
             name = _response$2.name,
             _password = _response$2.password,
-            userType = _response$2.userType,
+            usertype = _response$2.usertype,
             id = _response$2.id;
 
-        var token = _authentication2.default.encodeToken({ name: name, email: email, password: _password, userId: id, userType: userType });
-        res.status(200).send({ message: "Logged in successfully", token: token });
+        var token = _authentication2.default.encodeToken({
+          name: name, email: email, password: _password, userId: id, usertype: usertype
+        });
+        res.status(200).send({ message: "Logged in successfully", token: token, id: id, name: name, usertype: usertype });
       } else {
-        res.status(400).send({ message: "Password not matching" });
+        res.status(400).send({ error: "Password not matching" });
       };
     } else {
-      res.status(400).send({ message: 'No user with that email' });
+      res.status(400).send({ error: 'No user with that email' });
     };
   }).catch(function (error) {
-    console.log(error);
+    res.status(400).send({ error: error });
   });
-};
-
-// sign out
-var signOut = function signOut(req, res) {
-  var specificUser = users.find(function (user) {
-    return user.email === req.body.email && user.password === req.body.password;
-  });
-  if (specificUser) {
-    req.session.user = specificUser;
-    // redirect the user to the next page.
-    res.redirect('/api/v1/');
-  }
-  res.end('Invalid login');
 };
 
 //Delete all users from users table.
@@ -168,7 +156,6 @@ userControllers.fetchAllUsers = fetchAllUsers;
 userControllers.getUser = getUser;
 userControllers.createUser = createUser;
 userControllers.login = login;
-userControllers.signOut = signOut;
 userControllers.deleteUsers = deleteUsers;
 
 exports.default = userControllers;

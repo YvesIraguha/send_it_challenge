@@ -3,7 +3,7 @@ let btn = document.getElementById('open-login');
 let closebtn = document.getElementById('closebtn');
 
 //display the modal onclick 
-btn.onclick = function(){
+btn.onclick = function(){   
     modal.style.display="block";
 }
 
@@ -25,12 +25,11 @@ let btnlogin = document.querySelector('.btn-login');
 btnlogin.onclick = function() {
     let email = document.querySelector('.input-email-login').value;
     let password=document.querySelector('.input-password-login').value;   
-    let error = document.querySelector('.error');
+    let error = document.querySelector('.login-error');
     let data = {        
         email,
         password,
-    };
-    console.log(data);
+    };    
 
     fetch('/api/v1/users/signin',{
         method:'POST',   
@@ -50,8 +49,8 @@ btnlogin.onclick = function() {
                 error.innerHTML = "";
                 localStorage.setItem("token",myJson.token);
                 localStorage.setItem('userid',myJson.id);
-                localStorage.setItem('username',myJson.name);
-                window.location = "/pages/";
+                localStorage.setItem('username',myJson.firstname);
+                window.location = "/pages/user";
             }	                
 		})
 		.catch(function(error){

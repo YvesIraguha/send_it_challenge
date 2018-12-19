@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-require('babel-polyfill');
-
 var _connection = require('./connection');
 
 var _connection2 = _interopRequireDefault(_connection);
@@ -14,10 +12,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var sqlQueries = {};
 // Create table for parcels
-var createParcelsTable = 'CREATE TABLE IF NOT EXISTS parcels (id VARCHAR(200) PRIMARY KEY,  name VARCHAR(20) NOT NULL,  origin VARCHAR(20) NOT NULL,  destination VARCHAR(200) NOT NULL,  weight INT NOT NULL,  price INT NOT NULL, presentLocation VARCHAR(200) NOT NULL, status VARCHAR(200), userId VARCHAR(200) NOT NULL )';
+var createParcelsTable = 'CREATE TABLE IF NOT EXISTS parcels (id VARCHAR(200) PRIMARY KEY,  name VARCHAR(70) NOT NULL,  origin VARCHAR(70) NOT NULL,  destination VARCHAR(70) NOT NULL,  weight DECIMAL NOT NULL,  price DECIMAL NOT NULL, presentLocation VARCHAR(200) NOT NULL, status VARCHAR(200) DEFAULT \'Not delivered\', userId VARCHAR(200) NOT NULL, created_at TIMESTAMP NOT NULL)';
 
 // Create users table
-var createusersTable = 'CREATE TABLE IF NOT EXISTS users(id VARCHAR(200) PRIMARY KEY,  name VARCHAR(20) NOT NULL,  email VARCHAR(40) NOT NULL,  password VARCHAR(200) NOT NULL, userType VARCHAR(200) NOT NULL\n)';
+var createusersTable = 'CREATE TABLE IF NOT EXISTS users(id VARCHAR(200) PRIMARY KEY,  firstname VARCHAR(70) NOT NULL, lastname VARCHAR(70) NOT NULL, phone VARCHAR(50) NOT NULL, email VARCHAR(40) NOT NULL UNIQUE,  password VARCHAR(200) NOT NULL, userType VARCHAR(200) NOT NULL\n)';
 
 if (require.main === module) {
   (0, _connection2.default)(createParcelsTable);
@@ -25,7 +23,7 @@ if (require.main === module) {
 }
 
 // insert parcel into the database
-var insertIntoDatabase = 'INSERT INTO parcels (id, name, origin, destination, weight, price, presentLocation,userId) VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING * ';
+var insertIntoDatabase = 'INSERT INTO parcels (id, name, origin, destination, weight, price, presentLocation,userId,created_at) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING * ';
 
 // Pull out a parcel from a database
 var getSpecificParcel = 'SELECT * FROM parcels WHERE id =$1 ';
@@ -43,7 +41,7 @@ var destinationUpdate = 'UPDATE parcels SET destination = $1 WHERE id = $2 RETUR
 var presentLocationUpdate = 'UPDATE parcels SET presentLocation = $1 WHERE id =$2 RETURNING * ';
 
 // register user
-var registerUser = ' INSERT INTO users (id,name, email, password,userType) VALUES ($1,$2,$3,$4,$5) RETURNING *';
+var registerUser = ' INSERT INTO users (id,firstname, lastname, phone, email, password,userType) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *';
 // Check if a user is logged in
 var checkUser = 'SELECT * FROM users WHERE email = $1';
 

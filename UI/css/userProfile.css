@@ -45,6 +45,10 @@
     height: 20px;
     left: 90px;
 }
+
+.icons:hover {
+    cursor:pointer;
+}
 .icon1 {   
     top: 276px;
 }
@@ -160,28 +164,13 @@
     padding-left:10px;
     display: inline;
 }
-
-.show-more {
-    position: absolute;
-    width: 950px;
-    height: 35px;
-    left: 30px;
-    top: 530px;   
-    border-radius:10px;
-    color:white; 
-    background-color:#192a56 ;
-    text-align:center;
-}
-.show-more p {
-    top:-10px;
-    font-weight:bold;
-}
 .parcels-display{
     position: absolute;
     width: 950px;
-    height: 0px;
     left: 29px;
     top: 300px;    
+    height:270px;
+    overflow:scroll;
 }
 
 .copy-rights {
@@ -217,21 +206,44 @@ table {
   }
   
   tr:nth-child(even){background-color: #0a3d62}
+  th:nth-child(1){display:none;}
   
   th {
     background-color: #0c2461;
     color: white;
   }
 
-  .button{
-    width: 140px;
+  .btn{
+    width: 100px;
     height: 30px;
-    background-color:rgb(87, 96, 111);
-    border-radius:10px;
+    background: #4834D4;
+    border-radius: 10px;
     color:white;
-    font-size:18px;    
+    font-size:14px;    
   }
 
-  .show-more:active {
-     top: 535px;
+  #create {
+    position: absolute;
+    width: 100px;
+    height: 30px;
+    left: 756px;
+    top: 42px;
+    font-size:18px;
+  }
+
+  #signout {
+    position: absolute;
+    width: 100px;
+    height: 30px;
+    left: 860px;
+    top: 42px;
+    font-size:18px;
+  }
+
+  #create:hover, #signout:hover {
+    background-color:#d35400;
+    cursor:pointer;
+  }
+  .id{
+      display:none;
   }

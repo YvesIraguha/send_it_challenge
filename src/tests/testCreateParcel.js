@@ -11,7 +11,9 @@ let token;
 
 before('Create a user who will create a parcel', (done) => {
   const user = {
-    name: 'Yves',
+    firstname: 'Yves',
+    lastname: 'iraguha',
+    phone: '25071231231231',
     email: 'iraguhaivos@gmail.com',
     password: 'ahfahdafd',
     userType: 'User',
@@ -48,7 +50,7 @@ describe('It should test parcel creation', () => {
           res.body.response.should.have.property('name').eql('Tshirts');
           res.body.response.should.have.property('origin').eql('Kabarore');
           res.body.response.should.have.property('destination').eql('Muramba');
-          res.body.response.should.have.property('price').eql(300);
+          res.body.response.should.have.property('price').eql('300');
           done();
         });
     });

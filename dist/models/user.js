@@ -16,13 +16,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 // Define a class for creating a user
 var User = function () {
-  function User(id, name, email, password) {
-    var userType = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'User';
+  function User(id, firstname, lastname, phone, email, password) {
+    var userType = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : 'User';
 
     _classCallCheck(this, User);
 
     this.id = id;
-    this.name = name;
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.phone = phone;
     this.email = email;
     this.userType = userType;
     this.setPassword(password);

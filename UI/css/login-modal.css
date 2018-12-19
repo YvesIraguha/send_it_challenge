@@ -11,10 +11,11 @@
 
 .modal-content {
     background-color:#fefefe;
-    margin:15%;
-    padding:20px;
+    margin:15%;  
+    padding:30px;
     border:1px solid #888;
-    width:80%;
+    width:70%;
+    text-align: center;
 }
 
 #closebtn {
@@ -42,8 +43,8 @@
 .label {
     display:block;
     padding:10px;
-    width: 130px;
-    height: 20px;
+    /* width: 130px; */
+    height: 20px;    
     font-family: Roboto;
     font-style: normal;
     font-weight: 300;
@@ -53,7 +54,7 @@
 }
 
 .btn-login{
-    display:block;
+    /* display:block; */
     margin-top:15px;
     width: 100px;
     height: 30px;    

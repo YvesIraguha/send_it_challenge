@@ -9,14 +9,18 @@ let token;
 let adminToken;
 before('Create a user who will create a parcel', (done) => {
   const user = {
-    name: 'Yves',
-    email: 'iraguhaivos@gmail.com',
+    firstname: 'Yves',
+    lastname: 'iraguha',
+    phone: '25071231231231',
+    email: 'alfhdwteyd@gmail.com',
     password: 'ahfahdafd',
     userType: 'User',
   };
   const admin = {
-    name: 'Yves',
-    email: 'iraguhaivos@gmail.com',
+    firstname: 'Yves',
+    lastname: 'iraguha',
+    phone: '25071231231231',
+    email: 'aetahswadad@gmail.com',
     password: 'ahfahdafd',
     userType: 'Admin',
   };
@@ -40,7 +44,7 @@ beforeEach('Create a data in memory', (done) => {
   };
   chai.request(app).post('/api/v1/parcels').send(order).set({ token })
     .end((error, res) => {
-      if (error) done(error);      
+      if (error) done(error);
       done();
     });
 });
@@ -74,12 +78,12 @@ describe('It should test fetching parcels ', () => {
       res.body.should.be.a('object');
       res.body.should.have.property('origin').eql('Kabarore');
       res.body.should.have.property('destination').eql('Muramba');
-      
+
       done();
     });
   });
   it('it should return all orders created ', (done) => {
-    chai.request(app).get('/api/v1/parcels').set({ token:adminToken }).end((error, res) => {
+    chai.request(app).get('/api/v1/parcels').set({ token: adminToken }).end((error, res) => {
       if (error) done(error);
       res.should.have.status(200);
       res.body.should.be.a('array');
@@ -87,9 +91,9 @@ describe('It should test fetching parcels ', () => {
     });
   });
 
-  it('it should return orders by a user id', (done) => {    
-    let decoded = jwt.decode(token,"secret");
-    chai.request(app).get(`/api/v1/users/${decoded.sub.userId}/parcels`).end((error, res) => {      
+  it('it should return orders by a user id', (done) => {
+    const decoded = jwt.decode(token, 'secret');
+    chai.request(app).get(`/api/v1/users/${decoded.sub.userId}/parcels`).end((error, res) => {
       if (error) done(error);
       res.should.have.status(200);
       res.body.should.be.a('array');
