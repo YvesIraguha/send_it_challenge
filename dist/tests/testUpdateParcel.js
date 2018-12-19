@@ -8,10 +8,6 @@ var _chaiHttp = require('chai-http');
 
 var _chaiHttp2 = _interopRequireDefault(_chaiHttp);
 
-var _jwtSimple = require('jwt-simple');
-
-var _jwtSimple2 = _interopRequireDefault(_jwtSimple);
-
 var _app = require('../app');
 
 var _app2 = _interopRequireDefault(_app);

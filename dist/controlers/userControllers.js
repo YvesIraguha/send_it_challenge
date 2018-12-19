@@ -66,7 +66,9 @@ var createUser = function createUser(req, res) {
       password = _req$body.password,
       userType = _req$body.userType;
 
-  var _joi$validate = _joi2.default.validate({ firstname: firstname, lastname: lastname, email: email, password: password, userType: userType }, _inputFieldsValidation2.default.userSchema),
+  var _joi$validate = _joi2.default.validate({
+    firstname: firstname, lastname: lastname, email: email, password: password, userType: userType
+  }, _inputFieldsValidation2.default.userSchema),
       error = _joi$validate.error,
       value = _joi$validate.value;
 
@@ -87,11 +89,17 @@ var createUser = function createUser(req, res) {
           email = _response$.email,
           userType = _response$.userType;
 
-      res.status(200).send({ message: 'user registered successfully', response: { id: id, firstname: firstname, lastname: lastname, email: email, userType: userType }, token: token });
+      res.status(200).send({
+        message: 'user registered successfully',
+        response: {
+          id: id, firstname: firstname, lastname: lastname, email: email, userType: userType
+        },
+        token: token
+      });
     }).catch(function (error) {
       res.status(400).send({ error: error });
     });
-  };
+  }
 };
 
 // get a user
@@ -130,19 +138,21 @@ var login = function login(req, res) {
         var token = _authentication2.default.encodeToken({
           name: name, email: email, password: _password, userId: id, usertype: usertype
         });
-        res.status(200).send({ message: "Logged in successfully", token: token, id: id, name: name, usertype: usertype });
+        res.status(200).send({
+          message: 'Logged in successfully', token: token, id: id, name: name, usertype: usertype
+        });
       } else {
-        res.status(400).send({ error: "Password not matching" });
-      };
+        res.status(400).send({ error: 'Password not matching' });
+      }
     } else {
       res.status(400).send({ error: 'No user with that email' });
-    };
+    }
   }).catch(function (error) {
     res.status(400).send({ error: error });
   });
 };
 
-//Delete all users from users table.
+// Delete all users from users table.
 var deleteUsers = function deleteUsers(req, res) {
   var parcels = (0, _connection2.default)('DELETE FROM users ');
   parcels.then(function (response) {
