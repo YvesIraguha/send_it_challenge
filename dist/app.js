@@ -1,38 +1,67 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
 
-var _express = _interopRequireDefault(require("express"));
+var _express = require('express');
 
-var _dotenv = _interopRequireDefault(require("dotenv"));
+var _express2 = _interopRequireDefault(_express);
 
-var _parcels = _interopRequireDefault(require("./routes/parcels"));
+var _dotenv = require('dotenv');
 
-var _users = _interopRequireDefault(require("./routes/users"));
+var _dotenv2 = _interopRequireDefault(_dotenv);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _path = require('path');
 
-_dotenv.default.config(); // instantiate the app;
+var _path2 = _interopRequireDefault(_path);
 
+var _parcels = require('./routes/parcels');
 
-var app = (0, _express.default)(); // set the middle ware to use for body parsing
+var _parcels2 = _interopRequireDefault(_parcels);
 
-app.use(_express.default.json());
-app.use(_express.default.urlencoded({
-  extended: true
-})); // set the router to use.
+var _users = require('./routes/users');
 
+<<<<<<< HEAD
 app.use('/api/v1', _parcels.default);
 app.use('/api/v1/auth', _users.default);
 app.get('/', function (req, res) {
   res.redirect('/api/v1/parcels');
 }); // Set the port for listening on.
+=======
+var _users2 = _interopRequireDefault(_users);
 
-var port = process.env.PORT;
-app.listen(port); // export the app for testing
+var _staticFilesRoutes = require('./routes/staticFilesRoutes');
+>>>>>>> 352d76a875f3f5c33dab7b1dbf074329be1cd730
 
-var _default = app;
-exports.default = _default;
+var _staticFilesRoutes2 = _interopRequireDefault(_staticFilesRoutes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_dotenv2.default.config();
+// instantiate the app;
+var app = (0, _express2.default)();
+// set the middle ware to use for body parsing
+
+// Set the static directory to use
+app.use(_express2.default.static(_path2.default.join(__dirname, '../UI')));
+
+// set the middlewares
+app.use(_express2.default.json());
+app.use(_express2.default.urlencoded({ extended: true }));
+// set the router to use.
+app.use('/api/v1', _parcels2.default);
+app.use('/api/v1/users', _users2.default);
+app.use('/pages', _staticFilesRoutes2.default);
+app.get('/', function (req, res) {
+  res.redirect('https://documenter.getpostman.com/view/6026755/RzfdpVau');
+});
+app.get('*', function (req, res) {
+  res.status(404).send({ message: 'Page requested not found' });
+});
+// Set the port for listening on.
+var port = process.env.PORT || 3000;
+app.listen(port);
+
+// export the app for testing
+exports.default = app;

@@ -7,7 +7,8 @@ class Parcel {
     this.destination = destination;
     this.weight = weight;
     this.userId = userId;
-	  this.setPrice();
+    this.setPrice();
+    this.setCreationDate();
   }
 
   setPrice() {
@@ -15,6 +16,15 @@ class Parcel {
       return this.price = parseFloat(this.weight) * 100;
     }
     return this.price = 0;
+  }
+
+  setCreationDate() {
+    const currentDate = new Date();
+    const date = currentDate.getDate();
+    const month = currentDate.getMonth();
+    const year = currentDate.getFullYear();
+    const dateString = `${year}-${month + 1}-${date}`;
+    return this.created_at = dateString;
   }
 }
 

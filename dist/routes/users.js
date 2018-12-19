@@ -1,38 +1,39 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
 
-var _express = _interopRequireDefault(require("express"));
+var _express = require('express');
 
-var _userControllers = _interopRequireDefault(require("../controlers/userControllers"));
+var _express2 = _interopRequireDefault(_express);
 
-var _users = _interopRequireDefault(require("../../dist/routes/users"));
+var _authentication = require('../helpers/authentication');
 
-var _user = _interopRequireDefault(require("../../dist/models/user"));
+var _authentication2 = _interopRequireDefault(_authentication);
+
+var _userControllers = require('../controlers/userControllers');
+
+var _userControllers2 = _interopRequireDefault(_userControllers);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // instantiate users router
-var usersRouter = _express.default.Router(); // get the list of all users.
+var usersRouter = _express2.default.Router();
 
+// get the list of all users.
+usersRouter.get('/', _userControllers2.default.fetchAllUsers);
 
-usersRouter.get('/', _userControllers.default.fetchAllUsers); // The route for signing up link
-// usersRouter.get('/signup', userControllers.signUpPage);
 // get a specific user by id
+usersRouter.get('/:id', _userControllers2.default.getUser);
 
-usersRouter.get('/:id', _userControllers.default.getUser); // accept the data from users signing up
+// accept the data from users signing up
+usersRouter.post('/signup', _userControllers2.default.createUser);
 
-usersRouter.post('/signup', _userControllers.default.createUser); // The login page;
-// usersRouter.get('/signin', userControllers.loginPage);
 // the login data
+usersRouter.post('/signin', _userControllers2.default.login);
 
-usersRouter.post('/signin', _userControllers.default.login); // sign out.
+// delete users for testing
+usersRouter.delete('/', _authentication2.default.adminTokenRequired, _userControllers2.default.deleteUsers);
 
-usersRouter.get('/signout', _userControllers.default.signOut); // delete users for testing
-
-usersRouter.delete('/', _userControllers.default.deleteUsers);
-var _default = usersRouter;
-exports.default = _default;
+exports.default = usersRouter;

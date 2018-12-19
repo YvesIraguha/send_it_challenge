@@ -1,0 +1,249 @@
+.container{
+    position: relative;
+    width: 1350px;
+    height: 620px;    
+    background: #130F40;   
+    /* background:#60a3bc; */
+}
+
+.profile-section{
+    position: absolute;
+    width: 295px;
+    height: 597px;
+    left: 9px;
+    top: 19px;
+    color:white;    
+    background: #2c3e50;    
+}
+.profile-picture{
+    position: absolute;
+    width: 148px;
+    height: 148px;
+    left: 70px;
+    top: 24px;
+    border-radius:50%;
+    background-image: url(../images/flowers.jpg) ;
+    background-size:142px 148px;
+}
+.welcome-message{
+    position: absolute;
+    width: 150px;
+    height: 50px;
+    left: 100px;
+    top: 188px;    
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 12px;  
+      
+}
+
+.icons {
+    position: absolute;
+    width: 150px;
+    height: 20px;
+    left: 90px;
+}
+
+.icons:hover {
+    cursor:pointer;
+}
+.icon1 {   
+    top: 276px;
+}
+.icons p {
+    position:absolute;
+    left: 25px;
+    top: -15px;
+}
+
+.icon2 {
+    top: 300px;       
+}
+
+.icon3{
+    top: 324px;  
+}
+
+.icon4{
+    top: 346px;
+}
+
+.parcels-section{
+    position: absolute;
+    width: 1000px;
+    height: 597px;
+    left: 316px;
+    top: 19px;    
+    color:white;
+    background: #2c3e50;
+}
+
+.parcels-title{
+    position: absolute;
+    width: 91px;
+    height: 30px;
+    left: 27px;
+    top: 2px;    
+    font-family: Roboto;
+    font-size: 18px;    
+    color: white;
+}
+.summary{
+    position: absolute;
+    width: 950px;
+    height: 100px;
+    left: 27px;
+    top: 98px;   
+    color:black; 
+    background: #ecf0f1;
+    border-radius: 10px;
+}
+
+.icon-picture{
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    top: 12px; 
+    border-radius:50%;    
+}
+.icon-picture img{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+}
+
+.summary-text{
+    position: absolute;
+    width: 150px;
+    height: 15px;    
+    top: 20px;   
+}
+.all-deliveries{
+    left: 36px;
+}
+.text1 {
+    left: 120px;
+}
+.delivered {
+    left:275px; 
+}
+
+.text2{
+    left:359px;
+}
+
+.in-transit {
+    left:514px;
+}
+.text3{
+    left:598px;
+}
+
+.not-delivered {
+    left:753px;
+}
+.text4 {
+    left:837px;
+}
+.all-icon{
+    position: absolute;
+    width: 350px;
+    height: 20px;
+    left: 27px;
+    top: 260px;
+}
+
+.all-icon img{
+    width:20px;
+    height:20px;
+    float:left;
+}
+.all-icon h3{
+    padding-left:10px;
+    display: inline;
+}
+.parcels-display{
+    position: absolute;
+    width: 950px;
+    left: 29px;
+    top: 300px;    
+    height:270px;
+    overflow:scroll;
+}
+
+.copy-rights {
+    position: absolute;
+    width: 200px;
+    height: 24px;
+    left: 30px;
+    top: 560px;
+}
+.terms-ofuse{
+    position: absolute;
+    width: 94px;
+    height: 25px;
+    left: 765px;
+    top: 559px;
+}
+.privacy-policy{
+    position: absolute;
+    width: 97px;
+    height: 25px;
+    left: 882px;
+    top: 559px;   
+}
+
+table {
+    border-collapse: collapse;   
+    width: 100%;
+}
+  
+  th, td {
+    text-align: left;
+    padding: 8px;    
+  }
+  
+  tr:nth-child(even){background-color: #0a3d62}
+  th:nth-child(1){display:none;}
+  
+  th {
+    background-color: #0c2461;
+    color: white;
+  }
+
+  .btn{
+    width: 100px;
+    height: 30px;
+    background: #4834D4;
+    border-radius: 10px;
+    color:white;
+    font-size:14px;    
+  }
+
+  #create {
+    position: absolute;
+    width: 100px;
+    height: 30px;
+    left: 756px;
+    top: 42px;
+    font-size:18px;
+  }
+
+  #signout {
+    position: absolute;
+    width: 100px;
+    height: 30px;
+    left: 860px;
+    top: 42px;
+    font-size:18px;
+  }
+
+  #create:hover, #signout:hover {
+    background-color:#d35400;
+    cursor:pointer;
+  }
+  .id{
+      display:none;
+  }

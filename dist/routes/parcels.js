@@ -1,41 +1,55 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
 
-var _express = _interopRequireDefault(require("express"));
+var _express = require('express');
 
-var _parcelControllers = _interopRequireDefault(require("../controlers/parcelControllers"));
+var _express2 = _interopRequireDefault(_express);
 
-var _authentication = _interopRequireDefault(require("../helpers/authentication"));
+var _parcelControllers = require('../controlers/parcelControllers');
+
+var _parcelControllers2 = _interopRequireDefault(_parcelControllers);
+
+var _authentication = require('../helpers/authentication');
+
+var _authentication2 = _interopRequireDefault(_authentication);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var parcelsRouter = _express.default.Router(); // redirect to the apis when on heroku.
+var parcelsRouter = _express2.default.Router();
 
-
+// redirect to the apis when on heroku.
 parcelsRouter.get('/', function (req, res) {
   res.redirect('/parcels');
-}); // fetch a parcel by id
+});
 
-parcelsRouter.get('/parcels/:id', _parcelControllers.default.fetchParcelById); // Route for accepting data from the parcel creation.
+// fetch a parcel by id
+parcelsRouter.get('/parcels/:id', _parcelControllers2.default.fetchParcelById);
 
-parcelsRouter.post('/parcels', _authentication.default.accessTokenRequired, _parcelControllers.default.createParcel); // fetch all delivery orders made by a specific user
+// Route for accepting data from the parcel creation.
+parcelsRouter.post('/parcels', _authentication2.default.accessTokenRequired, _parcelControllers2.default.createParcel);
 
-parcelsRouter.get('/users/:id/parcels', _parcelControllers.default.deliveryOrdersByUser); // Fetch all orders made.
+// fetch all delivery orders made by a specific user
+parcelsRouter.get('/users/:id/parcels', _parcelControllers2.default.deliveryOrdersByUser);
 
-parcelsRouter.get('/parcels', _parcelControllers.default.fetchAllDeliveryOrders); // delete all delivey orders.
+// Fetch all orders made.
+parcelsRouter.get('/parcels', _authentication2.default.adminTokenRequired, _parcelControllers2.default.fetchAllDeliveryOrders);
 
-parcelsRouter.delete('/parcels', _parcelControllers.default.deleteOrders); // cancel a delivery order with put method
+// delete all delivey orders.
+parcelsRouter.delete('/parcels', _authentication2.default.adminTokenRequired, _parcelControllers2.default.deleteOrders);
 
-parcelsRouter.put('/parcels/:id/cancel', _authentication.default.accessTokenRequired, _parcelControllers.default.cancelDeliveryOrder); // change the status of the parcel delivery order
+// cancel a delivery order
+parcelsRouter.put('/parcels/:id/cancel', _authentication2.default.accessTokenRequired, _parcelControllers2.default.cancelDeliveryOrder);
 
-parcelsRouter.put('/parcels/:id/status', _authentication.default.accessTokenRequired, _parcelControllers.default.updateStatus); // change the destination of a parcel delivery order
+// change the status of the parcel delivery order
+parcelsRouter.put('/parcels/:id/status', _authentication2.default.adminTokenRequired, _parcelControllers2.default.updateStatus);
 
-parcelsRouter.put('/parcels/:id/destination', _authentication.default.accessTokenRequired, _parcelControllers.default.changeDestination); // change the present location of the parcel
+// change the destination of a parcel delivery order
+parcelsRouter.put('/parcels/:id/destination', _authentication2.default.accessTokenRequired, _parcelControllers2.default.changeDestination);
 
-parcelsRouter.put('/parcels/:id/presentLocation', _authentication.default.accessTokenRequired, _parcelControllers.default.changePresentLocation);
-var _default = parcelsRouter;
-exports.default = _default;
+// change the present location of the parcel
+parcelsRouter.put('/parcels/:id/presentLocation', _authentication2.default.adminTokenRequired, _parcelControllers2.default.changePresentLocation);
+
+exports.default = parcelsRouter;

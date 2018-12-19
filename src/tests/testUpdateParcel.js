@@ -1,6 +1,5 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import jwt from 'jwt-simple';
 import app from '../app';
 
 chai.use(chaiHttp);
@@ -12,8 +11,10 @@ let adminToken;
 
 before('Create a user who will create a parcel', (done) => {
   const user = {
-    name: 'Yves',
-    email: 'iraguhaivos@gmail.com',
+    firstname: 'John',
+    lastname: 'Doen',
+    phone: '25071231231231',
+    email: 'iraguhavis@gmail.com',
     password: 'ahfahdafd',
     userType: 'User',
   };
@@ -26,10 +27,11 @@ before('Create a user who will create a parcel', (done) => {
 
 
 // Create an admin who will update the parcel
-
 before('Create an admin who will update a parcel', (done) => {
   const user = {
-    name: 'Admin',
+    firstname: 'Admin',
+    lastname: 'Administration',
+    phone: '25071231231231',
     email: 'uwaraall@gmail.com',
     password: 'afafedadfaeffd',
     userType: 'Admin',
@@ -44,9 +46,7 @@ before('Create an admin who will update a parcel', (done) => {
 
 let id;
 
-
-
-describe('It should test set the status to cancelled', () => { 
+describe('It should test set the status to cancelled', () => {
   before('Create order ', (done) => {
     const order = {
       name: 'Tshirts',
@@ -61,7 +61,7 @@ describe('It should test set the status to cancelled', () => {
         done();
       });
   });
-   
+
   it('It should return the order canceled', (done) => {
     chai.request(app).put(`/api/v1/parcels/${id}/cancel`).set({ token: userToken }).end((error, res) => {
       if (error) done(error);
@@ -79,7 +79,7 @@ describe('It should test set the status to cancelled', () => {
       if (error) done(error);
       res.should.have.status(400);
       res.body.should.be.a('object');
-      res.body.should.have.property('message').eql('There is no order with that id');
+      res.body.should.have.property('error');
       done();
     });
   });
@@ -100,13 +100,13 @@ describe('It should test updating the parcel', () => {
         done();
       });
   });
-  
+
   it('It should test destination updated successfully', (done) => {
     const order = {
       destination: 'Rugerero',
     };
     chai.request(app).put(`/api/v1/parcels/${id}/destination`).send(order).set({ token: userToken })
-      .end((error, res) => {        
+      .end((error, res) => {
         if (error) done(error);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('The parcel was updated successfully');
@@ -119,20 +119,19 @@ describe('It should test updating the parcel', () => {
       status: 'Delivered',
     };
     chai.request(app).put(`/api/v1/parcels/${id}/status`).send(order).set({ token: adminToken })
-      .end((error, res) => {        
+      .end((error, res) => {
         if (error) done(error);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('The parcel was updated successfully');
-        // res.body.response.should.have.property('status').eql('Delivered');
         done();
       });
   });
   it('It should test present location updated successfully', (done) => {
     const order = {
       presentLocation: 'Muhabura',
-    }; 
+    };
     chai.request(app).put(`/api/v1/parcels/${id}/presentLocation`).send(order).set({ token: adminToken })
-      .end((error, res) => {        
+      .end((error, res) => {
         if (error) done(error);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('The parcel was updated successfully');

@@ -1,45 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Create an order</title>
-  <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/stylesheet.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <title>SENDIT</title>
 </head>
-  <body>
-     <header>       
-          <ul>           
-               <li><a href="./signup.html">Sign Up</a></li>
-               <li><a href="./signin.html">Sign In</a></li>
-               <li><a href="./delivery_order_for_user.html">User</a></li>
-               <li><a href="#order">Create Order</a></li>
-               <li><a href="./delivery_order_for_user.html">User</a></li>
-               <li><a href="./delivery_orders_for_admin.html">Admin</a></li>
-          </ul>
-     </header>
-     <div id="homePage">
-      <article>
-        <h1>SendIT</h1>
-        <p><strong>SendIt</strong> is a service for you to send a parcel from one destination <br> 
-          to another with just cost calculated based on the weight of what you want to <br>
-          transfer. The cost per unit is 100RWf.</p>
-          <p>This is the opportunity for you to send parcels with us.</p>
-          <p><a href=" ./signup.html">Sign up</a> to send with us or <a href=" ./signin.html">Sign in</a> if you already have an account.</p>
-      </article>     
-      <div id="order">
-        <form action="./index.html" method="#"> 
-          <caption><b>Create an order</b></caption>             
-       </form>                         
-      </div>
-        
-      <!-- If a user tries to add an order and the first one is not filled, show an error  -->
-      <div class="error"></div>
-      <!-- If a user inserted the correct weight display the total quotes to be paid. -->
-      <div id="totalQuotes"></div>   
-      <!-- button for adding field for another order  -->      
-      <button id='addOrder'>Add</button> 
-      <!-- button for calculating the quotes              -->    
-      <button id ='quotes'>Get Quotes</button>
-  </div>
-   <!-- link to the javascript file for creating order  --> 
-   <script type="text/javascript" src="../js/index.js"></script>
-  </body>
+<body>
+    <div class="container">
+        <header>
+            <div class="heading-logo">
+                <img src="../images/alternative.PNG" alt="SENDIT">
+            </div>
+            <div class="heading-nav">
+                <ul>
+                    <li><a href="/pages/admin">Admin</a></li>
+                    <li><a href="/pages/user">User</a></li>
+                    <li><a href="/pages/signup">Login</a></li>
+                </ul>            
+            </div>
+        </header>
+        <div class="home-container">
+            <h2>SENDIT</h2>
+            <p>SendIt is a service for you to send a parcel delivery order</p>
+            <p>It is cheap affordable service</p>
+             <p> The unit cost is 100RWf</p>
+            <button class="btn signup"><a href="/pages/signup">Sign up</a></button>
+        </div>
+    </div>    
+    <footer>
+        <!-- icons for contacts, copy rights, and leave a message  -->
+    </footer>  
+</body>
 </html>
