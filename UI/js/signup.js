@@ -1,15 +1,15 @@
 //Insert the data into the database
-let button = document.querySelector('#form-signup');      
-button.onsubmit = function() {
+let button = document.querySelector('.signup');      
+button.onclick = function() {
     let firstname = document.querySelector('.input-firstname').value;
     let lastname = document.querySelector('.input-lastname').value;
     let email = document.querySelector('.input-email').value;
     let phone=document.querySelector('.input-phone').value; 
     let password=document.querySelector('.input-password').value;  
     let error = document.querySelector('.error');    
-    if (verify(firstname,lastname,phone,email,password)){
-        return;
-    }else{
+    // if (verify(firstname,lastname,phone,email,password)){
+    //     return;
+    // }else{
     
     let data = {
         firstname,
@@ -32,11 +32,11 @@ button.onsubmit = function() {
 		.then(function(myJson) {
             if (myJson.error){                
                 error.innerHTML = myJson.error;
-            }else{                
+            }else{
                 error.innerHTML = "";
                 localStorage.setItem("token",myJson.token);
                 localStorage.setItem("userid",myJson.response.id);
-                localStorage.setItem("username",myJson.response.name);
+                localStorage.setItem("username",myJson.response.firstname);
                 window.location = "/pages/user";
             }	                
 		})
@@ -45,7 +45,7 @@ button.onsubmit = function() {
 			return;
         });
     };
-};
+// };
 
 
 function verify(firstname,lastname,phone,email,password){
