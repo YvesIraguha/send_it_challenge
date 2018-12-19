@@ -22,17 +22,9 @@ var _parcels2 = _interopRequireDefault(_parcels);
 
 var _users = require('./routes/users');
 
-<<<<<<< HEAD
-app.use('/api/v1', _parcels.default);
-app.use('/api/v1/auth', _users.default);
-app.get('/', function (req, res) {
-  res.redirect('/api/v1/parcels');
-}); // Set the port for listening on.
-=======
 var _users2 = _interopRequireDefault(_users);
 
 var _staticFilesRoutes = require('./routes/staticFilesRoutes');
->>>>>>> 352d76a875f3f5c33dab7b1dbf074329be1cd730
 
 var _staticFilesRoutes2 = _interopRequireDefault(_staticFilesRoutes);
 

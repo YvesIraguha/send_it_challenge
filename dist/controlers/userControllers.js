@@ -38,8 +38,6 @@ var _inputFieldsValidation2 = _interopRequireDefault(_inputFieldsValidation);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// declare the variable to store users
-
 var userControllers = {};
 
 // fetch all users.
