@@ -28,6 +28,8 @@ var _staticFilesRoutes = require('./routes/staticFilesRoutes');
 
 var _staticFilesRoutes2 = _interopRequireDefault(_staticFilesRoutes);
 
+require('babel-polyfill');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _dotenv2.default.config();

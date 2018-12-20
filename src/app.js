@@ -4,6 +4,7 @@ import path from 'path';
 import parcelsRouter from './routes/parcels';
 import usersRouter from './routes/users';
 import pages from './routes/staticFilesRoutes';
+import 'babel-polyfill';
 
 dotenv.config();
 // instantiate the app;

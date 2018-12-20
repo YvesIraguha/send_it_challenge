@@ -75,7 +75,7 @@ var createParcel = function createParcel(req, res) {
       if (response.length >= 1) {
         res.status(201).send({ message: 'The order was successfully created', response: response[0] });
       } else {
-        res.send({ message: 'Duplicate key error' });
+        res.send({ error: 'Duplicate key error' });
       }
     }).catch(function (error) {
       return res.status(400).send(error);
