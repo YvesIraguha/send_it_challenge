@@ -22,7 +22,7 @@ app.use('/api/v1', parcelsRouter);
 app.use('/api/v1/users', usersRouter);
 app.use('/pages', pages);
 app.get('/', (req, res) => {
-  res.redirect('https://documenter.getpostman.com/view/6026755/RzfdpVau');
+  res.redirect('https://documenter.getpostman.com/view/6026755/Rzn8P1gT');
 });
 app.get('*', (req, res) => {
   res.status(404).send({ message: 'Page requested not found' });

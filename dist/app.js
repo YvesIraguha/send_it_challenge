@@ -48,7 +48,7 @@ app.use('/api/v1', _parcels2.default);
 app.use('/api/v1/users', _users2.default);
 app.use('/pages', _staticFilesRoutes2.default);
 app.get('/', function (req, res) {
-  res.redirect('https://documenter.getpostman.com/view/6026755/RzfdpVau');
+  res.redirect('https://documenter.getpostman.com/view/6026755/Rzn8P1gT');
 });
 app.get('*', function (req, res) {
   res.status(404).send({ message: 'Page requested not found' });
