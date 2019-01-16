@@ -4,6 +4,7 @@ import Parcel from '../models/parcel';
 import queries from '../db/sqlQueries';
 import execute from '../db/connection';
 import Schema from '../helpers/inputFieldsValidation';
+import sendEmailNotification from '../helpers/sendingEmail';
 
 const controllers = {};
 
@@ -51,8 +52,7 @@ const createParcel = (req, res) => {
 // Fetch a delivery order by a user.
 const deliveryOrdersByUser = (req, res) => {
   const userId = req.params.id;
-  // find the order where the owner is equal to the email
-  // const specificOrders = orders.filter(item => item.userId === userId);
+
   const specificOrders = execute(queries.ordersForUser, [userId]);
   specificOrders.then((response) => {
     if (response.length >= 1) {
@@ -87,11 +87,13 @@ const fetchAllDeliveryOrders = (req, res) => {
 // cancel a delivery order
 const cancelDeliveryOrder = (req, res) => {
   const parcelId = req.params.id;
-  const userId = req.body.userId;
+  const { userId } = req.body;
   const parcel = execute(queries.cancelOrder, ['Cancelled', parcelId, userId]);
   parcel.then((response) => {
     if (response.length >= 1) {
-      res.status(200).send({ message: 'Order successfully cancelled', response: response[0] });
+      const message = 'Order successfully cancelled';
+      sendEmailNotification('owner of the order', message);
+      res.status(200).send({ message, response: response[0] });
     } else {
       res.status(400).send({ error: 'There is no order with that id' });
     }
@@ -113,7 +115,7 @@ const deleteOrders = (req, res) => {
 // change the status of a parcel delivery order
 const updateStatus = (req, res) => {
   const orderid = req.params.id;
-  const status = req.body.status;
+  const { status } = req.body;
   const statusSchema = joi.object().keys({
     status: joi.string().alphanum().min(3).required(),
   });
@@ -124,6 +126,7 @@ const updateStatus = (req, res) => {
     const parcel = execute(queries.statusUpdate, [status, orderid]);
     parcel.then((response) => {
       if (response.length >= 1) {
+        sendEmailNotification('owner of the parcel','The parcel was successfully updated');
         res.status(200).send({ message: 'The parcel was updated successfully', response: response[0] });
       } else {
         res.status(400).send({ error: 'There is no parcel with that id' });
@@ -146,6 +149,7 @@ const changeDestination = (req, res) => {
     const parcel = execute(queries.destinationUpdate, [destination, parcelId]);
     parcel.then((response) => {
       if (response) {
+        sendEmailNotification('owner of the parcel','The parcel was successfully updated');
         res.status(200).send({ message: 'The parcel was updated successfully', response: response[0] });
       } else {
         res.status(400).send({ message: 'No order with that id' });
@@ -156,7 +160,7 @@ const changeDestination = (req, res) => {
 
 // change the present location of a parcel delivery order
 const changePresentLocation = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
   const { presentLocation } = req.body;
   const presentLocationSchema = joi.object().keys({
     presentLocation: joi.string().alphanum().min(3).required(),
@@ -168,6 +172,7 @@ const changePresentLocation = (req, res) => {
     const parcel = execute(queries.presentLocationUpdate, [presentLocation, id]);
     parcel.then((response) => {
       if (response) {
+        sendEmailNotification('owner of the parcel','The parcel was successfully updated');
         res.status(200).send({ message: 'The parcel was updated successfully', response: response[0] });
       } else {
         res.status(400).send({ error: 'No order with that id' });
