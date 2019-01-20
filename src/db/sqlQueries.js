@@ -19,6 +19,9 @@ const insertIntoDatabase = 'INSERT INTO parcels (id, name, origin, destination, 
 // Pull out a parcel from a database
 const getSpecificParcel = 'SELECT * FROM parcels WHERE id =$1 ';
 
+// Select a user for a specific parcel
+const getUserForSpecificParcel = 'SELECT parcels.id,users.email FROM parcels INNER JOIN users on parcels.userId = users.id WHERE parcels.id = $1';
+
 // Update status of a parcel
 const statusUpdate = 'UPDATE parcels SET status = $1 WHERE id = $2 RETURNING * ';
 
@@ -52,5 +55,6 @@ sqlQueries.ordersForUser = ordersForUser;
 sqlQueries.presentLocationUpdate = presentLocationUpdate;
 sqlQueries.statusUpdate = statusUpdate;
 sqlQueries.cancelOrder = cancelOrder;
+sqlQueries.getUserForSpecificParcel = getUserForSpecificParcel;
 
 export default sqlQueries;

@@ -1,53 +1,48 @@
 let weight = document.querySelector('.input-weight');
-let button = document.querySelector('#add');
-let form = document.querySelector('#form-order');
+const button = document.querySelector('#add');
+const form = document.querySelector('#form-order');
 weight.oninput = () => {
-    let price = document.querySelector('.input-price');
-    if ( Number(weight.value)){
-        price.value = parseFloat(weight.value)*100;
-    }else{
-        price.value =0;
-    }    
+  const price = document.querySelector('.input-price');
+  if (Number(weight.value)) {
+    price.value = parseFloat(weight.value) * 100;
+  } else {
+    price.value = 0;
+  }
 };
 
 form.onsubmit = () => {
-    let name = document.querySelector('.input-name').value;
-    let origin = document.querySelector('.input-origin').value;
-    let destination = document.querySelector('.input-destination').value;
-    weight = document.querySelector('.input-weight').value;
-    let token = localStorage.getItem('token');
-    if (token != undefined){
-        let data = {
-        name,origin,destination,weight,
-    }   
-    //includes the codes for connecting to the server to consume API
-    fetch('/api/v1/parcels',{
-        method:'POST',   
-        headers : new Headers({
-            "Content-Type":"application/json",
-            'token': localStorage.getItem('token'),
-        }),     
-        body:JSON.stringify(data),
+  const name = document.querySelector('.input-name').value;
+  const origin = document.querySelector('.input-origin').value;
+  const destination = document.querySelector('.input-destination').value;
+  weight = document.querySelector('.input-weight').value;
+  const token = localStorage.getItem('token');
+  if (token != undefined) {
+    const data = {
+      name, origin, destination, weight,
+    };
+    // includes the codes for connecting to the server to consume API
+    fetch('/api/v1/parcels', {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        token: localStorage.getItem('token'),
+      }),
+      body: JSON.stringify(data),
     })
-		.then(function(response) {
-			return response.json();
-		})
-		.then(function(myJson) {
-            if (myJson.error){                
-                error.innerHTML = myJson.error;
-            }else{                
-                error.innerHTML = "";
-                return true;
-            }	                
-		})
-		.catch(function(error){
-			console.log(error);
-			return;
-		});
-
-    }else{
-        document.write("Can't create an order without a token");
-        return false;
-    }
-    
-}
+      .then(response => response.json())
+      .then((myJson) => {
+        if (myJson.error) {
+          error.innerHTML = myJson.error;
+        } else {
+          error.innerHTML = '';
+          return true;
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  } else {
+    document.write("Can't create an order without a token");
+    return false;
+  }
+};

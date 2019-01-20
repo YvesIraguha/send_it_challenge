@@ -1,25 +1,29 @@
-import nodemailer from 'nodemailer';
+import nodemailer from "nodemailer";
 
 const transport = nodemailer.createTransport({
-  service: 'Gmail',
+  service: "Gmail",
   auth: {
-    user: 'willmunyaneza@gmail.com',
-    pass: '123Munyan#z@',
-  },
+    user: "willmunyaneza@gmail.com",
+    pass: "123Munyan#z@"
+  }
 });
 
-const sendEmailNotification = (sender, receiver, message) => {
-  const options = {
-    from: sender,
-    to: receiver,
-    subject: 'Updated Parcel Delivery Order',
-    text: message,
-  };
-  transport.sendMail(options, (error, info) => {
-    if (error) {
-      console.log(error);
-    }
-    console.log(`Message sent: ${info.response}`);
+const sendEmailNotification = (receiver, message) => {
+  return new Promise((resolve, reject) => {
+    const mailOptions = {
+      from: '"From name" <willmunyaneza@gmail.com>',
+      to: receiver,
+      subject: "Parcel updated",
+      html: `${message}`
+    };
+
+    transport.sendMail(mailOptions, async (error, info) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(info);
+    });
+    console.log("done");
   });
 };
 

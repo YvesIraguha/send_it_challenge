@@ -1,7 +1,7 @@
 .container {            
     position: relative;
     width: 1160px;
-    height:600px;
+    /* height:600px; */
     background:#ff7979;
     }
 
@@ -9,7 +9,7 @@
     position: absolute;
     width: 600px;
     height:600px;
-    left: 560px;
+    /* left: 560px; */
     top: 0px;
     background: #FFFFFF;
     }

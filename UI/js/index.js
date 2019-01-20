@@ -196,12 +196,12 @@ const options = `
               <option value="Zambia">Zambia</option>
               <option value="Zimbabwe">Zimbabwe</option>
             </select>
-            `
+            `;
 
-    const error = document.querySelector(".error"); 
-    const div =document.getElementById('order');    
-	 	const table = document.createElement("table"); 
-		table.innerHTML = `<tr>
+const error = document.querySelector('.error');
+const div = document.getElementById('order');
+	 	const table = document.createElement('table');
+table.innerHTML = `<tr>
                 <td>
                   From 
                 </td>
@@ -224,55 +224,53 @@ const options = `
                 <td>
                   <input type="text" placeholder="kgs" class="weight">
                 </td>
-              </tr><hr>`
-				
-	const orders = document.getElementById("order"); 
+              </tr><hr>`;
+
+const orders = document.getElementById('order');
 
 
-		orders.appendChild(table); 
-	
-   //Adding an order or creating an order
-  const addOrder = document.getElementById("addOrder");
-  addOrder.onclick = function(){
-    const weight = document.querySelector('.weight');
-    //check if there is a field which is not completed in the order. 
-      if (weight.value===""){	
-            error.innerHTML =`<p>Please correctly complete orders above</p>`;
-            setTimeout(function(){
-                  error.innerHTML =null;
-            },2000)		
-      return false; 
-      }else{
-        error.innerHTML =`<p>Order created successfully</p>`;
-        setTimeout(function(){
-              error.innerHTML =null;
-        },2000)
-      };
-      weight.value = "";
-    };
-    
-  	error.innerHTML="";
+orders.appendChild(table);
 
-//calculate the quotes to pay depending on the weight of parcel 
-var quotes= document.getElementById('quotes');
-quotes.onclick = function(){
-	var totalQuotes = document.getElementById("totalQuotes");
-	var weights = document.querySelectorAll('.weight');
-	var totalWeight =0; 
-	for (let weight of weights){
-			if (weight.value==="" || isNaN(weight.value)){
-        totalQuotes.innerHTML = `<p><strong>Please type the correct weight</strong></p>`;
-        setTimeout(function(){
-          totalQuotes.innerHTML =null;
-    },2000)
-				return false; 
-			}else{
-				totalWeight += parseFloat(weight.value);
-				};
-			};
-	
-      totalQuotes.innerHTML = `<p><strong>You will have to pay ${totalWeight*100}Rwf</strong></p>`	
-      setTimeout(function(){
-        totalQuotes.innerHTML =null;
-  },2000)
-	};
+// Adding an order or creating an order
+const addOrder = document.getElementById('addOrder');
+addOrder.onclick = function () {
+  const weight = document.querySelector('.weight');
+  // check if there is a field which is not completed in the order.
+  if (weight.value === '') {
+    error.innerHTML = '<p>Please correctly complete orders above</p>';
+    setTimeout(() => {
+      error.innerHTML = null;
+    }, 2000);
+    return false;
+  }
+  error.innerHTML = '<p>Order created successfully</p>';
+  setTimeout(() => {
+    error.innerHTML = null;
+  }, 2000);
+  weight.value = '';
+};
+
+  	error.innerHTML = '';
+
+// calculate the quotes to pay depending on the weight of parcel
+const quotes = document.getElementById('quotes');
+quotes.onclick = function () {
+  const totalQuotes = document.getElementById('totalQuotes');
+  const weights = document.querySelectorAll('.weight');
+  let totalWeight = 0;
+  for (const weight of weights) {
+    if (weight.value === '' || isNaN(weight.value)) {
+      totalQuotes.innerHTML = '<p><strong>Please type the correct weight</strong></p>';
+      setTimeout(() => {
+        totalQuotes.innerHTML = null;
+      }, 2000);
+      return false;
+    }
+    totalWeight += parseFloat(weight.value);
+  }
+
+  totalQuotes.innerHTML = `<p><strong>You will have to pay ${totalWeight * 100}Rwf</strong></p>`;
+  setTimeout(() => {
+    totalQuotes.innerHTML = null;
+  }, 2000);
+};

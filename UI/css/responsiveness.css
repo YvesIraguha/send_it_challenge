@@ -1,0 +1,12 @@
+@media screen and (max-width:640px){
+    .container{
+        width:100%;
+    }
+    .asideimage{
+        width:100%;
+    }
+    .home-container{
+        width:100%;
+        left:0px;
+    }
+}
