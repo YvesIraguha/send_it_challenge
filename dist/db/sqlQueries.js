@@ -28,6 +28,9 @@ var insertIntoDatabase = 'INSERT INTO parcels (id, name, origin, destination, we
 // Pull out a parcel from a database
 var getSpecificParcel = 'SELECT * FROM parcels WHERE id =$1 ';
 
+// Select a user for a specific parcel
+var getUserForSpecificParcel = 'SELECT parcels.id,users.email FROM parcels INNER JOIN users on parcels.userId = users.id WHERE parcels.id = $1';
+
 // Update status of a parcel
 var statusUpdate = 'UPDATE parcels SET status = $1 WHERE id = $2 RETURNING * ';
 
@@ -59,5 +62,6 @@ sqlQueries.ordersForUser = ordersForUser;
 sqlQueries.presentLocationUpdate = presentLocationUpdate;
 sqlQueries.statusUpdate = statusUpdate;
 sqlQueries.cancelOrder = cancelOrder;
+sqlQueries.getUserForSpecificParcel = getUserForSpecificParcel;
 
 exports.default = sqlQueries;

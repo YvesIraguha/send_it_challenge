@@ -56,8 +56,8 @@ var adminTokenRequired = function adminTokenRequired(req, res, next) {
       res.status(400).send({ error: 'Token expired' });
     } else {
       req.body.userId = decodedToken.sub.userId;
-      req.body.userType = decodedToken.sub.userType;
-      if (req.body.userType === 'Admin') {
+      req.body.usertype = decodedToken.sub.userType;
+      if (req.body.usertype === 'Admin') {
         next();
       } else {
         res.status(403).send({ error: 'Not authorized to this page' });

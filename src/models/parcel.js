@@ -13,9 +13,9 @@ class Parcel {
 
   setPrice() {
     if (Number(this.weight)) {
-      return this.price = parseFloat(this.weight) * 100;
+      return (this.price = parseFloat(this.weight) * 100);
     }
-    return this.price = 0;
+    return (this.price = 0);
   }
 
   setCreationDate() {
@@ -24,9 +24,8 @@ class Parcel {
     const month = currentDate.getMonth();
     const year = currentDate.getFullYear();
     const dateString = `${year}-${month + 1}-${date}`;
-    return this.created_at = dateString;
+    return (this.created_at = dateString);
   }
 }
-
 
 export default Parcel;

@@ -1,21 +1,21 @@
-import joi from "joi";
-import uuidv1 from "uuid/v1";
-import Parcel from "../models/parcel";
-import queries from "../db/sqlQueries";
-import execute from "../db/connection";
-import Schema from "../helpers/inputFieldsValidation";
-import sendEmailNotification from "../helpers/sendingEmail";
+import joi from 'joi';
+import uuidv1 from 'uuid/v1';
+import Parcel from '../models/parcel';
+import queries from '../db/sqlQueries';
+import execute from '../db/connection';
+import Schema from '../helpers/inputFieldsValidation';
+import sendEmailNotification from '../helpers/sendingEmail';
 
 const controllers = {};
 
 const getEmailOfOwner = (parcelId, message) => {
   const userEmail = execute(queries.getUserForSpecificParcel, [parcelId]);
   userEmail
-    .then(async response => {
+    .then(async (response) => {
       if (response.length >= 1) {
         await sendEmailNotification(response[0].email, message);
       } else {
-        console.log("could not find the email");
+        console.log('could not find the email');
       }
     })
     .catch(error => console.log(error));
@@ -27,13 +27,13 @@ const fetchParcelById = (req, res) => {
   // const parcel = orders.find(order => order.id === parcelId);
   const parcel = execute(queries.getSpecificParcel, [parcelId]);
   parcel
-    .then(response => {
+    .then((response) => {
       // send it.
       if (response.length >= 1) {
         res.status(200).send(response[0]);
       } else {
         // send the error page
-        res.status(400).send({ message: "Ooops! no order with that id" });
+        res.status(400).send({ message: 'Ooops! no order with that id' });
       }
     })
     .catch(error => console.log(error));
@@ -41,17 +41,18 @@ const fetchParcelById = (req, res) => {
 
 // create parcel
 const createParcel = (req, res) => {
-  const { name, origin, destination, weight, userId } = req.body;
-  console.log(`expected userid ${userId}`);
+  const {
+    name, origin, destination, weight, userId,
+  } = req.body;
   const { error, value } = joi.validate(
     {
       name,
       origin,
       destination,
       weight,
-      userId
+      userId,
     },
-    Schema.parcelSchema
+    Schema.parcelSchema,
   );
   if (error !== null) {
     res.status(400).send({ error: error.details[0].message });
@@ -67,17 +68,17 @@ const createParcel = (req, res) => {
       order.price,
       order.origin,
       order.userId,
-      order.created_at
+      order.created_at,
     ]);
     promise
-      .then(response => {
+      .then((response) => {
         if (response.length >= 1) {
           res.status(201).send({
-            message: "The order was successfully created",
-            response: response[0]
+            message: 'The order was successfully created',
+            response: response[0],
           });
         } else {
-          res.send({ error: "Duplicate key error" });
+          res.send({ error: 'Duplicate key error' });
         }
       })
       .catch(error => res.status(400).send(error));
@@ -90,16 +91,14 @@ const deliveryOrdersByUser = (req, res) => {
 
   const specificOrders = execute(queries.ordersForUser, [userId]);
   specificOrders
-    .then(response => {
+    .then((response) => {
       if (response.length >= 1) {
         res.status(200).send(response);
       } else {
-        res
-          .status(400)
-          .send({ message: "There is no order of the user you specified" });
+        res.status(400).send({ message: 'There is no order of the user you specified' });
       }
     })
-    .catch(error => {
+    .catch((error) => {
       res.status(400).send(error);
     });
 };
@@ -108,21 +107,18 @@ const deliveryOrdersByUser = (req, res) => {
 const fetchAllDeliveryOrders = (req, res) => {
   const { status } = req.query;
   let query;
-  if (status === "Intransit") {
-    query =
-      "SELECT * FROM parcels WHERE status = intransit ORDER BY created_at DESC";
-  } else if (status === "delivered") {
-    query =
-      "SELECT * FROM parcels WHERE status = delivered ORDER BY created_at DESC";
-  } else if (status === "notdelivered") {
-    query =
-      "SELECT * FROM parcels WHERE status = notdelivered ORDER BY created_at DESC";
+  if (status === 'Intransit') {
+    query = 'SELECT * FROM parcels WHERE status = intransit ORDER BY created_at DESC';
+  } else if (status === 'delivered') {
+    query = 'SELECT * FROM parcels WHERE status = delivered ORDER BY created_at DESC';
+  } else if (status === 'notdelivered') {
+    query = 'SELECT * FROM parcels WHERE status = notdelivered ORDER BY created_at DESC';
   } else {
-    query = "SELECT * FROM parcels ORDER BY created_at DESC";
+    query = 'SELECT * FROM parcels ORDER BY created_at DESC';
   }
   const orders = execute(query);
   orders
-    .then(response => {
+    .then((response) => {
       res.status(200).send(response);
     })
     .catch(error => res.status(400).send({ error }));
@@ -132,33 +128,31 @@ const fetchAllDeliveryOrders = (req, res) => {
 const cancelDeliveryOrder = (req, res) => {
   const parcelId = req.params.id;
   const { userId } = req.body;
-  const parcel = execute(queries.cancelOrder, ["Cancelled", parcelId, userId]);
+  const parcel = execute(queries.cancelOrder, ['Cancelled', parcelId, userId]);
   parcel
-    .then(response => {
+    .then((response) => {
       if (response.length >= 1) {
-        const message = "Order successfully cancelled";
+        const message = 'Order successfully cancelled';
         getEmailOfOwner(parcelId, message);
         // sendEmailNotification(getEmailOfOwner(parcelId), message);
         res.status(200).send({ message, response: response[0] });
       } else {
-        res.status(400).send({ error: "There is no order with that id" });
+        res.status(400).send({ error: 'There is no order with that id' });
       }
     })
-    .catch(error => {
+    .catch((error) => {
       res.status(400).send({ error });
     });
 };
 
 // delete all delivery orders
 const deleteOrders = (req, res) => {
-  const parcels = execute("DELETE FROM parcels ");
+  const parcels = execute('DELETE FROM parcels ');
   parcels
-    .then(response => {
-      res
-        .status(200)
-        .send({ message: "Orders deleted successfully", response });
+    .then((response) => {
+      res.status(200).send({ message: 'Orders deleted successfully', response });
     })
-    .catch(error => {
+    .catch((error) => {
       res.status(400).send({ error });
     });
 };
@@ -172,7 +166,7 @@ const updateStatus = (req, res) => {
       .string()
       .alphanum()
       .min(3)
-      .required()
+      .required(),
   });
   const { error, value } = joi.validate({ status }, statusSchema);
   if (error) {
@@ -180,15 +174,15 @@ const updateStatus = (req, res) => {
   } else {
     const parcel = execute(queries.statusUpdate, [status, orderid]);
     parcel
-      .then(response => {
+      .then((response) => {
         if (response.length >= 1) {
-          getEmailOfOwner(orderid, "The parcel was updated successfully");
+          getEmailOfOwner(orderid, 'The parcel was updated successfully');
           res.status(200).send({
-            message: "The parcel was updated successfully",
-            response: response[0]
+            message: 'The parcel was updated successfully',
+            response: response[0],
           });
         } else {
-          res.status(400).send({ error: "There is no parcel with that id" });
+          res.status(400).send({ error: 'There is no parcel with that id' });
         }
       })
       .catch(error => res.status(400).send({ error }));
@@ -204,7 +198,7 @@ const changeDestination = (req, res) => {
       .string()
       .alphanum()
       .min(3)
-      .required()
+      .required(),
   });
   const { error, value } = joi.validate({ destination }, destinationSchema);
   if (error) {
@@ -212,13 +206,13 @@ const changeDestination = (req, res) => {
   } else {
     const parcel = execute(queries.destinationUpdate, [destination, parcelId]);
     parcel
-      .then(response => {
+      .then((response) => {
         if (response) {
-          const message = "The parcel was updated successfully";
+          const message = 'The parcel was updated successfully';
           getEmailOfOwner(parcelId, message);
           res.status(200).send({ message, response: response[0] });
         } else {
-          res.status(400).send({ message: "No order with that id" });
+          res.status(400).send({ message: 'No order with that id' });
         }
       })
       .catch(error => res.status(400).send({ error }));
@@ -234,27 +228,21 @@ const changePresentLocation = (req, res) => {
       .string()
       .alphanum()
       .min(3)
-      .required()
+      .required(),
   });
-  const { error, value } = joi.validate(
-    { presentLocation },
-    presentLocationSchema
-  );
+  const { error, value } = joi.validate({ presentLocation }, presentLocationSchema);
   if (error) {
     res.status(200).send({ error: error.details[0].message });
   } else {
-    const parcel = execute(queries.presentLocationUpdate, [
-      presentLocation,
-      id
-    ]);
+    const parcel = execute(queries.presentLocationUpdate, [presentLocation, id]);
     parcel
-      .then(response => {
+      .then((response) => {
         if (response) {
-          const message = "The parcel was updated successfully";
+          const message = 'The parcel was updated successfully';
           getEmailOfOwner(id, message);
           res.status(200).send({ message, response: response[0] });
         } else {
-          res.status(400).send({ error: "No order with that id" });
+          res.status(400).send({ error: 'No order with that id' });
         }
       })
       .catch(err => res.status(400).send({ err }));

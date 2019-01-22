@@ -16,7 +16,7 @@ class User {
   setPassword(password) {
     const hashedPassword = passwordHash.generate(password);
     // hash the password
-    return this.password = hashedPassword;
+    return (this.password = hashedPassword);
   }
 }
 

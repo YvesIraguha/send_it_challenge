@@ -1,23 +1,23 @@
-import passwordHash from "password-hash";
-import joi from "joi";
-import uuidv1 from "uuid/v1";
-import queries from "../db/sqlQueries";
-import execute from "../db/connection";
-import authentication from "../helpers/authentication";
-import User from "../models/user";
-import Schema from "../helpers/inputFieldsValidation";
+import passwordHash from 'password-hash';
+import joi from 'joi';
+import uuidv1 from 'uuid/v1';
+import queries from '../db/sqlQueries';
+import execute from '../db/connection';
+import authentication from '../helpers/authentication';
+import User from '../models/user';
+import Schema from '../helpers/inputFieldsValidation';
 
 const userControllers = {};
 
 // fetch all users.
 const fetchAllUsers = (req, res) => {
-  const users = execute("SELECT * FROM users");
+  const users = execute('SELECT * FROM users');
   users
-    .then(response => {
+    .then((response) => {
       if (response) {
         res.send({ response });
       } else {
-        res.send({ message: "There is no user at the moment." });
+        res.send({ message: 'There is no user at the moment.' });
       }
     })
     .catch(error => console.log(error));
@@ -25,31 +25,25 @@ const fetchAllUsers = (req, res) => {
 
 // create a user
 const createUser = (req, res) => {
-  const { firstname, lastname, phone, email, password, userType } = req.body;
+  const {
+    firstname, lastname, phone, email, password, userType,
+  } = req.body;
   const { error, value } = joi.validate(
     {
       firstname,
       lastname,
       email,
       password,
-      userType
+      userType,
     },
-    Schema.userSchema
+    Schema.userSchema,
   );
   if (error) {
     res.status(400).send({ error: error.details[0].message });
   } else {
     // generate the id and pass it to a user
     const id = uuidv1();
-    const user1 = new User(
-      id,
-      firstname,
-      lastname,
-      phone,
-      email,
-      password,
-      userType
-    );
+    const user1 = new User(id, firstname, lastname, phone, email, password, userType);
     const token = authentication.encodeToken({
       firstname,
       lastname,
@@ -57,7 +51,7 @@ const createUser = (req, res) => {
       email,
       password,
       userId: id,
-      userType: user1.userType
+      userType: user1.userType,
     });
     const promise = execute(queries.registerUser, [
       user1.id,
@@ -66,24 +60,26 @@ const createUser = (req, res) => {
       user1.phone,
       user1.email,
       user1.password,
-      user1.userType
+      user1.userType,
     ]);
     promise
-      .then(response => {
-        const { firstname, lastname, email, userType } = response[0];
+      .then((response) => {
+        const {
+          firstname, lastname, email, userType,
+        } = response[0];
         res.status(200).send({
-          message: "user registered successfully",
+          message: 'user registered successfully',
           response: {
             id,
             firstname,
             lastname,
             email,
-            userType
+            userType,
           },
-          token
+          token,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         res.status(400).send({ error });
       });
   }
@@ -93,13 +89,13 @@ const createUser = (req, res) => {
 const getUser = (req, res) => {
   const id = req.params.id;
   // const specificUser = users.find(item => item.id === id);
-  const specificUser = execute("SELECT * FROM users WHERE id =$1", [id]);
+  const specificUser = execute('SELECT * FROM users WHERE id =$1', [id]);
   specificUser
-    .then(response => {
+    .then((response) => {
       if (response) {
         res.status(200).send(response[0]);
       } else {
-        res.send({ message: "There is no user with that id" });
+        res.send({ message: 'There is no user with that id' });
       }
     })
     .catch(error => res.status(400).send({ error }));
@@ -110,10 +106,12 @@ const login = (req, res) => {
   const { email, password } = req.body;
   const specificUser = execute(queries.checkUser, [email]);
   specificUser
-    .then(response => {
+    .then((response) => {
       if (response.length > 0) {
         if (passwordHash.verify(password, response[0].password)) {
-          const { firstname, lastname, phone, email, password } = response[0];
+          const {
+            firstname, lastname, phone, email, password,
+          } = response[0];
           const user = {
             firstname,
             lastname,
@@ -121,36 +119,36 @@ const login = (req, res) => {
             email,
             password,
             userType: response[0].usertype,
-            userId: response[0].id
+            userId: response[0].id,
           };
           const token = authentication.encodeToken(user);
           res.status(200).send({
-            message: "Logged in successfully",
+            message: 'Logged in successfully',
             token,
             firstname,
             lastname,
-            userid: response[0].id
+            userid: response[0].id,
           });
         } else {
-          res.status(400).send({ error: "Password not matching" });
+          res.status(400).send({ error: 'Password not matching' });
         }
       } else {
-        res.status(400).send({ error: "No user with that email" });
+        res.status(400).send({ error: 'No user with that email' });
       }
     })
-    .catch(error => {
+    .catch((error) => {
       res.status(400).send({ error });
     });
 };
 
 // Delete all users from users table.
 const deleteUsers = (req, res) => {
-  const parcels = execute("DELETE FROM users ");
+  const parcels = execute('DELETE FROM users ');
   parcels
-    .then(response => {
-      res.status(200).send({ message: "Users deleted successfully", response });
+    .then((response) => {
+      res.status(200).send({ message: 'Users deleted successfully', response });
     })
-    .catch(error => {
+    .catch((error) => {
       res.status(400).send({ error });
     });
 };

@@ -55,7 +55,6 @@ function displayParcels(url) {
         const modal = document.getElementById('parcel-modal');
         const btns = document.getElementsByClassName('btn-edit');
 
-
         for (const btn of btns) {
           totalParcels++;
           if (btn.parentElement.parentNode.children[7].innerHTML === 'Intransit') {

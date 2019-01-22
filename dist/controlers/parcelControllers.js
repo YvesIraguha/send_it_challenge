@@ -28,9 +28,54 @@ var _inputFieldsValidation = require('../helpers/inputFieldsValidation');
 
 var _inputFieldsValidation2 = _interopRequireDefault(_inputFieldsValidation);
 
+var _sendingEmail = require('../helpers/sendingEmail');
+
+var _sendingEmail2 = _interopRequireDefault(_sendingEmail);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 var controllers = {};
+
+var getEmailOfOwner = function getEmailOfOwner(parcelId, message) {
+  var userEmail = (0, _connection2.default)(_sqlQueries2.default.getUserForSpecificParcel, [parcelId]);
+  userEmail.then(function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(response) {
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              if (!(response.length >= 1)) {
+                _context.next = 5;
+                break;
+              }
+
+              _context.next = 3;
+              return (0, _sendingEmail2.default)(response[0].email, message);
+
+            case 3:
+              _context.next = 6;
+              break;
+
+            case 5:
+              console.log('could not find the email');
+
+            case 6:
+            case 'end':
+              return _context.stop();
+          }
+        }
+      }, _callee, undefined);
+    }));
+
+    return function (_x) {
+      return _ref.apply(this, arguments);
+    };
+  }()).catch(function (error) {
+    return console.log(error);
+  });
+};
 
 // fetch a parcel
 var fetchParcelById = function fetchParcelById(req, res) {
@@ -60,7 +105,11 @@ var createParcel = function createParcel(req, res) {
       userId = _req$body.userId;
 
   var _joi$validate = _joi2.default.validate({
-    name: name, origin: origin, destination: destination, weight: weight, userId: userId
+    name: name,
+    origin: origin,
+    destination: destination,
+    weight: weight,
+    userId: userId
   }, _inputFieldsValidation2.default.parcelSchema),
       error = _joi$validate.error,
       value = _joi$validate.value;
@@ -73,7 +122,10 @@ var createParcel = function createParcel(req, res) {
     var promise = (0, _connection2.default)(_sqlQueries2.default.insertIntoDatabase, [order.id, order.name, order.origin, order.destination, order.weight, order.price, order.origin, order.userId, order.created_at]);
     promise.then(function (response) {
       if (response.length >= 1) {
-        res.status(201).send({ message: 'The order was successfully created', response: response[0] });
+        res.status(201).send({
+          message: 'The order was successfully created',
+          response: response[0]
+        });
       } else {
         res.send({ error: 'Duplicate key error' });
       }
@@ -86,8 +138,7 @@ var createParcel = function createParcel(req, res) {
 // Fetch a delivery order by a user.
 var deliveryOrdersByUser = function deliveryOrdersByUser(req, res) {
   var userId = req.params.id;
-  // find the order where the owner is equal to the email
-  // const specificOrders = orders.filter(item => item.userId === userId);
+
   var specificOrders = (0, _connection2.default)(_sqlQueries2.default.ordersForUser, [userId]);
   specificOrders.then(function (response) {
     if (response.length >= 1) {
@@ -126,10 +177,14 @@ var fetchAllDeliveryOrders = function fetchAllDeliveryOrders(req, res) {
 var cancelDeliveryOrder = function cancelDeliveryOrder(req, res) {
   var parcelId = req.params.id;
   var userId = req.body.userId;
+
   var parcel = (0, _connection2.default)(_sqlQueries2.default.cancelOrder, ['Cancelled', parcelId, userId]);
   parcel.then(function (response) {
     if (response.length >= 1) {
-      res.status(200).send({ message: 'Order successfully cancelled', response: response[0] });
+      var message = 'Order successfully cancelled';
+      getEmailOfOwner(parcelId, message);
+      // sendEmailNotification(getEmailOfOwner(parcelId), message);
+      res.status(200).send({ message: message, response: response[0] });
     } else {
       res.status(400).send({ error: 'There is no order with that id' });
     }
@@ -152,6 +207,7 @@ var deleteOrders = function deleteOrders(req, res) {
 var updateStatus = function updateStatus(req, res) {
   var orderid = req.params.id;
   var status = req.body.status;
+
   var statusSchema = _joi2.default.object().keys({
     status: _joi2.default.string().alphanum().min(3).required()
   });
@@ -166,7 +222,11 @@ var updateStatus = function updateStatus(req, res) {
     var parcel = (0, _connection2.default)(_sqlQueries2.default.statusUpdate, [status, orderid]);
     parcel.then(function (response) {
       if (response.length >= 1) {
-        res.status(200).send({ message: 'The parcel was updated successfully', response: response[0] });
+        getEmailOfOwner(orderid, 'The parcel was updated successfully');
+        res.status(200).send({
+          message: 'The parcel was updated successfully',
+          response: response[0]
+        });
       } else {
         res.status(400).send({ error: 'There is no parcel with that id' });
       }
@@ -195,7 +255,9 @@ var changeDestination = function changeDestination(req, res) {
     var parcel = (0, _connection2.default)(_sqlQueries2.default.destinationUpdate, [destination, parcelId]);
     parcel.then(function (response) {
       if (response) {
-        res.status(200).send({ message: 'The parcel was updated successfully', response: response[0] });
+        var message = 'The parcel was updated successfully';
+        getEmailOfOwner(parcelId, message);
+        res.status(200).send({ message: message, response: response[0] });
       } else {
         res.status(400).send({ message: 'No order with that id' });
       }
@@ -224,12 +286,14 @@ var changePresentLocation = function changePresentLocation(req, res) {
     var parcel = (0, _connection2.default)(_sqlQueries2.default.presentLocationUpdate, [presentLocation, id]);
     parcel.then(function (response) {
       if (response) {
-        res.status(200).send({ message: 'The parcel was updated successfully', response: response[0] });
+        var message = 'The parcel was updated successfully';
+        getEmailOfOwner(id, message);
+        res.status(200).send({ message: message, response: response[0] });
       } else {
         res.status(400).send({ error: 'No order with that id' });
       }
-    }).catch(function (error) {
-      return res.status(400).send({ error: error });
+    }).catch(function (err) {
+      return res.status(400).send({ err: err });
     });
   }
 };

@@ -25,7 +25,7 @@ before('Create a user who will create a parcel', function (done) {
     firstname: 'John',
     lastname: 'Doen',
     phone: '25071231231231',
-    email: 'iraguhavis@gmail.com',
+    email: 'willmunyaneza@gmail.com',
     password: 'ahfahdafd',
     userType: 'User'
   };

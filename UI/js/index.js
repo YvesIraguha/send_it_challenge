@@ -200,7 +200,7 @@ const options = `
 
 const error = document.querySelector('.error');
 const div = document.getElementById('order');
-	 	const table = document.createElement('table');
+const table = document.createElement('table');
 table.innerHTML = `<tr>
                 <td>
                   From 
@@ -228,7 +228,6 @@ table.innerHTML = `<tr>
 
 const orders = document.getElementById('order');
 
-
 orders.appendChild(table);
 
 // Adding an order or creating an order
@@ -250,7 +249,7 @@ addOrder.onclick = function () {
   weight.value = '';
 };
 
-  	error.innerHTML = '';
+error.innerHTML = '';
 
 // calculate the quotes to pay depending on the weight of parcel
 const quotes = document.getElementById('quotes');

@@ -65,7 +65,11 @@ var createUser = function createUser(req, res) {
       userType = _req$body.userType;
 
   var _joi$validate = _joi2.default.validate({
-    firstname: firstname, lastname: lastname, email: email, password: password, userType: userType
+    firstname: firstname,
+    lastname: lastname,
+    email: email,
+    password: password,
+    userType: userType
   }, _inputFieldsValidation2.default.userSchema),
       error = _joi$validate.error,
       value = _joi$validate.value;
@@ -77,7 +81,13 @@ var createUser = function createUser(req, res) {
     var id = (0, _v2.default)();
     var user1 = new _user2.default(id, firstname, lastname, phone, email, password, userType);
     var token = _authentication2.default.encodeToken({
-      firstname: firstname, lastname: lastname, phone: phone, email: email, password: password, userId: id, userType: user1.userType
+      firstname: firstname,
+      lastname: lastname,
+      phone: phone,
+      email: email,
+      password: password,
+      userId: id,
+      userType: user1.userType
     });
     var promise = (0, _connection2.default)(_sqlQueries2.default.registerUser, [user1.id, user1.firstname, user1.lastname, user1.phone, user1.email, user1.password, user1.userType]);
     promise.then(function (response) {
@@ -90,7 +100,11 @@ var createUser = function createUser(req, res) {
       res.status(200).send({
         message: 'user registered successfully',
         response: {
-          id: id, firstname: firstname, lastname: lastname, email: email, userType: userType
+          id: id,
+          firstname: firstname,
+          lastname: lastname,
+          email: email,
+          userType: userType
         },
         token: token
       });
@@ -122,22 +136,33 @@ var login = function login(req, res) {
       email = _req$body2.email,
       password = _req$body2.password;
 
-
   var specificUser = (0, _connection2.default)(_sqlQueries2.default.checkUser, [email]);
   specificUser.then(function (response) {
     if (response.length > 0) {
       if (_passwordHash2.default.verify(password, response[0].password)) {
         var _response$2 = response[0],
-            name = _response$2.name,
-            _password = _response$2.password,
-            usertype = _response$2.usertype,
-            id = _response$2.id;
+            firstname = _response$2.firstname,
+            lastname = _response$2.lastname,
+            phone = _response$2.phone,
+            _email = _response$2.email,
+            _password = _response$2.password;
 
-        var token = _authentication2.default.encodeToken({
-          name: name, email: email, password: _password, userId: id, usertype: usertype
-        });
+        var user = {
+          firstname: firstname,
+          lastname: lastname,
+          phone: phone,
+          email: _email,
+          password: _password,
+          userType: response[0].usertype,
+          userId: response[0].id
+        };
+        var token = _authentication2.default.encodeToken(user);
         res.status(200).send({
-          message: 'Logged in successfully', token: token, id: id, name: name, usertype: usertype
+          message: 'Logged in successfully',
+          token: token,
+          firstname: firstname,
+          lastname: lastname,
+          userid: response[0].id
         });
       } else {
         res.status(400).send({ error: 'Password not matching' });

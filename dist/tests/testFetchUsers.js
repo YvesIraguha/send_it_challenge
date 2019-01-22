@@ -61,7 +61,7 @@ describe('Test a user logged in successfully', function () {
       firstname: 'Marcel',
       lastname: 'Uwumukiza',
       phone: '25071231231231',
-      email: 'marcelresist@gmail.com',
+      email: 'marcelresist12@gmail.com',
       password: 'ahfahdafd',
       userType: 'User'
     };
@@ -74,7 +74,7 @@ describe('Test a user logged in successfully', function () {
 
   it('It should test a successful log in', function (done) {
     var user = {
-      email: 'marcelresist@gmail.com',
+      email: 'marcelresist12@gmail.com',
       password: 'ahfahdafd'
     };
     _chai2.default.request(_app2.default).post('/api/v1/users/signin').send(user).end(function (error, res) {
