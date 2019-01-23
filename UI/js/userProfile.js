@@ -72,10 +72,10 @@ function displayParcels(url) {
             const weight = document.querySelector('.input-weight');
             const id = document.querySelector('.input-id');
             id.value = btn.parentElement.parentNode.children[0].innerHTML;
-            name.value = btn.parentElement.parentNode.children[1].innerHTML;
-            origin.value = btn.parentElement.parentNode.children[2].innerHTML;
-            destination.value = btn.parentElement.parentNode.children[3].innerHTML;
-            weight.value = btn.parentElement.parentNode.children[4].innerHTML;
+            name.value = btn.parentElement.parentNode.children[2].innerHTML;
+            origin.value = btn.parentElement.parentNode.children[3].innerHTML;
+            destination.value = btn.parentElement.parentNode.children[4].innerHTML;
+            weight.value = btn.parentElement.parentNode.children[5].innerHTML;
             modal.style.display = 'block';
           };
         }

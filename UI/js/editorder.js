@@ -1,4 +1,3 @@
-
 const modal = document.getElementById('parcel-modal');
 const closebtn = document.getElementById('closebtn');
 
