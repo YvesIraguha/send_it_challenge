@@ -1,14 +1,13 @@
-
 const modal = document.getElementById('parcel-modal');
 const closebtn = document.getElementById('closebtn');
 
 // When a user clicks on closebtn, close the modal
-closebtn.onclick = function () {
+closebtn.onclick = () => {
   modal.style.display = 'none';
 };
 
 // When a user clicks anywhere outside of the modal, close it.
-window.onclick = function (event) {
+window.onclick = (event) => {
   if (event.target == modal) {
     modal.style.display = 'none';
   }
@@ -16,14 +15,12 @@ window.onclick = function (event) {
 // Admin updating the present location of parcel delivery order
 
 const adminUpdateOrder = document.querySelector('.admin-btn-update');
-adminUpdateOrder.onclick = function () {
-  console.log('clicked');
+adminUpdateOrder.onclick = () => {
   const origin = document.querySelector('.input-origin').value;
   const destination = document.querySelector('.input-destination').value;
   const presentLocation = document.querySelector('.input-present-location').value;
   const error = document.querySelector('.update-error');
   const id = document.querySelector('.input-id').value;
-  console.log(id);
   let status;
   if (origin === presentLocation) {
     status = 'Notdelivered';
@@ -48,11 +45,10 @@ adminUpdateOrder.onclick = function () {
         error.innerHTML = myJson.error;
       } else {
         error.innerHTML = '';
-        console.log('done updating presentlocation');
       }
     })
-    .catch((error) => {
-      console.log(error);
+    .catch((err) => {
+      console.log(err);
     });
 
   fetch(`/api/v1/parcels/${id}/status`, {
@@ -73,7 +69,7 @@ adminUpdateOrder.onclick = function () {
         window.location = '/pages/admin';
       }
     })
-    .catch((error) => {
-      console.log(error);
+    .catch((err) => {
+      console.log(err);
     });
 };

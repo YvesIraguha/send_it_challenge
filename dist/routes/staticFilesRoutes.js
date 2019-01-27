@@ -41,5 +41,8 @@ staticPages.get('/summary', function (req, res) {
 staticPages.get('/admin', function (req, res) {
   res.sendFile(path.join(__dirname, '/../../UI/html/adminProfile.html'));
 });
+staticPages.get('/error', function (req, res) {
+  res.sendFile(path.join(__dirname, '/../../UI/html/notAuthorizedError.html'));
+});
 
 exports.default = staticPages;

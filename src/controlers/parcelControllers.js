@@ -88,8 +88,24 @@ const createParcel = (req, res) => {
 // Fetch a delivery order by a user.
 const deliveryOrdersByUser = (req, res) => {
   const userId = req.params.id;
-
-  const specificOrders = execute(queries.ordersForUser, [userId]);
+  const { status } = req.query;
+  let specificOrders;
+  let specificStatus;
+  let query;
+  if (status) {
+    if (status === 'intransit') {
+      specificStatus = 'Intransit';
+    } else if (status === 'delivered') {
+      specificStatus = 'Delivered';
+    } else {
+      specificStatus = 'Not delivered';
+    }
+    query = queries.ordersFilteredParcels;
+    specificOrders = execute(query, [userId, specificStatus]);
+  } else {
+    query = queries.ordersForUser;
+    specificOrders = execute(query, [userId]);
+  }
   specificOrders
     .then((response) => {
       if (response.length >= 1) {
@@ -107,12 +123,12 @@ const deliveryOrdersByUser = (req, res) => {
 const fetchAllDeliveryOrders = (req, res) => {
   const { status } = req.query;
   let query;
-  if (status === 'Intransit') {
-    query = 'SELECT * FROM parcels WHERE status = intransit ORDER BY created_at DESC';
+  if (status === 'intransit') {
+    query = "SELECT * FROM parcels WHERE status = 'Intransit' ORDER BY created_at DESC";
   } else if (status === 'delivered') {
-    query = 'SELECT * FROM parcels WHERE status = delivered ORDER BY created_at DESC';
+    query = "SELECT * FROM parcels WHERE status = 'Delivered' ORDER BY created_at DESC";
   } else if (status === 'notdelivered') {
-    query = 'SELECT * FROM parcels WHERE status = notdelivered ORDER BY created_at DESC';
+    query = "SELECT * FROM parcels WHERE status = 'Not delivered' or status = 'Cancelled' ORDER BY created_at DESC";
   } else {
     query = 'SELECT * FROM parcels ORDER BY created_at DESC';
   }

@@ -12,7 +12,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var sqlQueries = {};
 // Create table for parcels
-var createParcelsTable = 'CREATE TABLE IF NOT EXISTS parcels (id VARCHAR(200) PRIMARY KEY,  name VARCHAR(70) NOT NULL,  origin VARCHAR(70) NOT NULL,  destination VARCHAR(70) NOT NULL,  weight DECIMAL NOT NULL,  price DECIMAL NOT NULL, presentLocation VARCHAR(200) NOT NULL, status VARCHAR(200) DEFAULT \'Not delivered\', userId VARCHAR(200) NOT NULL, created_at TIMESTAMP NOT NULL)';
+var createParcelsTable = "CREATE TABLE IF NOT EXISTS parcels (id VARCHAR(200) PRIMARY KEY,  name VARCHAR(70) NOT NULL,  origin VARCHAR(70) NOT NULL,  destination VARCHAR(70) NOT NULL,  weight DECIMAL NOT NULL,  price DECIMAL NOT NULL, presentLocation VARCHAR(200) NOT NULL, status VARCHAR(200) DEFAULT 'Not delivered', userId VARCHAR(200) NOT NULL, created_at TIMESTAMP NOT NULL)";
 
 // Create users table
 var createusersTable = 'CREATE TABLE IF NOT EXISTS users(id VARCHAR(200) PRIMARY KEY,  firstname VARCHAR(70) NOT NULL, lastname VARCHAR(70) NOT NULL, phone VARCHAR(50) NOT NULL, email VARCHAR(40) NOT NULL UNIQUE,  password VARCHAR(200) NOT NULL, userType VARCHAR(200) NOT NULL\n)';
@@ -51,6 +51,9 @@ var checkUser = 'SELECT * FROM users WHERE email = $1';
 // SELECT orders that belongs to a particular user
 var ordersForUser = 'SELECT * FROM parcels WHERE userId=$1';
 
+// SELECT filtered orders that belongs to a particular user based on their status
+var ordersFilteredParcels = 'SELECT * FROM parcels WHERE userId=$1 AND status=$2';
+
 sqlQueries.checkUser = checkUser;
 sqlQueries.createParcelsTable = createParcelsTable;
 sqlQueries.createusersTable = createusersTable;
@@ -63,5 +66,6 @@ sqlQueries.presentLocationUpdate = presentLocationUpdate;
 sqlQueries.statusUpdate = statusUpdate;
 sqlQueries.cancelOrder = cancelOrder;
 sqlQueries.getUserForSpecificParcel = getUserForSpecificParcel;
+sqlQueries.ordersFilteredParcels = ordersFilteredParcels;
 
 exports.default = sqlQueries;

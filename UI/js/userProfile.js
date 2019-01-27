@@ -37,7 +37,7 @@ function displayParcels(url) {
         let inTransit = 0;
         let notDelivered = 0;
 
-        for (let i = 0; i < myJson.length; i++) {
+        for (let i = 0; i < myJson.length; i += 1) {
           const row = document.createElement('tr');
           row.innerHTML = `   <td class="id">${myJson[i].id}</td>
                                     <td>${myJson[i].created_at}</td>
@@ -55,27 +55,29 @@ function displayParcels(url) {
         const modal = document.getElementById('parcel-modal');
         const btns = document.getElementsByClassName('btn-edit');
 
-        for (const btn of btns) {
-          totalParcels++;
-          if (btn.parentElement.parentNode.children[7].innerHTML === 'Intransit') {
-            inTransit++;
-          } else if (btn.parentElement.parentNode.children[7].innerHTML === 'Delivered') {
-            delivered++;
+        for (let i = 0; i < btns.length; i += 1) {
+          totalParcels += 1;
+          if (btns[i].parentElement.parentNode.children[7].innerHTML === 'Intransit') {
+            inTransit += 1;
+          } else if (btns[i].parentElement.parentNode.children[7].innerHTML === 'Delivered') {
+            delivered += 1;
           } else {
-            notDelivered++;
+            notDelivered += 1;
           }
           // display the modal onclick
-          btn.onclick = function () {
+          btns[i].onclick = () => {
             const name = document.querySelector('.input-name');
             const origin = document.querySelector('.input-origin');
             const destination = document.querySelector('.input-destination');
             const weight = document.querySelector('.input-weight');
+            const presentlocation = document.querySelector('.input-present-location');
             const id = document.querySelector('.input-id');
-            id.value = btn.parentElement.parentNode.children[0].innerHTML;
-            name.value = btn.parentElement.parentNode.children[2].innerHTML;
-            origin.value = btn.parentElement.parentNode.children[3].innerHTML;
-            destination.value = btn.parentElement.parentNode.children[4].innerHTML;
-            weight.value = btn.parentElement.parentNode.children[5].innerHTML;
+            id.value = btns[i].parentElement.parentNode.children[0].innerHTML;
+            name.value = btns[i].parentElement.parentNode.children[1].innerHTML;
+            origin.value = btns[i].parentElement.parentNode.children[2].innerHTML;
+            destination.value = btns[i].parentElement.parentNode.children[3].innerHTML;
+            weight.value = btns[i].parentElement.parentNode.children[4].innerHTML;
+            presentlocation.value = btns[i].parentElement.parentNode.children[6].innerHTML;
             modal.style.display = 'block';
           };
         }
@@ -111,37 +113,28 @@ const delivered = document.querySelector('#icon3');
 const intransit = document.querySelector('#icon2');
 const notdelivered = document.querySelector('#icon4');
 
+const displayParcel = document.querySelector('.parcels-display');
+const table = displayParcel.firstElementChild.firstElementChild;
 alldeliveries.onclick = () => {
-  if (id != undefined) {
-    url = `/api/v1/users/${id}/parcels`;
-  } else {
-    window.location = '/pages/signup';
-  }
+  table.innerHTML = '';
+  url = `/api/v1/users/${id}/parcels`;
   displayParcels(url);
 };
 
 delivered.onclick = () => {
-  if (id != undefined) {
-    url = `/api/v1/users/${id}/parcels/?status=delivered`;
-  } else {
-    window.location = '/pages/signup';
-  }
+  table.innerHTML = '';
+  url = `/api/v1/users/${id}/parcels/?status=delivered`;
   displayParcels(url);
 };
 
 intransit.onclick = () => {
-  if (id != undefined) {
-    url = `/api/v1/users/${id}/parcels/?status=intransit`;
-  } else {
-    window.location = '/pages/signup';
-  }
+  table.innerHTML = '';
+  url = `/api/v1/users/${id}/parcels/?status=intransit`;
   displayParcels(url);
 };
+
 notdelivered.onclick = () => {
-  if (id != undefined) {
-    url = `/api/v1/users/${id}/parcels/?status=notdelivered`;
-  } else {
-    window.location = '/pages/signup';
-  }
+  table.innerHTML = '';
+  url = `/api/v1/users/${id}/parcels/?status=notdelivered`;
   displayParcels(url);
 };

@@ -1,0 +1,36 @@
+* {
+  box-sizing: border-box;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #ebdfe7;
+}
+ul {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+li {
+  list-style: none;
+  margin-left: 20px;
+  font-size: 25px;
+  text-decoration: none;
+}
+li a {
+  color: black;
+  text-decoration: none;
+}
+.error {
+  margin-top: 100px;
+  color: rebeccapurple;
+  font-size: 34px;
+  font-weight: 30px;
+  margin-left: 20%;
+}

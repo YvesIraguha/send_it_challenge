@@ -26,5 +26,8 @@ staticPages.get('/summary', (req, res) => {
 staticPages.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, '/../../UI/html/adminProfile.html'));
 });
+staticPages.get('/error', (req, res) => {
+  res.sendFile(path.join(__dirname, '/../../UI/html/notAuthorizedError.html'));
+});
 
 export default staticPages;

@@ -138,8 +138,25 @@ var createParcel = function createParcel(req, res) {
 // Fetch a delivery order by a user.
 var deliveryOrdersByUser = function deliveryOrdersByUser(req, res) {
   var userId = req.params.id;
+  var status = req.query.status;
 
-  var specificOrders = (0, _connection2.default)(_sqlQueries2.default.ordersForUser, [userId]);
+  var specificOrders = void 0;
+  var specificStatus = void 0;
+  var query = void 0;
+  if (status) {
+    if (status === 'intransit') {
+      specificStatus = 'Intransit';
+    } else if (status === 'delivered') {
+      specificStatus = 'Delivered';
+    } else {
+      specificStatus = 'Not delivered';
+    }
+    query = _sqlQueries2.default.ordersFilteredParcels;
+    specificOrders = (0, _connection2.default)(query, [userId, specificStatus]);
+  } else {
+    query = _sqlQueries2.default.ordersForUser;
+    specificOrders = (0, _connection2.default)(query, [userId]);
+  }
   specificOrders.then(function (response) {
     if (response.length >= 1) {
       res.status(200).send(response);
@@ -156,12 +173,12 @@ var fetchAllDeliveryOrders = function fetchAllDeliveryOrders(req, res) {
   var status = req.query.status;
 
   var query = void 0;
-  if (status === 'Intransit') {
-    query = 'SELECT * FROM parcels WHERE status = intransit ORDER BY created_at DESC';
+  if (status === 'intransit') {
+    query = "SELECT * FROM parcels WHERE status = 'Intransit' ORDER BY created_at DESC";
   } else if (status === 'delivered') {
-    query = 'SELECT * FROM parcels WHERE status = delivered ORDER BY created_at DESC';
+    query = "SELECT * FROM parcels WHERE status = 'Delivered' ORDER BY created_at DESC";
   } else if (status === 'notdelivered') {
-    query = 'SELECT * FROM parcels WHERE status = notdelivered ORDER BY created_at DESC';
+    query = "SELECT * FROM parcels WHERE status = 'Not delivered' or status = 'Cancelled' ORDER BY created_at DESC";
   } else {
     query = 'SELECT * FROM parcels ORDER BY created_at DESC';
   }
