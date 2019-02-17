@@ -26,7 +26,6 @@ before('Create a user in a database', (done) => {
       done();
     });
 });
-
 describe('It should test fetching all users', () => {
   it('It should return the list of all user', (done) => {
     chai
