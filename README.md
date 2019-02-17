@@ -46,5 +46,5 @@ The template for sign in page: [Sign in](https://yvesiraguha.github.io/send_it_c
 `GET /users`: Fetch all users. 
 
 # POSTMAN documentation 
-[API Documentation](https://documenter.getpostman.com/view/6026755/RzfdpVau)
+[API Documentation](https://documenter.getpostman.com/view/6026755/Rzn8P1gT)
 
