@@ -8,25 +8,37 @@
     <title>SENDIT</title>
   </head>
   <body>
-    <div class="container">
-      <header>
-        <div class="heading-logo">
-          <img src="../images/alternative.PNG" alt="SENDIT" />
-        </div>
-        <div class="heading-nav">
-          <ul>
-            <li><a href="/pages/admin">Admin</a></li>
-            <li><a href="/pages/user">User</a></li>
-            <li><a href="/pages/signup">Login</a></li>
-          </ul>
-        </div>
-      </header>
-      <div class="home-container">
-        <h2>SENDIT</h2>
-        <p>SendIt is a service for you to send a parcel delivery order</p>
-        <p>It is cheap affordable service</p>
-        <p>The unit cost is 100RWf</p>
-        <button class="btn signup"><a href="/pages/signup">Sign up</a></button>
+    <header>
+      <ul>
+        <li><a href="./signup.html">Sign Up</a></li>
+        <li><a href="./signin.html">Sign In</a></li>
+        <li><a href="#order">Create Order</a></li>
+        <li><a href="./delivery_order_for_user.html">User</a></li>
+        <li><a href="./delivery_orders_for_admin.html">Admin</a></li>
+      </ul>
+    </header>
+    <div id="homePage">
+      <article>
+        <h1>SendIT</h1>
+        <p>
+          <strong>SendIt</strong> is a service for you to send a parcel from one
+          destination <br />
+          to another with just cost calculated based on the weight of what you
+          want to <br />
+          transfer. The cost per unit is 100RWf.
+        </p>
+        <p>This is the opportunity for you to send parcels with us.</p>
+        <p>
+          <a href=" ./signup.html">Sign up</a> to send with us or
+          <a href=" ./signin.html">Sign in</a> if you already have an account.
+        </p>
+      </article>
+      <div id="order">
+        <form action="./index.html" method="#">
+          <caption>
+            <b>Create an order</b>
+          </caption>
+        </form>
       </div>
     </div>
     <footer>
